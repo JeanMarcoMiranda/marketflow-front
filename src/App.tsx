@@ -1,13 +1,10 @@
-import { Button } from "./components/ui/button"
+import LoginPage from "./features/auth/pages/Login"
 
 function App() {
 
   return (
     <>
-      <div>Buenas</div>
-      <Button>
-        hOLA A TODOS
-      </Button>
+      <LoginPage/>
     </>
   )
 }
