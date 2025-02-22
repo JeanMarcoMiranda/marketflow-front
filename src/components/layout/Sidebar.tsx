@@ -1,21 +1,14 @@
 import type * as React from "react";
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  ClipboardList,
+  Megaphone,
+  Pizza,
+  Truck
 } from "lucide-react";
 
-import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "./team-switcher";
+import { NavProjects } from "./NavProjects";
+import { NavUser } from "./NavUser";
+import { TeamSwitcher } from "./TeamSwitcher";
 import {
   Sidebar,
   SidebarContent,
@@ -27,42 +20,32 @@ import {
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "admin",
+    email: "admin@lalena.com",
+    avatar: "/avatars/admin.jpg",
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: "La Leña",
+      logo: Pizza, // Un ícono relacionado con fuego u horno
+      plan: "Premium",
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Mejoras en la entrega",
       url: "#",
-      icon: Frame,
+      icon: Truck,
     },
     {
-      name: "Sales & Marketing",
+      name: "Optimización de inventario",
       url: "#",
-      icon: PieChart,
+      icon: ClipboardList,
     },
     {
-      name: "Travel",
+      name: "Campañas de marketing",
       url: "#",
-      icon: Map,
+      icon: Megaphone,
     },
   ],
 };
