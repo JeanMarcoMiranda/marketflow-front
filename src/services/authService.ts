@@ -1,4 +1,4 @@
-import { login, logout, getUser } from "@/api/auth";
+import { login, logout, getUser, register } from "@/api/auth";
 
 export class AuthService {
   async signIn(email: string, password: string) {
@@ -11,6 +11,10 @@ export class AuthService {
 
   async getCurrentUser() {
     return await getUser();
+  }
+
+  async signUp(email: string, password: string) {
+    return await register(email, password);
   }
 }
 

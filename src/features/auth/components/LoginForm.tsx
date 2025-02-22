@@ -4,18 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"form"> {
-  onSubmit: (email: string, password: string) => void;
+  onLogin: (email: string, password: string) => void;
 }
 
-export function LoginForm({ onSubmit, className, ...props }: LoginFormProps) {
+export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(email, password);
+    onLogin(email, password);
   };
 
   return (
@@ -42,23 +45,30 @@ export function LoginForm({ onSubmit, className, ...props }: LoginFormProps) {
             required
           />
         </div>
-        <div className="grid gap-2">
+        <div className="grid gap-2 relative">
           <div className="flex items-center">
-            <Label htmlFor="password">Contraña</Label>
+            <Label htmlFor="password">Contraseña</Label>
             <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
-              Olvidaste tu contraña?
+              Olvidaste tu contraseña?
             </a>
           </div>
           <Input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-9"
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
         </div>
         <Button type="submit" className="w-full">
           Ingresar
@@ -80,9 +90,9 @@ export function LoginForm({ onSubmit, className, ...props }: LoginFormProps) {
       </div>
       <div className="text-center text-sm">
         No tienes una cuenta?{" "}
-        <a href="#" className="underline underline-offset-4">
+        <Link to="/auth/register" className="underline underline-offset-4">
           Registrarte
-        </a>
+        </Link>
       </div>
     </form>
   );
