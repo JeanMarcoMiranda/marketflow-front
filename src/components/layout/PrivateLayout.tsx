@@ -1,5 +1,5 @@
-import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { Outlet, Navigate } from "react-router-dom";
 
 export default function PrivateLayout() {
   const { user } = useAuth();

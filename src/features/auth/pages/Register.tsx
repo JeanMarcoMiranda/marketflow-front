@@ -2,17 +2,25 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { GalleryVerticalEnd } from "lucide-react";
 import { RegisterForm } from "../components/RegisterForm";
-import { useNavigate } from "react-router-dom";
 import ImgBackground from "@/assets/img/background_auth.png";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
-  const { signUp } = useAuth();
+  const { user, signUp } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from =
+    (location.state as { from?: Location })?.from?.pathname || "/dashboard";
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleRegister = async (email: string, password: string) => {
     try {
       await signUp(email, password);
-      navigate("/dashboard");
+      // navigate("/dashboard");
+      navigate(from, { replace: true });
     } catch (error) {
       console.log("Error al momento de registrar", error);
       toast("Error al registrarte");

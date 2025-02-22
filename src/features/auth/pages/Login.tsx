@@ -2,17 +2,25 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "../components/LoginForm";
-import { useNavigate } from "react-router-dom";
 import ImgBackground from "@/assets/img/background_auth.png";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const { signIn } = useAuth();
+  const { user, signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from =
+    (location.state as { from?: Location })?.from?.pathname || "/dashboard";
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleLogin = async (email: string, password: string) => {
     try {
       await signIn(email, password);
-      navigate("/dashboard");
+      // navigate("/dashboard");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Error de autenticación:", error);
       toast("Error al iniciar sesión");
