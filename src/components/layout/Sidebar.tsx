@@ -1,10 +1,5 @@
 import type * as React from "react";
-import {
-  ClipboardList,
-  Megaphone,
-  Pizza,
-  Truck
-} from "lucide-react";
+import { ClipboardList, Pizza, Truck, BookMarked} from "lucide-react";
 
 import { NavProjects } from "./NavProjects";
 import { NavUser } from "./NavUser";
@@ -33,19 +28,19 @@ const data = {
   ],
   projects: [
     {
-      name: "Mejoras en la entrega",
-      url: "#",
+      name: "Dashboard",
+      url: "/dashboard",
+      icon: BookMarked,
+    },
+    {
+      name: "Envios",
+      url: "/orders",
       icon: Truck,
     },
     {
-      name: "Optimización de inventario",
-      url: "#",
+      name: "Inventario",
+      url: "/inventory",
       icon: ClipboardList,
-    },
-    {
-      name: "Campañas de marketing",
-      url: "#",
-      icon: Megaphone,
     },
   ],
 };
