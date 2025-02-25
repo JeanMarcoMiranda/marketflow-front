@@ -1,5 +1,12 @@
 import type * as React from "react";
-import { ClipboardList, Pizza, Truck, BookMarked} from "lucide-react";
+import {
+  ClipboardList,
+  Pizza,
+  Truck,
+  BookMarked,
+  User,
+  Store,
+} from "lucide-react";
 
 import { NavProjects } from "./NavProjects";
 import { NavUser } from "./NavUser";
@@ -22,7 +29,7 @@ const data = {
   teams: [
     {
       name: "La Leña",
-      logo: Pizza, // Un ícono relacionado con fuego u horno
+      logo: Pizza,
       plan: "Premium",
     },
   ],
@@ -41,6 +48,16 @@ const data = {
       name: "Inventario",
       url: "/inventory",
       icon: ClipboardList,
+    },
+    {
+      name: "Usuarios",
+      url: "/users",
+      icon: User,
+    },
+    {
+      name: "Sucursales",
+      url: "/branches",
+      icon: Store,
     },
   ],
 };

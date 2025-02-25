@@ -1,6 +1,8 @@
+import UsersPage from "@/features/Users/pages/Users";
+import BranchesPage from "@/features/Branches/pages";
+import OrdersPage from "@/features/Orders/pages/Orders";
 import Dashboard from "@/features/Dashboard/pages/Dashboard";
 import InventoryPage from "@/features/Inventory/pages/Inventory";
-import OrdersPage from "@/features/Orders/pages/Orders";
 
 export const privateRoutes = [
   {
@@ -14,6 +16,14 @@ export const privateRoutes = [
   {
     path: "/inventory",
     element: <InventoryPage />,
+  },
+  {
+    path: "/users",
+    element: <UsersPage />,
+  },
+  {
+    path: "/branches",
+    element: <BranchesPage />,
   },
   //   {
   //     path: "/profile",

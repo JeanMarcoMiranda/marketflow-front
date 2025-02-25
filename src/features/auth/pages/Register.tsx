@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/shared/hooks/useAuth";
 import { GalleryVerticalEnd } from "lucide-react";
 import { RegisterForm } from "../components/RegisterForm";
 import ImgBackground from "@/assets/img/background_auth.png";

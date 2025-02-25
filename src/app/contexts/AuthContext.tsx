@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import { authService } from "@/services/authService";
+import { authService } from "@/app/services/authService";
 import { createContext, useEffect, useState } from "react";
 import { Session, User, WeakPassword } from "@supabase/supabase-js";
 
