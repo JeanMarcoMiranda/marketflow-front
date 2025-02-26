@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Branch } from "../../data/branchSchema";
+import { Branch } from "../../data/models/branchSchema";
 import { FormComponent } from "../../components/form";
 import { updateBranch } from "../../service/branchService";
 import {
@@ -12,23 +12,23 @@ import {
 import { Button } from "@/components/ui/button";
 
 interface FormUpdateProps {
-  branchData: Branch;
+  data: Branch;
   onSuccess: () => void;
 }
 
-export function FormUpdate({ branchData, onSuccess }: FormUpdateProps) {
+export function FormUpdate({ data, onSuccess }: FormUpdateProps) {
   const [loading, setLoading] = useState(false);
   const [initialData, setInitialData] = useState<Branch | null>(null);
 
   useEffect(() => {
     // Si se requiere, se puede hacer una carga más detallada de los datos.
-    setInitialData(branchData);
-  }, [branchData]);
+    setInitialData(data);
+  }, [data]);
 
   const handleUpdate = async (formData: Partial<Branch>) => {
     setLoading(true);
     try {
-      await updateBranch(branchData.id, formData);
+      await updateBranch(data.id, formData);
       onSuccess();
     } catch (error) {
       console.error("Error updating branch:", error);

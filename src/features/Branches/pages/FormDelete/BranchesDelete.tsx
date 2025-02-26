@@ -1,4 +1,6 @@
-import { Branch } from "../../data/branchSchema";
+import { useState } from "react";
+import { Branch } from "../../data/models/branchSchema";
+import { deleteBranch } from "../../service/branchService";
 import {
   DialogClose,
   DialogDescription,
@@ -8,12 +10,26 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-interface DeleteConfirmationProps {
-  branch: Branch;
-  onConfirm: () => Promise<void>;
+interface FormDeleteProps {
+  data: Branch;
+  onSuccess: () => void;
 }
 
-export function FormDelete({ branch, onConfirm }: DeleteConfirmationProps) {
+export function FormDelete({ data, onSuccess }: FormDeleteProps) {
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async () => {
+    setLoading(true);
+    try {
+      await deleteBranch(data.id);
+      onSuccess();
+    } catch (error) {
+      console.error("Error deleting branch:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <DialogHeader>
@@ -23,12 +39,12 @@ export function FormDelete({ branch, onConfirm }: DeleteConfirmationProps) {
         </DialogDescription>
       </DialogHeader>
       <p>
-        ¿Realmente deseas eliminar la sucursal <strong>{branch.name}</strong>?
+        ¿Realmente deseas eliminar la sucursal <strong>{data.name}</strong>?
       </p>
       <div className="mt-4 flex justify-end">
-        <button onClick={onConfirm} className="btn btn-destructive">
-          Confirmar
-        </button>
+        <Button onClick={handleDelete} variant="destructive" disabled={loading}>
+          {loading ? "Procesando..." : "Confirmar"}
+        </Button>
       </div>
       <DialogFooter>
         <DialogClose asChild>

@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Branch } from "../data/branchSchema";
+import { Branch } from "../data/models/branchSchema";
 import { DataTableColumnHeader } from "@/components/common/data-table-column-header";
 import { DataTableRowActions } from "@/components/common/data-table-row-actions";
 

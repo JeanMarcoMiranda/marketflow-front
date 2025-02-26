@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/common/data-table";
 import { useDialogStore } from "@/app/store/useDialogStore";
 
-import { Branch } from "../../data/branchSchema";
+import { Branch } from "../../data/models/branchSchema";
 import { getColumns } from "../../components/columns";
-import { fetchBranches, deleteBranch } from "../../service/branchService";
+import { fetchBranches } from "../../service/branchService";
 import { FormCreate } from "../FormCreate/BranchesCreate";
 import { FormUpdate } from "../FormUpdate/BranchesUpdate";
 import { FormDelete } from "../FormDelete/BranchesDelete";
@@ -55,7 +55,7 @@ export function BranchesList() {
   const openEditModal = (branch: Branch) => {
     openDialog(
       <FormUpdate
-        branchData={branch}
+        data={branch}
         onSuccess={async () => {
           closeDialog();
           await refreshBranches();
@@ -68,15 +68,10 @@ export function BranchesList() {
   const openDeleteModal = (branch: Branch) => {
     openDialog(
       <FormDelete
-        branch={branch}
-        onConfirm={async () => {
-          try {
-            await deleteBranch(branch.id);
-            closeDialog();
-            await refreshBranches();
-          } catch (error) {
-            console.error("Error deleting branch:", error);
-          }
+        data={branch}
+        onSuccess={async () => {
+          closeDialog();
+          await refreshBranches();
         }}
       />
     );

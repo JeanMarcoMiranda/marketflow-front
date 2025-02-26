@@ -1,9 +1,21 @@
 import { supabase } from "@/lib/supabaseClient";
-import { Branch, branchSchema } from "../data/branchSchema";
+import { Branch, branchSchema } from "../data/models/branchSchema";
 
 // ✅ Obtener todas las sucursales
 export async function fetchBranches(): Promise<Branch[]> {
-  const { data, error } = await supabase.from("Branches").select("*");
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    throw new Error("No se pudo obtener el usuario autenticado.");
+  }
+
+  const { data, error } = await supabase
+    .from("Branches")
+    .select("*")
+    .eq("id_user", user.id);
 
   if (error) throw new Error(`Error fetching branches: ${error.message}`);
 
@@ -18,7 +30,7 @@ export async function createBranch(
   const {
     data: { user },
     error: authError,
-  } = await supabase.auth.getUser();    
+  } = await supabase.auth.getUser();
 
   if (authError || !user) {
     throw new Error("No se pudo obtener el usuario autenticado.");
@@ -26,7 +38,7 @@ export async function createBranch(
 
   const { data, error } = await supabase
     .from("Branches")
-    .insert([{...newBranch, id_user: user.id}])
+    .insert([{ ...newBranch, id_user: user.id }])
     .select()
     .single();
 

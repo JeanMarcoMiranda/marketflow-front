@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Branch } from "../../data/branchSchema";
+import { Branch } from "../../data/models/branchSchema";
 import { FormComponent } from "../../components/form";
 import { createBranch } from "../../service/branchService";
 import {

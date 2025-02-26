@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Branch } from "../data/branchSchema";
+import { Branch } from "../data/models/branchSchema";
 
 interface FormComponentProps {
   onSubmit: (data: any) => Promise<void>;
