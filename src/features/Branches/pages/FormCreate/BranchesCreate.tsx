@@ -33,12 +33,11 @@ export function FormCreate({ onSuccess }: FormCreateProps) {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Crear Sucursal</DialogTitle>
+        <DialogTitle className="text-lg font-bold">Crear Sucursal</DialogTitle>
         <DialogDescription>
           Ingresa la información para crear una nueva sucursal.
         </DialogDescription>
       </DialogHeader>
-      <h3 className="text-lg font-bold mb-4">Crear Sucursal</h3>
       <FormComponent onSubmit={handleCreate} loading={loading} />
       <DialogFooter>
         <DialogClose asChild>
