@@ -1,12 +1,12 @@
 import { toast } from "sonner";
-import { useAuth } from "@/shared/hooks/useAuth";
 import { GalleryVerticalEnd } from "lucide-react";
 import { RegisterForm } from "../components/RegisterForm";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function RegisterPage() {
-  const { user, signUp } = useAuth();
+  const { user, signUp } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const from =
