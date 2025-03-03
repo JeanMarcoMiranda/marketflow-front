@@ -1,9 +1,9 @@
-import { useAuth } from "@/shared/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function Dashboard() {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogout = async () => {

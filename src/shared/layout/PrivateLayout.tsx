@@ -1,11 +1,11 @@
-import { useAuth } from "@/shared/hooks/useAuth";
 import { Outlet, Navigate } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import { AppSidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function PrivateLayout() {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   if (!user) {
     return <Navigate to="/auth/login" replace />;

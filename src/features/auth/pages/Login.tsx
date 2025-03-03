@@ -1,12 +1,12 @@
 import { toast } from "sonner";
-import { useAuth } from "@/shared/hooks/useAuth";
 import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "../components/LoginForm";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function LoginPage() {
-  const { user, signIn } = useAuth();
+  const { user, signIn } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const from =
