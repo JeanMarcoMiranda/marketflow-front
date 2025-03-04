@@ -1,23 +1,12 @@
 import { supabase } from "@/lib/supabaseClient";
+import { useAuthStore } from "@/app/store/useAuthStore";
 import { Branch, branchSchema } from "../data/models/branchSchema";
 
 // ✅ Obtener todas las sucursales
-export async function fetchBranches(): Promise<Branch[]> {
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+export async function fetchBranch(): Promise<Branch[]> {
+  const { data, error } = await supabase.from("Branch").select("*");
 
-  if (authError || !user) {
-    throw new Error("No se pudo obtener el usuario autenticado.");
-  }
-
-  const { data, error } = await supabase
-    .from("Branches")
-    .select("*")
-    .eq("id_user", user.id);
-
-  if (error) throw new Error(`Error fetching branches: ${error.message}`);
+  if (error) throw new Error(`Error fetching Branch: ${error.message}`);
 
   return data?.map((branch) => branchSchema.parse(branch)) || [];
 }
@@ -26,19 +15,21 @@ export async function fetchBranches(): Promise<Branch[]> {
 export async function createBranch(
   newBranch: Omit<Branch, "id" | "created_at" | "id_user">
 ): Promise<Branch> {
-  // Obtener el usuario tenticado
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+  const { user } = useAuthStore.getState();
 
-  if (authError || !user) {
-    throw new Error("No se pudo obtener el usuario autenticado.");
+  const { data: business, error: errorBusiness } = await supabase
+    .from("Business")
+    .select("*")
+    .eq("id_super_admin", user!.user.id)
+    .single();
+
+  if (errorBusiness) {
+    throw new Error("No business found for the super_admin.");
   }
 
   const { data, error } = await supabase
-    .from("Branches")
-    .insert([{ ...newBranch, id_user: user.id }])
+    .from("Branch")
+    .insert([{ ...newBranch, id_business: business.id }])
     .select()
     .single();
 
@@ -49,11 +40,11 @@ export async function createBranch(
 
 // ✅ Actualizar sucursal existente
 export async function updateBranch(
-  id: number,
+  id: string,
   updatedData: Partial<Branch>
 ): Promise<Branch> {
   const { data, error } = await supabase
-    .from("Branches")
+    .from("Branch")
     .update(updatedData)
     .eq("id", id)
     .select()
@@ -65,8 +56,8 @@ export async function updateBranch(
 }
 
 // ✅ Eliminar sucursal
-export async function deleteBranch(id: number): Promise<void> {
-  const { error } = await supabase.from("Branches").delete().eq("id", id);
+export async function deleteBranch(id: string): Promise<void> {
+  const { error } = await supabase.from("Branch").delete().eq("id", id);
 
   if (error) throw new Error(`Error deleting branch: ${error.message}`);
 }

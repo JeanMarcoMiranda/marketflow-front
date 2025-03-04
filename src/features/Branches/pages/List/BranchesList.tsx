@@ -1,43 +1,19 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/common/data-table";
 import { useDialogStore } from "@/app/store/useDialogStore";
 
 import { Branch } from "../../data/models/branchSchema";
 import { getColumns } from "../../components/columns";
-import { fetchBranches } from "../../service/branchService";
+// import { fetchBranches } from "../../service/branchService";
 import { FormCreate } from "../FormCreate/BranchesCreate";
 import { FormUpdate } from "../FormUpdate/BranchesUpdate";
 import { FormDelete } from "../FormDelete/BranchesDelete";
+import { useBranchQuery } from "@/shared/hooks/useBranch";
 
 export function BranchesList() {
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { branchesQuery } = useBranchQuery();
   const { openDialog, closeDialog } = useDialogStore();
-
-  useEffect(() => {
-    async function loadBranches() {
-      try {
-        const data = await fetchBranches();
-        setBranches(data);
-      } catch (error) {
-        console.error("Error fetching branches:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadBranches();
-  }, []);
-
-  // Función para refrescar la lista tras crear, editar o eliminar
-  const refreshBranches = async () => {
-    try {
-      const data = await fetchBranches();
-      setBranches(data);
-    } catch (error) {
-      console.error("Error refreshing branches:", error);
-    }
-  };
 
   // Abre el modal de creación delegando todo el contenido en FormCreate
   const openCreateModal = () => {
@@ -45,7 +21,7 @@ export function BranchesList() {
       <FormCreate
         onSuccess={async () => {
           closeDialog();
-          await refreshBranches();
+          branchesQuery.refetch();
         }}
       />
     );
@@ -58,7 +34,7 @@ export function BranchesList() {
         data={branch}
         onSuccess={async () => {
           closeDialog();
-          await refreshBranches();
+          branchesQuery.refetch();
         }}
       />
     );
@@ -71,7 +47,7 @@ export function BranchesList() {
         data={branch}
         onSuccess={async () => {
           closeDialog();
-          await refreshBranches();
+          branchesQuery.refetch();
         }}
       />
     );
@@ -81,16 +57,23 @@ export function BranchesList() {
   const columns = getColumns(openEditModal, openDeleteModal);
 
   return (
-    <div>
+    <>
       <h2 className="text-xl font-bold mb-4">Lista de Sucursales</h2>
       <div className="mb-4">
         <Button onClick={openCreateModal}>Agregar Sucursal</Button>
       </div>
-      {loading ? (
+
+      {branchesQuery.isFetching ? (
+        <div>Loading branches...</div>
+      ) : (
+        <DataTable data={branchesQuery.data || []} columns={columns} />
+      )}
+
+      {/* {loading ? (
         <div>Loading branches...</div>
       ) : (
         <DataTable data={branches} columns={columns} />
-      )}
-    </div>
+      )} */}
+    </>
   );
 }

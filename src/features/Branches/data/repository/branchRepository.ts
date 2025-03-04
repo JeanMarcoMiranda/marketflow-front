@@ -2,13 +2,16 @@
 import { supabase } from "@/lib/supabaseClient";
 import { Branch, branchSchema } from "../models/branchSchema";
 import { CreateBranchDTO, UpdateBranchDTO } from "../dtos/branchDTO";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export class BranchRepository {
-  async fetchBranches(userId: string): Promise<Branch[]> {
+  async fetchBranches(): Promise<Branch[]> {
+    const { user } = useAuthStore.getState();
+
     const { data, error } = await supabase
-      .from("Branches")
-      .select("*")
-      .eq("id_user", userId);
+      .from("UserBranch")
+      .select("Branch(*)")
+      .eq("id_user", user!.user.id);
 
     if (error) {
       throw new Error(`Error fetching branches: ${error.message}`);

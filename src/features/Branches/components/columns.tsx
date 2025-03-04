@@ -60,11 +60,11 @@ export function getColumns(
       ),
     },
     {
-      accessorKey: "id_user",
+      accessorKey: "id_business",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="ID usuario" />
+        <DataTableColumnHeader column={column} title="ID negocio" />
       ),
-      cell: ({ row }) => <div>{row.getValue("id_user")}</div>,
+      cell: ({ row }) => <div>{row.getValue("id_business")}</div>,
     },
     {
       id: "actions",
