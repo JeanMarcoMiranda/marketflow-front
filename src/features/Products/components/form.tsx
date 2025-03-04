@@ -29,7 +29,7 @@ export const FormComponentProduct = forwardRef(function FormComponentProduct(
     price: initialData?.price || 0,
     category: initialData?.category || "",
     is_active: initialData?.is_active ?? true,
-    id_branch: initialData?.id_branch || "", // Este campo se actualizará con la sucursal seleccionada
+    id_branch: initialData?.id_branch || "",
   });
 
   const formRef = useRef<HTMLFormElement>(null);

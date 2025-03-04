@@ -1,18 +1,18 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product } from "../data/models/productSchema";
+import { Inventory } from "../data/models/inventorySchema";
 import { DataTableColumnHeader } from "@/components/common/data-table-column-header";
 import { DataTableRowActions } from "@/components/common/data-table-row-actions";
 
 /**
- * Genera la definición de columnas para la tabla de productos.
+ * Genera la definición de columnas para la tabla de inventario.
  * @param openEditModal Función para abrir el modal de edición.
  * @param openDeleteModal Función para abrir el modal de eliminación.
  */
-export function getColumns(
-  openEditModal: (product: Product) => void,
-  openDeleteModal: (product: Product) => void
-): ColumnDef<Product>[] {
+export function getInventoryColumns(
+  openEditModal: (inventory: Inventory) => void,
+  openDeleteModal: (inventory: Inventory) => void
+): ColumnDef<Inventory>[] {
   return [
     {
       id: "select",
@@ -37,54 +37,42 @@ export function getColumns(
       enableHiding: false,
     },
     {
-      accessorKey: "name",
+      accessorKey: "id_product",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Nombre" />
+        <DataTableColumnHeader column={column} title="ID del Producto" />
       ),
-      cell: ({ row }) => <div>{row.getValue("name")}</div>,
+      cell: ({ row }) => <div>{row.getValue("id_product")}</div>,
     },
     {
-      accessorKey: "description",
+      accessorKey: "available_quantity",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Descripción" />
+        <DataTableColumnHeader column={column} title="Cantidad Disponible" />
       ),
-      cell: ({ row }) => (
-        <div>{row.getValue("description") || "Sin descripción"}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("available_quantity")}</div>,
     },
     {
-      accessorKey: "price",
+      accessorKey: "reorder_level",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Precio" />
+        <DataTableColumnHeader column={column} title="Nivel de Reorden" />
       ),
-      cell: ({ row }) => {
-        const price = row.getValue("price") as number;
-        return <div>S/. {price.toFixed(2)}</div>;
-      },
-    },
-    {
-      accessorKey: "category",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Categoría" />
-      ),
-      cell: ({ row }) => <div>{row.getValue("category")}</div>,
-    },
-    {
-      accessorKey: "is_active",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Estado" />
-      ),
-      cell: ({ row }) => (
-        <div>{row.getValue("is_active") ? "Activo" : "Inactivo"}</div>
-      ),
+      cell: ({ row }) => <div>{row.getValue("reorder_level")}</div>,
     },
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Fecha de creación" />
+        <DataTableColumnHeader column={column} title="Fecha de Creación" />
       ),
       cell: ({ row }) => (
         <div>{new Date(row.getValue("created_at")).toLocaleString()}</div>
+      ),
+    },
+    {
+      accessorKey: "last_updated",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Última Actualización" />
+      ),
+      cell: ({ row }) => (
+        <div>{new Date(row.getValue("last_updated")).toLocaleString()}</div>
       ),
     },
     {
