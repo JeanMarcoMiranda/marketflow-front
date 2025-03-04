@@ -20,7 +20,6 @@ export function BranchesList() {
       <FormCreate
         onSuccess={async () => {
           closeDialog();
-          branchesQuery.refetch();
         }}
       />
     );

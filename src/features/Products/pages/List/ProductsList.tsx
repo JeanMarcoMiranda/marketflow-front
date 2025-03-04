@@ -13,6 +13,10 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { FormCreateProduct } from "../FormCreate/ProductCreate";
+import { useDialogStore } from "@/app/store/useDialogStore";
+import { FormUpdateProduct } from "../FormUpdate/ProductUpdate";
+import { FormDeleteProduct } from "../FormDelete/ProductDelete";
 
 const ProductsList = () => {
   const { branchesQuery } = useBranchQuery();
@@ -27,10 +31,37 @@ const ProductsList = () => {
   const { productsByBranchQuery } = useProduct(selectedBranchId || "");
 
   const openCreateModal = () => {
-
+    openDialog(
+      <FormCreateProduct
+        idBranch={selectedBranchId || ""}
+        onSuccess={async () => {
+          closeDialog();
+        }}
+      />
+    );
   };
-  const openEditModal = (product: Product) => {};
-  const openDeleteModal = (product: Product) => {};
+  const openEditModal = (product: Product) => {
+    openDialog(
+      <FormUpdateProduct
+        data={product}
+        branchId={selectedBranchId || ""}
+        onSuccess={async () => {
+          closeDialog();
+        }}
+      />
+    );
+  };
+  const openDeleteModal = (product: Product) => {
+    openDialog(
+      <FormDeleteProduct
+        data={product}
+        branchId={selectedBranchId || ""}
+        onSuccess={async () => {
+          closeDialog();
+        }}
+      />
+    );
+  };
 
   const columns = getColumns(openEditModal, openDeleteModal);
 
@@ -68,7 +99,7 @@ const ProductsList = () => {
         )}
       </div>
       <div className="mb-4">
-        <Button onClick={openCreateModal}>Agregar Sucursal</Button>
+        <Button onClick={openCreateModal}>Agregar Producto</Button>
       </div>
 
       {productsByBranchQuery.isFetching ? (
