@@ -1,7 +1,7 @@
-import { useProduct } from "../../hooks/useProduct";
+import { useInventory } from "../../hooks/useInventory";
 import { DataTable } from "@/components/common/data-table";
-import { Product } from "../../data/models/productSchema";
-import { getColumns } from "../../components/columns";
+import { Inventory } from "../../data/models/inventorySchema";
+import { getInventoryColumns } from "../../components/columns";
 import { useBranchQuery } from "@/features/Branches/hooks/useBranch";
 import { useState } from "react";
 import {
@@ -13,12 +13,12 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FormCreateProduct } from "../FormCreate/ProductCreate";
+import { FormCreateInventory } from "../FormCreate/InventoryCreate";
 import { useDialogStore } from "@/app/store/useDialogStore";
-import { FormUpdateProduct } from "../FormUpdate/ProductUpdate";
-import { FormDeleteProduct } from "../FormDelete/ProductDelete";
+import { FormUpdateInventory } from "../FormUpdate/InventoryUpdate";
+import { FormDeleteInventory } from "../FormDelete/InventoryDelete";
 
-const ProductsList = () => {
+const InventoryList = () => {
   const { branchesQuery } = useBranchQuery();
   const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null);
   const { openDialog, closeDialog } = useDialogStore();
@@ -28,50 +28,54 @@ const ProductsList = () => {
     setSelectedBranchId(branchesQuery.data[0].id);
   }
 
-  const { productsByBranchQuery } = useProduct(selectedBranchId || "");
+  const { inventoryByBranchQuery } = useInventory(selectedBranchId || "");
 
   const openCreateModal = () => {
     openDialog(
-      <FormCreateProduct
+      <FormCreateInventory
         idBranch={selectedBranchId || ""}
         onSuccess={async () => {
           closeDialog();
-          productsByBranchQuery.refetch()
-        }}
-      />
-    );
-  };
-  const openEditModal = (product: Product) => {
-    openDialog(
-      <FormUpdateProduct
-        data={product}
-        branchId={selectedBranchId || ""}
-        onSuccess={async () => {
-          closeDialog();
-        }}
-      />
-    );
-  };
-  const openDeleteModal = (product: Product) => {
-    openDialog(
-      <FormDeleteProduct
-        data={product}
-        branchId={selectedBranchId || ""}
-        onSuccess={async () => {
-          closeDialog();
+          inventoryByBranchQuery.refetch();
         }}
       />
     );
   };
 
-  const columns = getColumns(openEditModal, openDeleteModal);
+  const openEditModal = (inventory: Inventory) => {
+    openDialog(
+      <FormUpdateInventory
+        data={inventory}
+        branchId={selectedBranchId || ""}
+        onSuccess={async () => {
+          closeDialog();
+          inventoryByBranchQuery.refetch();
+        }}
+      />
+    );
+  };
+
+  const openDeleteModal = (inventory: Inventory) => {
+    openDialog(
+      <FormDeleteInventory
+        data={inventory}
+        branchId={selectedBranchId || ""}
+        onSuccess={async () => {
+          closeDialog();
+          inventoryByBranchQuery.refetch();
+        }}
+      />
+    );
+  };
+
+  const columns = getInventoryColumns(openEditModal, openDeleteModal);
 
   return (
     <>
       <div className="mb-8">
         {branchesQuery.isFetching ? (
           <div className="text-center text-gray-500">
-            Cargando productos...
+            Cargando sucursales...
           </div>
         ) : (
           <div className="space-y-2">
@@ -100,18 +104,18 @@ const ProductsList = () => {
         )}
       </div>
       <div className="mb-4">
-        <Button onClick={openCreateModal}>Agregar Producto</Button>
+        <Button onClick={openCreateModal}>Agregar Inventario</Button>
       </div>
 
-      {productsByBranchQuery.isFetching ? (
-        <div>Cargando Productos...</div>
+      {inventoryByBranchQuery.isFetching ? (
+        <div>Cargando Inventario...</div>
       ) : (
         <DataTable
-          data={productsByBranchQuery.data || []}
+          data={inventoryByBranchQuery.data || []}
           columns={columns}
           toolbarProps={{
-            searchColumnId: "name",
-            searchPlaceholder: "Buscar por producto...",
+            searchColumnId: "id_product",
+            searchPlaceholder: "Buscar por ID de producto...",
           }}
         />
       )}
@@ -119,4 +123,4 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+export default InventoryList;

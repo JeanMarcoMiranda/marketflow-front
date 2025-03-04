@@ -37,9 +37,9 @@ const data = {
       icon: BookMarked,
     },
     {
-      name: "Envios",
-      url: "/orders",
-      icon: Truck,
+      name: "Sucursales",
+      url: "/branches",
+      icon: Store,
     },
     {
       name: "Productos",
@@ -52,14 +52,14 @@ const data = {
       icon: ClipboardList,
     },
     {
+      name: "Envios",
+      url: "/orders",
+      icon: Truck,
+    },
+    {
       name: "Usuarios",
       url: "/users",
       icon: User,
-    },
-    {
-      name: "Sucursales",
-      url: "/branches",
-      icon: Store,
     },
   ],
 };
