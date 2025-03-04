@@ -6,6 +6,7 @@ import {
   BookMarked,
   User,
   Store,
+  Cookie,
 } from "lucide-react";
 
 import { NavProjects } from "./NavProjects";
@@ -39,6 +40,11 @@ const data = {
       name: "Envios",
       url: "/orders",
       icon: Truck,
+    },
+    {
+      name: "Productos",
+      url: "/products",
+      icon: Cookie,
     },
     {
       name: "Inventario",
