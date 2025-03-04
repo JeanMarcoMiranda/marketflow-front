@@ -3,13 +3,12 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/common/data-table";
 import { useDialogStore } from "@/app/store/useDialogStore";
 
-import { Branch } from "../../data/models/branchSchema";
 import { getColumns } from "../../components/columns";
-// import { fetchBranches } from "../../service/branchService";
+import { useBranchQuery } from "../../hooks/useBranch";
+import { Branch } from "../../data/models/branchSchema";
 import { FormCreate } from "../FormCreate/BranchesCreate";
 import { FormUpdate } from "../FormUpdate/BranchesUpdate";
 import { FormDelete } from "../FormDelete/BranchesDelete";
-import { useBranchQuery } from "@/shared/hooks/useBranch";
 
 export function BranchesList() {
   const { branchesQuery } = useBranchQuery();

@@ -1,10 +1,10 @@
 import { Branch } from "@/features/Branches/data/models/branchSchema";
 import {
-  fetchBranch, 
+  fetchBranch,
   createBranch,
   updateBranch,
   deleteBranch,
-} from "@/features/Branches/service/branchService";
+} from "@/features/Branches/data/service/branchService";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
 export const useBranchQuery = () => {
@@ -12,7 +12,7 @@ export const useBranchQuery = () => {
 
   // ✅ Obtener sucursales
   const branchesQuery = useQuery({
-    queryKey: ["branch"], 
+    queryKey: ["branch"],
     queryFn: fetchBranch,
   });
 
@@ -30,7 +30,7 @@ export const useBranchQuery = () => {
       id,
       updatedData,
     }: {
-      id: string; 
+      id: string;
       updatedData: Partial<Branch>;
     }) => updateBranch(id, updatedData),
     onSuccess: () => {
@@ -40,7 +40,7 @@ export const useBranchQuery = () => {
 
   // ✅ Eliminar sucursal
   const deleteBranchMutation = useMutation({
-    mutationFn: (id: string) => deleteBranch(id), 
+    mutationFn: (id: string) => deleteBranch(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["branch"] });
     },
