@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Loadable } from "@/shared/components/Loadable";
+import ProductsPage from "@/features/Products";
 
 const Dashboard = Loadable(
   lazy(() => import("@/features/Dashboard/pages/Dashboard"))
@@ -34,4 +35,8 @@ export const privateRoutes = [
     path: "/branches",
     element: <BranchesPage />,
   },
+  {
+    path: "/products",
+    element: <ProductsPage/>
+  }
 ];
