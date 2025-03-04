@@ -1,7 +1,14 @@
+import { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import LoginPage from "@/features/auth/pages/Login";
-import RegisterPage from "@/features/auth/pages/Register";
-import NotFound from "@/features/NotFound/pages/NotFound";
+import { Loadable } from "@/shared/components/Loadable";
+
+const LoginPage = Loadable(lazy(() => import("@/features/auth/pages/Login")));
+const RegisterPage = Loadable(
+  lazy(() => import("@/features/auth/pages/Register"))
+);
+const NotFound = Loadable(
+  lazy(() => import("@/features/NotFound/pages/NotFound"))
+);
 
 export const publicRoutes = [
   {

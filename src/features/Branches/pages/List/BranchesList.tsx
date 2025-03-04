@@ -34,7 +34,6 @@ export function BranchesList() {
         data={branch}
         onSuccess={async () => {
           closeDialog();
-          branchesQuery.refetch();
         }}
       />
     );
@@ -47,7 +46,6 @@ export function BranchesList() {
         data={branch}
         onSuccess={async () => {
           closeDialog();
-          branchesQuery.refetch();
         }}
       />
     );
@@ -66,14 +64,34 @@ export function BranchesList() {
       {branchesQuery.isFetching ? (
         <div>Loading branches...</div>
       ) : (
-        <DataTable data={branchesQuery.data || []} columns={columns} />
+        <DataTable
+          data={branchesQuery.data || []}
+          columns={columns}
+          toolbarProps={{
+            searchColumnId: "name",
+            searchPlaceholder: "Buscar por sucursal...",
+          }}
+        />
+        //<DataTable
+        //   data={users}
+        //   columns={userColumns}
+        //   toolbarProps={{
+        //     searchColumnId: "username",
+        //     searchPlaceholder: "Buscar usuario...",
+        //     filters: [
+        //       {
+        //         columnId: "role",
+        //         title: "Roles",
+        //         options: [
+        //           { label: "Admin", value: "admin" },
+        //           { label: "Editor", value: "editor" },
+        //           { label: "Viewer", value: "viewer" },
+        //         ],
+        //       },
+        //     ],
+        //   }}
+        // />
       )}
-
-      {/* {loading ? (
-        <div>Loading branches...</div>
-      ) : (
-        <DataTable data={branches} columns={columns} />
-      )} */}
     </>
   );
 }
