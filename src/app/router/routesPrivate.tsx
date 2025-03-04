@@ -1,8 +1,17 @@
-import UsersPage from "@/features/Users/pages/Users";
-import BranchesPage from "@/features/Branches/pages";
-import OrdersPage from "@/features/Orders/pages/Orders";
-import Dashboard from "@/features/Dashboard/pages/Dashboard";
-import InventoryPage from "@/features/Inventory/pages/Inventory";
+import { lazy } from "react";
+import { Loadable } from "@/shared/components/Loadable";
+
+const Dashboard = Loadable(
+  lazy(() => import("@/features/Dashboard/pages/Dashboard"))
+);
+const OrdersPage = Loadable(
+  lazy(() => import("@/features/Orders/pages/Orders"))
+);
+const InventoryPage = Loadable(
+  lazy(() => import("@/features/Inventory/pages/Inventory"))
+);
+const UsersPage = Loadable(lazy(() => import("@/features/Users/pages/Users")));
+const BranchesPage = Loadable(lazy(() => import("@/features/Branches/pages")));
 
 export const privateRoutes = [
   {
@@ -25,8 +34,4 @@ export const privateRoutes = [
     path: "/branches",
     element: <BranchesPage />,
   },
-  //   {
-  //     path: "/profile",
-  //     element: <Profile />,
-  //   },
 ];
