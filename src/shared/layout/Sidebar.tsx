@@ -18,14 +18,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "admin",
-    email: "admin@lalena.com",
-    avatar: "/avatars/admin.jpg",
-  },
   teams: [
     {
       name: "La Leña",
@@ -63,6 +59,15 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Obtenemos el usuario desde el store
+  const { user: supabaseUser } = useAuthStore();
+
+  const currentUser = {
+    name: "Usuario",
+    email: supabaseUser?.user?.email || "admin@lalena.com",
+    avatar: "/avatars/admin.jpg",
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -72,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={currentUser} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
