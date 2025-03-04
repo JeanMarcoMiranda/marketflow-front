@@ -5,7 +5,7 @@ import { useDialogStore } from "@/app/store/useDialogStore";
 
 import { Branch } from "../../data/models/branchSchema";
 import { getColumns } from "../../components/columns";
-import { fetchBranches } from "../../service/branchService";
+import { fetchBranch } from "../../service/branchService";
 import { FormCreate } from "../FormCreate/BranchesCreate";
 import { FormUpdate } from "../FormUpdate/BranchesUpdate";
 import { FormDelete } from "../FormDelete/BranchesDelete";
@@ -18,7 +18,7 @@ export function BranchesList() {
   useEffect(() => {
     async function loadBranches() {
       try {
-        const data = await fetchBranches();
+        const data = await fetchBranch();
         setBranches(data);
       } catch (error) {
         console.error("Error fetching branches:", error);
@@ -32,7 +32,7 @@ export function BranchesList() {
   // Función para refrescar la lista tras crear, editar o eliminar
   const refreshBranches = async () => {
     try {
-      const data = await fetchBranches();
+      const data = await fetchBranch();
       setBranches(data);
     } catch (error) {
       console.error("Error refreshing branches:", error);
@@ -89,7 +89,33 @@ export function BranchesList() {
       {loading ? (
         <div>Loading branches...</div>
       ) : (
-        <DataTable data={branches} columns={columns} />
+        <DataTable
+          data={branches}
+          columns={columns}
+          toolbarProps={{
+            searchColumnId: "name",
+            searchPlaceholder: "Buscar por sucursal...",
+          }}
+        />
+        //<DataTable
+        //   data={users}
+        //   columns={userColumns}
+        //   toolbarProps={{
+        //     searchColumnId: "username",
+        //     searchPlaceholder: "Buscar usuario...",
+        //     filters: [
+        //       {
+        //         columnId: "role",
+        //         title: "Roles",
+        //         options: [
+        //           { label: "Admin", value: "admin" },
+        //           { label: "Editor", value: "editor" },
+        //           { label: "Viewer", value: "viewer" },
+        //         ],
+        //       },
+        //     ],
+        //   }}
+        // />
       )}
     </div>
   );
