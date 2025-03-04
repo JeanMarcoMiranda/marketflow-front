@@ -16,7 +16,8 @@ export function FormComponent({
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     location: initialData?.location || "",
-    id_user: initialData?.id_user || "",
+    id_business: initialData?.id_business || "",
+    contact_number: initialData?.contact_number || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +51,18 @@ export function FormComponent({
           id="location"
           name="location"
           value={formData.location}
+          onChange={handleChange}
+          className="border p-2 w-full"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="contact_number" className="block mb-1">
+          Número de Contacto
+        </label>
+        <input
+          id="contact_number"
+          name="contact_number"
+          value={formData.contact_number}
           onChange={handleChange}
           className="border p-2 w-full"
         />

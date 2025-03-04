@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Branch } from "../../data/models/branchSchema";
-import { deleteBranch } from "../../service/branchService";
 import {
   DialogClose,
   DialogDescription,
@@ -9,6 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useBranchQuery } from "@/shared/hooks/useBranch";
 
 interface FormDeleteProps {
   data: Branch;
@@ -16,18 +15,17 @@ interface FormDeleteProps {
 }
 
 export function FormDelete({ data, onSuccess }: FormDeleteProps) {
-  const [loading, setLoading] = useState(false);
+  const { deleteBranchMutation } = useBranchQuery();
 
-  const handleDelete = async () => {
-    setLoading(true);
-    try {
-      await deleteBranch(data.id);
-      onSuccess();
-    } catch (error) {
-      console.error("Error deleting branch:", error);
-    } finally {
-      setLoading(false);
-    }
+  const handleDelete = () => {
+    deleteBranchMutation.mutate(data.id, {
+      onSuccess: () => {
+        onSuccess();
+      },
+      onError: (error) => {
+        console.error("Error deleting branch:", error);
+      },
+    });
   };
 
   return (
@@ -42,8 +40,12 @@ export function FormDelete({ data, onSuccess }: FormDeleteProps) {
         ¿Realmente deseas eliminar la sucursal <strong>{data.name}</strong>?
       </p>
       <div className="mt-4 flex justify-end">
-        <Button onClick={handleDelete} variant="destructive" disabled={loading}>
-          {loading ? "Procesando..." : "Confirmar"}
+        <Button
+          onClick={handleDelete}
+          variant="destructive"
+          disabled={deleteBranchMutation.isPending}
+        >
+          {deleteBranchMutation.isPending ? "Procesando..." : "Confirmar"}
         </Button>
       </div>
       <DialogFooter>
