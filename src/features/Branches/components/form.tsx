@@ -1,24 +1,43 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { Button } from "@/components/ui/button";
 import { Branch } from "../data/models/branchSchema";
 
+export type FormData = Omit<Branch, "id" | "created_at">;
+
+export interface FormComponentRef {
+  submitForm: () => void;
+}
+
 interface FormComponentProps {
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: FormData) => Promise<void>;
   loading: boolean;
   initialData?: Branch;
 }
 
-export function FormComponent({
-  onSubmit,
-  loading,
-  initialData,
-}: FormComponentProps) {
+
+export const FormComponent = forwardRef(function FormComponent(
+  { onSubmit, loading, initialData }: FormComponentProps,
+  ref
+) {
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     location: initialData?.location || "",
     id_business: initialData?.id_business || "",
     contact_number: initialData?.contact_number || "",
   });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    submitForm() {
+      onSubmit(formData);
+    },
+  }));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +49,7 @@ export function FormComponent({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit}>
       <div className="mb-4">
         <label htmlFor="name" className="block mb-1">
           Nombre
@@ -67,9 +86,11 @@ export function FormComponent({
           className="border p-2 w-full"
         />
       </div>
-      <button type="submit" disabled={loading} className="btn btn-primary">
-        {loading ? "Procesando..." : "Guardar"}
-      </button>
+      <div className="hidden">
+        <Button type="submit" disabled={loading}>
+          {loading ? "Procesando..." : "Guardar"}
+        </Button>
+      </div>
     </form>
   );
-}
+});

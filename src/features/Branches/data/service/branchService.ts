@@ -1,14 +1,19 @@
 import { supabase } from "@/lib/supabaseClient";
 import { useAuthStore } from "@/app/store/useAuthStore";
-import { Branch, branchSchema } from "../data/models/branchSchema";
+import { Branch, branchSchema } from "../models/branchSchema";
 
 // ✅ Obtener todas las sucursales
 export async function fetchBranch(): Promise<Branch[]> {
-  const { data, error } = await supabase.from("Branch").select("*");
+  const { user } = useAuthStore.getState();
+
+  const { data, error } = await supabase
+    .from("UserBranch")
+    .select("Branch(*)")
+    .eq("id_user", user!.user.id);
 
   if (error) throw new Error(`Error fetching Branch: ${error.message}`);
 
-  return data?.map((branch) => branchSchema.parse(branch)) || [];
+  return data?.map((item) => branchSchema.parse(item.Branch)) || [];
 }
 
 // ✅ Crear nueva sucursal
@@ -34,6 +39,14 @@ export async function createBranch(
     .single();
 
   if (error) throw new Error(`Error creating branch: ${error.message}`);
+
+  const { error: errorUserBranch } = await supabase
+    .from("UserBranch")
+    .insert([{ id_user: user!.user.id, id_branch: data.id }]);
+
+  if (errorUserBranch) {
+    throw new Error(`Error creating UserBranch: ${errorUserBranch.message}`);
+  }
 
   return branchSchema.parse(data);
 }

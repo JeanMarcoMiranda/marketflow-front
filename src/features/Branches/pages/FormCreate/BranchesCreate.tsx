@@ -1,5 +1,5 @@
 import { Branch } from "../../data/models/branchSchema";
-import { FormComponent } from "../../components/form";
+import { FormComponent, FormComponentRef } from "../../components/form";
 import {
   DialogClose,
   DialogDescription,
@@ -8,7 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useBranchQuery } from "@/shared/hooks/useBranch";
+import { useBranchQuery } from "../../hooks/useBranch";
+import { useRef } from "react";
 
 interface FormCreateProps {
   onSuccess: () => void;
@@ -16,6 +17,7 @@ interface FormCreateProps {
 
 export function FormCreate({ onSuccess }: FormCreateProps) {
   const { createBranchMutation } = useBranchQuery();
+  const formRef = useRef<FormComponentRef>(null);
 
   const handleCreate = async (formData: Omit<Branch, "id" | "created_at">) => {
     createBranchMutation.mutate(formData, {
@@ -37,10 +39,17 @@ export function FormCreate({ onSuccess }: FormCreateProps) {
         </DialogDescription>
       </DialogHeader>
       <FormComponent
+        ref={formRef}
         onSubmit={handleCreate}
         loading={createBranchMutation.isPending}
       />
-      <DialogFooter>
+      <DialogFooter className="flex justify-end items-center gap-2">
+        <Button
+          onClick={() => formRef.current?.submitForm()}
+          disabled={createBranchMutation.isPending}
+        >
+          {createBranchMutation.isPending ? "Procesando..." : "Guardar"}
+        </Button>
         <DialogClose asChild>
           <Button variant="secondary">Cerrar</Button>
         </DialogClose>

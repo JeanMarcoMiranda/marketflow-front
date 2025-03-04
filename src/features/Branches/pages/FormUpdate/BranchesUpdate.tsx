@@ -1,5 +1,5 @@
 import { Branch } from "../../data/models/branchSchema";
-import { FormComponent } from "../../components/form";
+import { FormComponent, FormComponentRef } from "../../components/form";
 import {
   DialogClose,
   DialogDescription,
@@ -8,7 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useBranchQuery } from "@/shared/hooks/useBranch";
+import { useBranchQuery } from "../../hooks/useBranch";
+import { useRef } from "react";
 
 interface FormUpdateProps {
   data: Branch;
@@ -17,6 +18,7 @@ interface FormUpdateProps {
 
 export function FormUpdate({ data, onSuccess }: FormUpdateProps) {
   const { updateBranchMutation } = useBranchQuery();
+  const formRef = useRef<FormComponentRef>(null);
 
   const handleUpdate = async (formData: Partial<Branch>) => {
     updateBranchMutation.mutate(
@@ -42,11 +44,18 @@ export function FormUpdate({ data, onSuccess }: FormUpdateProps) {
       </DialogHeader>
       <h3 className="text-lg font-bold mb-4">Editar Sucursal</h3>
       <FormComponent
+        ref={formRef}
         onSubmit={handleUpdate}
         loading={updateBranchMutation.isPending}
         initialData={data}
       />
       <DialogFooter>
+        <Button
+          onClick={() => formRef.current?.submitForm()}
+          disabled={updateBranchMutation.isPending}
+        >
+          {updateBranchMutation.isPending ? "Procesando..." : "Editar"}
+        </Button>
         <DialogClose asChild>
           <Button variant="secondary">Cerrar</Button>
         </DialogClose>

@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useBranchQuery } from "@/shared/hooks/useBranch";
+import { useBranchQuery } from "../../hooks/useBranch";
 
 interface FormDeleteProps {
   data: Branch;
