@@ -68,12 +68,13 @@ export const useAuthStore = create<AuthState>()(
 
       signUp: async (email: string, password: string) => {
         const response = await authService.signUp(email, password);
+        const userData = await fetchUserById(response.user!.id);
         if (response.user && response.session) {
           const newUser: LoggedInUser = {
             user: response.user,
             session: response.session,
           };
-          set({ user: newUser });
+          set({ user: newUser, userData });
           return newUser;
         }
         return null;
