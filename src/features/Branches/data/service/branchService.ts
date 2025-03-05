@@ -22,6 +22,7 @@ export async function createBranch(
 ): Promise<Branch> {
   const { user } = useAuthStore.getState();
 
+  //TODO: Reemplazar con un metodo que obtenga el negocio del localstorage o parecido
   const { data: business, error: errorBusiness } = await supabase
     .from("Business")
     .select("*")

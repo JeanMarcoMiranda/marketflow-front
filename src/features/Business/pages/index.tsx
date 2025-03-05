@@ -1,4 +1,4 @@
-import BusinessList from "./page/List/BusinessList";
+import BusinessList from "./List/BusinessList";
 
 const BusinessPage = () => {
   return (

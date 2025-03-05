@@ -1,7 +1,5 @@
 import { lazy } from "react";
 import { Loadable } from "@/shared/components/Loadable";
-import ProductsPage from "@/features/Products";
-import BusinessPage from "@/features/Business";
 import { ProtectedRoute } from "./protectedRoutes";
 
 const Dashboard = Loadable(
@@ -15,6 +13,8 @@ const InventoryPage = Loadable(
 );
 const UsersPage = Loadable(lazy(() => import("@/features/Users/pages/Users")));
 const BranchesPage = Loadable(lazy(() => import("@/features/Branches/pages")));
+const BusinessPage = Loadable(lazy(() => import("@/features/Business/pages")));
+const ProductsPage = Loadable(lazy(() => import("@/features/Products/pages")));
 
 export const privateRoutes = [
   {

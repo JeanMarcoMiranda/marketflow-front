@@ -40,6 +40,7 @@ export function NavUser({
   const { signOut } = useAuthStore();
   const navigate = useNavigate();
 
+  //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
     await signOut();
     navigate("/auth/login");

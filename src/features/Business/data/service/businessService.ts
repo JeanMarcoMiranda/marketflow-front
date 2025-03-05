@@ -1,7 +1,22 @@
 import { supabase } from "@/lib/supabaseClient";
 import { Business, businessSchema } from "../models/businessSchema";
 
-// ✅ Obtener negocios por ID de super administrador
+// ✅ Obtener negocios por ID de super administrador (Para el Dashboard)
+export async function fetchBusinessesBySuperAdminId(
+  superAdminId: string
+): Promise<Business[]> {
+  const { data, error } = await supabase
+    .from("Business")
+    .select("*")
+    .eq("id_super_admin", superAdminId);
+
+  if (error)
+    throw new Error(`Error fetching user businesses: ${error.message}`);
+
+  return data?.map((item) => businessSchema.parse(item)) || [];
+}
+
+// ✅ Obtener todos los negocios
 export async function fetchBusinesses(): Promise<Business[]> {
   const { data, error } = await supabase.from("Business").select("*");
 
