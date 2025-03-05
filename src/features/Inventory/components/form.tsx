@@ -1,12 +1,9 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Inventory } from "../data/models/inventorySchema";
+import { Inventory, inventorySchema } from "../data/models/inventorySchema";
 import { useProduct } from "@/features/Products/hooks/useProduct";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export type FormDataInventory = Omit<
   Inventory,
@@ -31,49 +28,41 @@ export const FormComponentInventory = forwardRef(
   ) {
     const { productsByBranchQuery } = useProduct(branchId);
 
-    const [formData, setFormData] = useState<FormDataInventory>({
-      id_branch: initialData?.id_branch || branchId,
-      id_product: initialData?.id_product || "",
-      available_quantity: initialData?.available_quantity || 0,
-      reorder_level: initialData?.reorder_level || 0,
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<FormDataInventory>({
+      resolver: zodResolver(
+        inventorySchema.omit({ id: true, created_at: true, last_updated: true })
+      ),
+      defaultValues: {
+        id_branch: initialData?.id_branch || branchId,
+        id_product: initialData?.id_product || "",
+        available_quantity: initialData?.available_quantity || 0,
+        reorder_level: initialData?.reorder_level || 0,
+      },
     });
 
     const formRef = useRef<HTMLFormElement>(null);
 
     useImperativeHandle(ref, () => ({
       submitForm() {
-        onSubmit(formData);
+        handleSubmit(onSubmit)();
       },
     }));
 
-    const handleChange = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-      const { name, value, type } = e.target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: type === "number" ? Number(value) || 0 : value,
-      }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      await onSubmit(formData);
-    };
-
     return (
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        {/* Producto */}
         <div className="mb-4">
           <label htmlFor="id_product" className="block mb-1">
             Producto
           </label>
           <select
             id="id_product"
-            name="id_product"
-            value={formData.id_product}
-            onChange={handleChange}
+            {...register("id_product")}
             className="border p-2 w-full"
-            required
           >
             <option value="">Selecciona un producto</option>
             {productsByBranchQuery.data?.map((product) => (
@@ -82,40 +71,48 @@ export const FormComponentInventory = forwardRef(
               </option>
             ))}
           </select>
+          {errors.id_product && (
+            <p className="text-red-500 text-sm">{errors.id_product.message}</p>
+          )}
         </div>
 
+        {/* Cantidad Disponible */}
         <div className="mb-4">
           <label htmlFor="available_quantity" className="block mb-1">
             Cantidad Disponible
           </label>
           <input
             id="available_quantity"
-            name="available_quantity"
             type="number"
-            value={formData.available_quantity}
-            onChange={handleChange}
+            {...register("available_quantity", { valueAsNumber: true })}
             className="border p-2 w-full"
-            min="0"
-            required
           />
+          {errors.available_quantity && (
+            <p className="text-red-500 text-sm">
+              {errors.available_quantity.message}
+            </p>
+          )}
         </div>
 
+        {/* Nivel de Reorden */}
         <div className="mb-4">
           <label htmlFor="reorder_level" className="block mb-1">
             Nivel de Reorden
           </label>
           <input
             id="reorder_level"
-            name="reorder_level"
             type="number"
-            value={formData.reorder_level}
-            onChange={handleChange}
+            {...register("reorder_level", { valueAsNumber: true })}
             className="border p-2 w-full"
-            min="0"
-            required
           />
+          {errors.reorder_level && (
+            <p className="text-red-500 text-sm">
+              {errors.reorder_level.message}
+            </p>
+          )}
         </div>
 
+        {/* Botón de envío */}
         <div className="hidden">
           <Button type="submit" disabled={loading}>
             {loading ? "Procesando..." : "Guardar"}
