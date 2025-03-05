@@ -72,13 +72,22 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Obtenemos el usuario desde el store
-  const { user: supabaseUser } = useAuthStore();
+  const { user: supabaseUser, userData } = useAuthStore();
+  const userRole = userData?.role || "customer";
 
   const currentUser = {
-    name: "Usuario",
+    name: userData?.name || "Admin",
     email: supabaseUser?.user?.email || "admin@lalena.com",
     avatar: "/avatars/admin.jpg",
   };
+
+  // Filtrar proyectos según el rol del usuario
+  const filteredProjects = data.projects.filter((project) => {
+    if (project.name === "Negocios" && userRole !== "developer") {
+      return false; // Restringir la sección "Negocios" si el usuario no es developer
+    }
+    return true;
+  });
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -86,7 +95,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={filteredProjects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={currentUser} />
