@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Loadable } from "@/shared/components/Loadable";
+import { ProtectedRoute } from "./protectedRoutes";
 
 const Dashboard = Loadable(
   lazy(() => import("@/features/Dashboard/pages/Dashboard"))
@@ -42,6 +43,8 @@ export const privateRoutes = [
   },
   {
     path: "/business",
-    element: <BusinessPage />,
+    element: (
+      <ProtectedRoute allowedRoles={["developer"]} element={<BusinessPage />} />
+    ),
   },
 ];

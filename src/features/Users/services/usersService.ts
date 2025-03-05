@@ -27,3 +27,15 @@ export async function fetchUsers(): Promise<User[]> {
 
   return mergedUsers;
 }
+
+export async function fetchUserById(id: string): Promise<User> {
+  const { data, error } = await supabase
+    .from("User")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw new Error(`Error fetching user: ${error.message}`);
+
+  return userSchema.parse(data);
+}
