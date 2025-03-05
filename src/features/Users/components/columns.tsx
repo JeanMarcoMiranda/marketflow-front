@@ -4,10 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { DataTableRowActions } from "@/components/common/data-table-row-actions";
+// import { DataTableRowActions } from "@/components/common/data-table-row-actions";
 import { DataTableColumnHeader } from "@/components/common/data-table-column-header";
-import { User, userLabels, userSchema } from "../data/userSchema";
-
+import { User, userLabels } from "../data/userSchema";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -72,10 +71,10 @@ export const columns: ColumnDef<User>[] = [
     },
     filterFn: (row, id, value) => value.includes(row.getValue(id)),
   },
-  {
-    id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions row={row} schema={userSchema} labels={userLabels} />
-    ),
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => (
+  //     <DataTableRowActions row={row} schema={userSchema} labels={userLabels} />
+  //   ),
+  // },
 ];

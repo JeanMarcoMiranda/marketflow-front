@@ -4,8 +4,9 @@ import {
   Pizza,
   Truck,
   BookMarked,
-  User,
+  // User,
   Store,
+  Package,
   Cookie,
 } from "lucide-react";
 
@@ -37,6 +38,11 @@ const data = {
       icon: BookMarked,
     },
     {
+      name: "Negocios",
+      url: "/business",
+      icon: Package,
+    },
+    {
       name: "Sucursales",
       url: "/branches",
       icon: Store,
@@ -56,11 +62,11 @@ const data = {
       url: "/orders",
       icon: Truck,
     },
-    {
-      name: "Usuarios",
-      url: "/users",
-      icon: User,
-    },
+    // {
+    //   name: "Usuarios",
+    //   url: "/users",
+    //   icon: User,
+    // },
   ],
 };
 
