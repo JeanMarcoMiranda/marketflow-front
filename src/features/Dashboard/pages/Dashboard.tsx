@@ -1,11 +1,31 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogOut, Bell, BarChart2, Users, ShoppingBag } from "lucide-react";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { useUserBusiness } from "@/features/Business/hooks/useBusiness";
+import { LogOut, Bell, BarChart2, Users, ShoppingBag } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { FormCreateBusiness } from "@/features/Business/pages/FormCreate/BusinessCreate";
 
 export default function Dashboard() {
   const { user, signOut } = useAuthStore();
   const navigate = useNavigate();
+  //TODO: Cmabiar la funcion para obtener del localstorage
+  const { userBusinessesQuery } = useUserBusiness(user!.user.id);
+  const [showDialog, setShowDialog] = useState(false);
 
+  useEffect(() => {
+    if (user && userBusinessesQuery.data?.length === 0) {
+      setShowDialog(true);
+    }
+  }, [user, userBusinessesQuery.data]);
+
+  //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
     await signOut();
     navigate("/auth/login");
@@ -80,7 +100,6 @@ export default function Dashboard() {
         </div>
 
         {/* Sección de Notificaciones */}
-        {/* Sección de Notificaciones */}
         <div className="mt-8">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-800">
@@ -114,6 +133,19 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+
+      {/* Dialog para crear negocio si el usuario no tiene uno */}
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>¡Bienvenido!</DialogTitle>
+            <DialogDescription>
+              Para comenzar, por favor crea tu negocio.
+            </DialogDescription>
+          </DialogHeader>
+          <FormCreateBusiness onSuccess={() => setShowDialog(false)} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
