@@ -48,12 +48,12 @@ export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
         <div className="grid gap-2 relative">
           <div className="flex items-center">
             <Label htmlFor="password">Contraseña</Label>
-            <a
+            {/* <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Olvidaste tu contraseña?
-            </a>
+            </a> */}
           </div>
           <Input
             id="password"
@@ -65,7 +65,7 @@ export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-9"
+            className="absolute right-3 top-8" //top-9
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -73,7 +73,7 @@ export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
         <Button type="submit" className="w-full">
           Ingresar
         </Button>
-        <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+        {/* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
           <span className="relative z-10 bg-background px-2 text-muted-foreground">
             O continuar con
           </span>
@@ -86,7 +86,7 @@ export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
             />
           </svg>
           Ingresar con Github
-        </Button>
+        </Button> */}
       </div>
       <div className="text-center text-sm">
         No tienes una cuenta?{" "}
