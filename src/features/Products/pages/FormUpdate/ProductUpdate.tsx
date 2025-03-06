@@ -50,7 +50,6 @@ export function FormUpdateProduct({
           Modifica la información del producto.
         </DialogDescription>
       </DialogHeader>
-      <h3 className="text-lg font-bold mb-4">Editar Producto</h3>
       <FormComponentProduct
         ref={formRef}
         onSubmit={handleUpdate}
