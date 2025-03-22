@@ -21,10 +21,18 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { BranchSwitcher } from "./BranchSwitcher";
 
 // This is sample data.
 const data = {
   teams: [
+    {
+      name: "La Leña",
+      logo: Pizza,
+      plan: "Premium",
+    },
+  ],
+  branches: [
     {
       name: "La Leña",
       logo: Pizza,
@@ -92,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <BranchSwitcher branches={data.branches} />
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={filteredProjects} />
