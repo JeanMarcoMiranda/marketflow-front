@@ -48,22 +48,6 @@ export function BranchSwitcher({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            {/* <DropdownMenuItem className="flex items-center justify-between">
-              <DropdownMenuLabel className="text-xs text-muted-foreground">Business</DropdownMenuLabel>
-              <Button variant="ghost" size="icon" asChild>
-                <Link to="/businessConfigartion">
-                  <Edit className="size-4" />
-                </Link>
-              </Button>
-            </DropdownMenuItem> */}
-
-            {/* <DropdownMenuItem asChild>
-              <Link to="/businessConfiguration" className="flex w-full items-center justify-between">
-                <DropdownMenuLabel className="text-xs text-muted-foreground">Business</DropdownMenuLabel>
-                <Edit className="size-4" />
-              </Link>
-            </DropdownMenuItem> */}
-
             <div className="flex items-center justify-between gap-2">
               <DropdownMenuLabel className="text-xs text-muted-foreground">Business</DropdownMenuLabel>
               <DropdownMenuItem asChild>
