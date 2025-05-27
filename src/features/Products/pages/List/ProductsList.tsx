@@ -14,7 +14,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FormCreateProduct } from "../FormCreate/ProductCreate";
-import { useDialogStore } from "@/app/store/useDialogStore";
+import { useDialogStore } from "@/store/useDialogStore";
 import { FormUpdateProduct } from "../FormUpdate/ProductUpdate";
 import { FormDeleteProduct } from "../FormDelete/ProductDelete";
 

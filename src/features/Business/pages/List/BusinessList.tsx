@@ -4,7 +4,7 @@ import { Business } from "../../data/models/businessSchema";
 import { getBusinessColumns } from "../../components/columns";
 import { Button } from "@/components/ui/button";
 import { FormCreateBusiness } from "../FormCreate/BusinessCreate";
-import { useDialogStore } from "@/app/store/useDialogStore";
+import { useDialogStore } from "@/store/useDialogStore";
 import { FormUpdateBusiness } from "../FormUpdate/BusinessUpdate";
 import { FormDeleteBusiness } from "../FormDelete/BusinessDelete";
 

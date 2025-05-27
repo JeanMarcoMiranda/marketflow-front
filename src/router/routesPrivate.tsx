@@ -1,7 +1,7 @@
 import { lazy } from "react";
-import { Loadable } from "@/shared/components/Loadable";
 import { ProtectedRoute } from "./protectedRoutes";
 import BusinessConfigurationPage from "@/features/BusinessConfiguration/pages";
+import { Loadable } from "@/components/common/Loadable";
 
 const Dashboard = Loadable(
   lazy(() => import("@/features/Dashboard/pages/Dashboard"))
