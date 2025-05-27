@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useDialogStore } from "@/app/store/useDialogStore";
+import { useDialogStore } from "@/store/useDialogStore";
 
 export function GlobalDialog() {
   const { isOpen, content, closeDialog } = useDialogStore();

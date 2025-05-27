@@ -14,7 +14,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FormCreateInventory } from "../FormCreate/InventoryCreate";
-import { useDialogStore } from "@/app/store/useDialogStore";
+import { useDialogStore } from "@/store/useDialogStore";
 import { FormUpdateInventory } from "../FormUpdate/InventoryUpdate";
 import { FormDeleteInventory } from "../FormDelete/InventoryDelete";
 

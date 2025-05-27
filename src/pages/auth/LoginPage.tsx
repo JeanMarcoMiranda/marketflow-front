@@ -1,25 +1,28 @@
 import { toast } from "sonner";
 import { GalleryVerticalEnd } from "lucide-react";
-import { LoginForm } from "../components/LoginForm";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/app/store/useAuthStore";
+import { LoginForm } from "@/components/features/auth/LoginForm";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
-  const { user, signIn } = useAuthStore();
+  const { login, userData, userSession } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from =
     (location.state as { from?: Location })?.from?.pathname || "/dashboard";
 
-  if (user) {
+  console.log("User data:", userData);
+  console.log("User session:", userSession);
+
+  if (userData) {
     return <Navigate to="/dashboard" replace />;
   }
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      await signIn(email, password);
-      // navigate("/dashboard");
+      await login(email, password);
+      console.log("Inicio de sesión exitoso");
       navigate(from, { replace: true });
     } catch (error) {
       console.error("Error de autenticación:", error);
@@ -54,3 +57,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

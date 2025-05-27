@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import { useAuthStore } from "@/app/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Branch, branchSchema } from "../models/branchSchema";
 
 // ✅ Obtener todas las sucursales

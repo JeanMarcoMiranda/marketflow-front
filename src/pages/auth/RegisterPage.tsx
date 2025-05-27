@@ -1,9 +1,9 @@
 import { toast } from "sonner";
 import { GalleryVerticalEnd } from "lucide-react";
-import { RegisterForm } from "../components/RegisterForm";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/app/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { RegisterForm } from "@/components/features/auth/RegisterForm";
 
 export default function RegisterPage() {
   const { user, signUp } = useAuthStore();
@@ -54,3 +54,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

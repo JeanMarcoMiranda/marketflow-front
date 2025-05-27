@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/app/store/useAuthStore";
 import { useUserBusiness } from "@/features/Business/hooks/useBusiness";
 import { LogOut, Bell, BarChart2, Users, ShoppingBag } from "lucide-react";
 import {
@@ -11,23 +10,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FormCreateBusiness } from "@/features/Business/pages/FormCreate/BusinessCreate";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Dashboard() {
-  const { user, signOut } = useAuthStore();
+  const { userData } = useAuth();
   const navigate = useNavigate();
   //TODO: Cmabiar la funcion para obtener del localstorage
-  const { userBusinessesQuery } = useUserBusiness(user!.user.id);
+  const { userBusinessesQuery } = useUserBusiness(userData?.id ?? "");
   const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
-    if (user && userBusinessesQuery.data?.length === 0) {
+    if (userData && userBusinessesQuery.data?.length === 0) {
       setShowDialog(true);
     }
-  }, [user, userBusinessesQuery.data]);
+  }, [userData, userBusinessesQuery.data]);
 
   //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
-    await signOut();
+    // await signOut();
     navigate("/auth/login");
   };
 
@@ -80,7 +80,7 @@ export default function Dashboard() {
       <main className="flex-1 p-8">
         {/* Bienvenida */}
         <p className="text-gray-600 text-lg mb-6">
-          Bienvenido, <span className="font-semibold">{user?.user.email}</span>
+          Bienvenido, <span className="font-semibold">Jacket</span>
         </p>
 
         {/* Tarjetas de métricas */}

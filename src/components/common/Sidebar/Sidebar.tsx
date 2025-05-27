@@ -20,7 +20,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useAuthStore } from "@/app/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { BranchSwitcher } from "./BranchSwitcher";
 
 // This is sample data.

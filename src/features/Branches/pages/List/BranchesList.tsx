@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/common/data-table";
-import { useDialogStore } from "@/app/store/useDialogStore";
+import { useDialogStore } from "@/store/useDialogStore";
 
 import { getColumns } from "../../components/columns";
 import { useBranchQuery } from "../../hooks/useBranch";

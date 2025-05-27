@@ -1,10 +1,10 @@
+import { Loadable } from "@/components/common/Loadable";
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import { Loadable } from "@/shared/components/Loadable";
 
-const LoginPage = Loadable(lazy(() => import("@/features/auth/pages/Login")));
+const LoginPage = Loadable(lazy(() => import("@/pages/auth/LoginPage")));
 const RegisterPage = Loadable(
-  lazy(() => import("@/features/auth/pages/Register"))
+  lazy(() => import("@/pages/auth/RegisterPage"))
 );
 const NotFound = Loadable(
   lazy(() => import("@/features/NotFound/pages/NotFound"))
