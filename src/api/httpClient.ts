@@ -60,12 +60,14 @@ httpClient.interceptors.response.use(
 
 					// Asumimos que /auth/refresh devuelve { session: { access_token, refresh_token } }
 					const { session } = response.data.body;
-					const { access_token, refresh_token } = session;
+					const { access_token, refresh_token, expires_in, expires_at } = session;
 
 					// Actualizar el store de Zustand con los nuevos tokens
 					useAuthStore.getState().setUserSession({
 						access_token,
 						refresh_token,
+						expires_in,
+						expires_at,
 					});
 
 					// Actualiza el header y reintenta la solicitud

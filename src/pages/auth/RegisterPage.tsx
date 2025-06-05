@@ -2,23 +2,23 @@ import { toast } from "sonner";
 import { GalleryVerticalEnd } from "lucide-react";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/store/useAuthStore";
 import { RegisterForm } from "@/components/features/auth/RegisterForm";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function RegisterPage() {
-  const { user, signUp } = useAuthStore();
+  const { register, userData } = useAuth()
   const navigate = useNavigate();
   const location = useLocation();
   const from =
     (location.state as { from?: Location })?.from?.pathname || "/dashboard";
 
-  if (user) {
+  if (userData) {
     return <Navigate to="/dashboard" replace />;
   }
 
   const handleRegister = async (email: string, password: string) => {
     try {
-      await signUp(email, password);
+      await register(email, password);
       // navigate("/dashboard");
       navigate(from, { replace: true });
     } catch (error) {

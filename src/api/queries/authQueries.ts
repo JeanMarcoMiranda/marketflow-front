@@ -1,5 +1,5 @@
 import { authService } from "@/api/services/authService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useLoginMutation = () => {
   return useMutation({
@@ -8,5 +8,31 @@ export const useLoginMutation = () => {
     onError: (error) => {
       console.error("Error de autenticación:", error);
     }
+  })
+}
+
+export const useRegisterMutation = () => {
+  return useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      authService.register(email, password),
+    onError: (error) => {
+      console.error("Error de registro:", error);
+    }
+  })
+}
+
+export const useLogoutMutation = () => {
+  return useMutation({
+    mutationFn: () => authService.logout(),
+    onError: (error) => {
+      console.error("Error al cerrar sesión:", error);
+    }
+  })
+}
+
+export const useGetCurrentAuthUserQuery = () => {
+  return useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => authService.getCurrentAuthUser(),
   })
 }
