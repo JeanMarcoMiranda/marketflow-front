@@ -13,8 +13,8 @@ export const useLoginMutation = () => {
 
 export const useRegisterMutation = () => {
   return useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      authService.register(email, password),
+    mutationFn: ({ email, password, businessName, branchName }: { email: string; password: string, businessName: string, branchName: string }) =>
+      authService.register(email, password, businessName, branchName),
     onError: (error) => {
       console.error("Error de registro:", error);
     }

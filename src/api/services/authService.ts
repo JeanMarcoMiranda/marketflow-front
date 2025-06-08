@@ -70,6 +70,8 @@ export class AuthService {
 	async register(
 		email: string,
 		password: string,
+		business_name: string,
+		branch_name: string,
 	): Promise<ApiResponse<RegisterResponseBody>> {
 		try {
 			const response = await http.post<ApiResponse<RegisterResponseBody>>(
@@ -77,6 +79,8 @@ export class AuthService {
 				{
 					email,
 					password,
+					business_name,
+					branch_name,
 				},
 			);
 
