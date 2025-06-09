@@ -1,36 +1,29 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export const useStepper = (initialStep = 0, totalSteps: number) => {
-  const [currentStep, setCurrentStep] = useState(initialStep);
+  const [currentStep, setCurrentStep] = useState(Math.max(0, Math.min(initialStep, totalSteps - 1)));
 
-  const nextStep = () => {
-    if (currentStep < totalSteps - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
+  const nextStep = useCallback(() => {
+    setCurrentStep((prev) => (prev < totalSteps - 1 ? prev + 1 : prev));
+  }, [totalSteps]);
 
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
+  const prevStep = useCallback(() => {
+    setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
+  }, []);
 
-  const goToStep = (step: number) => {
+  const goToStep = useCallback((step: number) => {
     if (step >= 0 && step < totalSteps) {
       setCurrentStep(step);
     }
-  };
-
-  const isFirstStep = currentStep === 0;
-  const isLastStep = currentStep === totalSteps - 1;
+  }, [totalSteps]);
 
   return {
     currentStep,
     nextStep,
     prevStep,
     goToStep,
-    isFirstStep,
-    isLastStep,
+    isFirstStep: currentStep === 0,
+    isLastStep: currentStep === totalSteps - 1,
     totalSteps,
   };
 };

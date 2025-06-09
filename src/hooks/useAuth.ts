@@ -19,9 +19,9 @@ export const useAuth = () => {
     }
   }
 
-  const register = async (email: string, password: string) => {
+  const register = async (email: string, password: string, businessName: string, branchName: string) => {
     try {
-      const userData = await registerMutation.mutateAsync({ email, password });
+      const userData = await registerMutation.mutateAsync({ email, password, businessName, branchName });
       setUser(userData.body.user);
       setUserSession(userData.body.session);
       return userData;

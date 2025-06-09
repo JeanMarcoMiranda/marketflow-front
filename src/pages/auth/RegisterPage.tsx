@@ -2,8 +2,8 @@ import { toast } from "sonner";
 import { GalleryVerticalEnd } from "lucide-react";
 import ImgBackground from "@/assets/img/background_auth.png";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { RegisterForm } from "@/components/features/auth/RegisterForm";
 import { useAuth } from "@/hooks/useAuth";
+import { RegisterForm } from "@/components/features/auth/RegisterForm/index";
 
 export default function RegisterPage() {
   const { register, userData } = useAuth()
@@ -16,14 +16,18 @@ export default function RegisterPage() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  const handleRegister = async (email: string, password: string) => {
+  const handleRegister = async (data: {
+    email: string;
+    password: string;
+    businessName: string;
+    branchName: string;
+  }) => {
     try {
-      await register(email, password);
-      // navigate("/dashboard");
+      await register(data.email, data.password, data.businessName, data.branchName);
       navigate(from, { replace: true });
     } catch (error) {
-      console.log("Error al momento de registrar", error);
-      toast("Error al registrarte");
+      console.error("Error al momento de registrar", error);
+      toast.error("Error al registrarte");
     }
   };
 
@@ -40,7 +44,7 @@ export default function RegisterPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <RegisterForm onRegister={handleRegister} />
+            <RegisterForm onSubmit={handleRegister} />
           </div>
         </div>
       </div>
