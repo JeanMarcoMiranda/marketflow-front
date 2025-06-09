@@ -1,105 +1,204 @@
-import type React from "react";
-import { cn } from "@/lib/utils";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Building2, Eye, EyeOff, User2 } from "lucide-react";
+import { useState } from "react";
+import { Step, Stepper } from "@/components/common/Stepper";
 
-interface RegisterFormProps extends React.ComponentPropsWithRef<"form"> {
-  onRegister: (email: string, password: string) => void;
+// Esquema de validación con Zod
+const registerSchema = z.object({
+  email: z.string().email("Correo electrónico inválido"),
+  password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+  confirmPassword: z.string(),
+  businessName: z.string().min(1, "El nombre del negocio es requerido"),
+  branchName: z.string().min(1, "El nombre de la sucursal es requerido"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Las contraseñas no coinciden",
+  path: ["confirmPassword"],
+});
+
+type RegisterFormData = z.infer<typeof registerSchema>;
+
+interface RegisterFormProps {
+  onSubmit: (data: Omit<RegisterFormData, "confirmPassword">) => void;
 }
 
 export function RegisterForm({
-  onRegister,
-  className,
-  ...props
+  onSubmit
 }: RegisterFormProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
-    onRegister(email, password);
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors, isValid },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
+  });
+
+  const steps: Step[] = [
+    {
+      id: "personal-info",
+      title: "Información Personal",
+      icon: <User2 />,
+      content: (
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Correo Electrónico</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              {...register("email")}
+              error={errors.email?.message}
+            />
+          </div>
+
+          <div className="grid gap-2 relative">
+            <Label htmlFor="password">Contraseña</Label>
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+              error={errors.password?.message}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-8 text-muted-foreground"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+
+          <div className="grid gap-2 relative">
+            <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
+            <Input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword")}
+              error={errors.confirmPassword?.message}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute right-3 top-8 text-muted-foreground"
+            >
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "business-info",
+      title: "Información del Negocio",
+      icon: <Building2 />,
+      content: (
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="businessName">Nombre del Negocio</Label>
+            <Input
+              id="businessName"
+              {...register("businessName")}
+              error={errors.businessName?.message}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="branchName">Nombre de la Sucursal</Label>
+            <Input
+              id="branchName"
+              {...register("branchName")}
+              error={errors.branchName?.message}
+            />
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const submitForm = (data: RegisterFormData) => {
+    const { confirmPassword, ...submitData } = data;
+    onSubmit(submitData);
   };
 
   return (
-    <form
-      className={cn("flex flex-col gap-6", className)}
-      onSubmit={handleSubmit}
-      {...props}
-    >
+    <div className="space-y-6">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Registrate</h1>
+        <h1 className="text-2xl font-bold">Regístrate</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Ingresa tu correo y contraseña para registrarte
+          Completa los siguientes pasos para crear tu cuenta
         </p>
       </div>
-      <div className="grid gap-6">
-        <div className="grid gap-2">
-          <Label htmlFor="email">Correo</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="grid gap-2 relative">
-          <Label htmlFor="password">Contraseña</Label>
-          <Input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-8"
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </button>
-        </div>
 
-        <div className="grid gap-2 relative">
-          <Label htmlFor="confirmPassword">Confirma tu Contraseña</Label>
-          <Input
-            id="confirmPassword"
-            type={showConfirmPassword ? "text" : "password"}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword((prev) => !prev)}
-            className="absolute right-3 top-8"
-          >
-            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </button>
-        </div>
-        <Button type="submit" className="w-full">
-          Registrarte
-        </Button>
-      </div>
+      <Stepper
+        steps={steps}
+        onComplete={handleSubmit(submitForm)}
+        renderActions={({
+          nextStep,
+          prevStep,
+          isFirstStep,
+          isLastStep,
+          currentStep,
+        }) => {
+          const validateAndNext = async () => {
+            let fieldsToValidate: (keyof RegisterFormData)[] = [];
+
+            if (currentStep === 0) {
+              fieldsToValidate = ["email", "password", "confirmPassword"];
+            } else if (currentStep === 1) {
+              fieldsToValidate = ["businessName", "branchName"];
+            }
+
+            const isValid = await trigger(fieldsToValidate);
+            if (isValid) nextStep();
+          };
+
+          return (
+            <div className="flex justify-between mt-6">
+              {!isFirstStep && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={prevStep}
+                >
+                  Anterior
+                </Button>
+              )}
+
+              <div className="ml-auto flex gap-2">
+                {!isLastStep ? (
+                  <Button
+                    type="button"
+                    onClick={validateAndNext}
+                  >
+                    Siguiente
+                  </Button>
+                ) : (
+                  <Button type="submit">
+                    Completar Registro
+                  </Button>
+                )}
+              </div>
+            </div>
+          );
+        }}
+      />
+
       <div className="text-center text-sm">
-        No tienes una cuenta?{" "}
+        ¿Ya tienes una cuenta?{" "}
         <Link to="/auth/login" className="underline underline-offset-4">
-          Login
+          Inicia Sesión
         </Link>
       </div>
-    </form>
+    </div>
   );
 }
