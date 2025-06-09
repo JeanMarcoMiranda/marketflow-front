@@ -13,7 +13,7 @@ import { FormCreateBusiness } from "@/features/Business/pages/FormCreate/Busines
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Dashboard() {
-  const { userData } = useAuth();
+  const { userData, logout } = useAuth();
   const navigate = useNavigate();
   //TODO: Cmabiar la funcion para obtener del localstorage
   const { userBusinessesQuery } = useUserBusiness(userData?.id ?? "");
@@ -28,6 +28,7 @@ export default function Dashboard() {
   //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
     // await signOut();
+    logout();
     navigate("/auth/login");
   };
 
