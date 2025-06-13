@@ -12,7 +12,6 @@ import {
 
 import { NavProjects } from "./NavProjects";
 import { NavUser } from "./NavUser";
-import { TeamSwitcher } from "./TeamSwitcher";
 import {
   Sidebar,
   SidebarContent,
@@ -25,18 +24,10 @@ import { BranchSwitcher } from "./BranchSwitcher";
 
 // This is sample data.
 const data = {
-  teams: [
-    {
-      name: "La Leña",
-      logo: Pizza,
-      plan: "Premium",
-    },
-  ],
   branches: [
     {
       name: "La Leña",
       logo: Pizza,
-      plan: "Premium",
     },
   ],
   projects: [
@@ -45,21 +36,21 @@ const data = {
       url: "/dashboard",
       icon: BookMarked,
     },
-    {
-      name: "Negocios",
-      url: "/business",
-      icon: Package,
-    },
-    {
-      name: "Sucursales",
-      url: "/branches",
-      icon: Store,
-    },
-    {
-      name: "Productos",
-      url: "/products",
-      icon: Cookie,
-    },
+    // {
+    //   name: "Negocios",
+    //   url: "/business",
+    //   icon: Package,
+    // },
+    // {
+    //   name: "Sucursales",
+    //   url: "/branches",
+    //   icon: Store,
+    // },
+    // {
+    //   name: "Productos",
+    //   url: "/products",
+    //   icon: Cookie,
+    // },
     {
       name: "Inventario",
       url: "/inventory",

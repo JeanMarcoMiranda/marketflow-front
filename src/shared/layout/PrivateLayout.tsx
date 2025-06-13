@@ -5,23 +5,39 @@ import { Header } from "@/components/common/Header";
 import { useBusiness } from "@/hooks/useBusiness";
 
 export default function PrivateLayout() {
-  const { business, isBusinessLoading, businessError, hasBusinessId } = useBusiness()
+  const {
+    business,
+    businessError,
+    branches,
+    branchesError,
+    hasBusinessId,
+    isAnyLoading,
+    hasAnyError,
+  } = useBusiness();
 
   if (!hasBusinessId) {
     return <div>No business ID found. Please log in or register a business.</div>;
   }
 
-  if (isBusinessLoading) {
+  if (isAnyLoading) {
     return <div>Loading business data...</div>;
   }
 
-  if (businessError) {
-    return <div>Error: {businessError.message}</div>;
+  if (hasAnyError) {
+    return (
+      <div>
+        {businessError && <p>Business error: {businessError.message}</p>}
+        {branchesError && <p>Branches error: {branchesError.message}</p>}
+      </div>
+    );
   }
 
   if (!business) {
     return <div>No business data available.</div>;
   }
+
+  console.log("this is the business data: ", business)
+  console.log("these are the business branches: ", branches)
 
   return (
     <SidebarProvider>

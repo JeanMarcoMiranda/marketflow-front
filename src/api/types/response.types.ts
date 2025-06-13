@@ -39,6 +39,36 @@ export interface Business {
   updated_at: string
 }
 
+export interface Branch {
+  id: string
+  id_business: string
+  name: string
+  contact_number: string
+  manager_id: string
+  address: string
+  city: string
+  postal_code: string
+  country_id: string
+  status: string
+  image_url: string
+  coordinates: {
+    lat: number
+    lng: number
+  }
+  inventory_capacity: number
+  operating_hours: {
+    monday: string
+    tuesday: string
+    wednesday: string
+    thursday: string
+    friday: string
+    saturday: string
+    sunday: string
+  }
+  created_at: string
+  updated_at: string
+}
+
 // Tipo para el body de esta respuesta específica
 export interface LoginResponseBody {
   user: User;
@@ -49,3 +79,4 @@ export interface RegisterResponseBody {
   user: User;
   session: Session;
 }
+

@@ -60,7 +60,7 @@ export function BranchSwitcher({
             </div>
 
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs text-muted-foreground">Sucursales</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-xs text-muted-foreground">Branches</DropdownMenuLabel>
             {branches.map((branch, index) => (
               <DropdownMenuItem key={branch.name} onClick={() => setActiveBranch(branch)} className="gap-2 p-2">
                 <div className="flex size-6 items-center justify-center rounded-sm border">

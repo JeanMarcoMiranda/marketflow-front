@@ -7,3 +7,10 @@ export const useGetBusinessByIdQuery = (id: string) => {
     queryFn: () => businessService.getBusinessById(id)
   })
 }
+
+export const useGetBusinessBranchesById = (id: string) => {
+  return useQuery({
+    queryKey: ["businessBranchesById", id],
+    queryFn: () => businessService.getBusinessBranchesById(id)
+  })
+}

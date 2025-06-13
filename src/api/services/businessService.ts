@@ -1,3 +1,4 @@
+import { Branch } from "@/features/Branches/data/models/branchSchema";
 import http from "../httpClient";
 import { ApiResponse, Business } from "../types/response.types";
 
@@ -10,6 +11,15 @@ export class BusinessService {
       return response.data
     } catch (error) {
       throw error
+    }
+  }
+
+  async getBusinessBranchesById(id: string): Promise<ApiResponse<Branch[]>> {
+    try {
+      const response = await http.get<ApiResponse<Branch[]>>(`${this.BUSINESS_ENDPOINT}/${id}/branches`)
+      return response.data
+    } catch (error) {
+      throw (error)
     }
   }
 }
