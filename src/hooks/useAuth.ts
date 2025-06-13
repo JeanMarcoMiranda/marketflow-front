@@ -2,7 +2,7 @@ import { useLoginMutation, useLogoutMutation, useRegisterMutation } from "@/api/
 import { useAuthStore } from "@/store/useAuthStore"
 
 export const useAuth = () => {
-  const { userData, userSession, setUser, setUserSession } = useAuthStore();
+  const { userData, userSession, setUser, setUserSession, logout: logoutStore } = useAuthStore();
   const loginMutation = useLoginMutation();
   const logoutMutation = useLogoutMutation();
   const registerMutation = useRegisterMutation();
@@ -34,8 +34,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       await logoutMutation.mutateAsync();
-      setUser(null);
-      setUserSession(null);
+      logoutStore()
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       throw error;

@@ -1,17 +1,11 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import { AppSidebar } from "../../components/common/Sidebar/Sidebar";
-import { useAuthStore } from "@/store/useAuthStore";
 import { Header } from "@/components/common/Header";
 import { useBusiness } from "@/hooks/useBusiness";
 
 export default function PrivateLayout() {
-  const { userSession } = useAuthStore();
   const { business, isBusinessLoading, businessError, hasBusinessId } = useBusiness()
-
-  if (!userSession) {
-    return <Navigate to="/auth/login" replace />;
-  }
 
   if (!hasBusinessId) {
     return <div>No business ID found. Please log in or register a business.</div>;
