@@ -4,6 +4,8 @@ export type Step = {
   subtitle?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
+  error?: boolean;
+  loading?: boolean;
   completed?: boolean;
   content: React.ReactNode;
 };
@@ -14,7 +16,7 @@ export type StepperProps = {
   onComplete?: () => void;
   onStepChange?: (step: number) => void;
   orientation?: "horizontal" | "vertical";
-  variant?: "default" | "dots" | "with-line";
+  variant?: "default" | "minimal" | "filled" | "outlined" | "connected";
   size?: "sm" | "md" | "lg";
   className?: string;
   stepClassName?: string;

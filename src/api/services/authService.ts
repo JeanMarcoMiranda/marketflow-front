@@ -1,41 +1,5 @@
 import http from "@/api/httpClient";
-
-interface ApiResponse<T> {
-	status: number;
-	body: T;
-	reason: string;
-}
-
-// Tipos específicos para User y Session
-interface User {
-	id: string;
-	email: string;
-	name: string;
-	role_id: string;
-	active: boolean;
-	phone_number: string | null;
-	id_business: string | null,
-	id_branch: string | null,
-	created_at: string;
-}
-
-interface Session {
-	access_token: string;
-	refresh_token: string;
-	expires_in: number;
-	expires_at: number;
-}
-
-// Tipo para el body de esta respuesta específica
-interface LoginResponseBody {
-	user: User;
-	session: Session;
-}
-
-interface RegisterResponseBody {
-	user: User;
-	session: Session;
-}
+import { ApiResponse, LoginResponseBody, RegisterResponseBody, User } from "../types/response.types";
 
 export class AuthService {
 	// Endpoint base para autenticación

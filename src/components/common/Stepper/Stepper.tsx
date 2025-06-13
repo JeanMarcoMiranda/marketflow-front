@@ -72,6 +72,8 @@ export const Stepper = ({
             size={size}
             onStepClick={handleStepClick}
             stepClassName={stepClassName}
+            showConnector={true}
+            isLastStep={index === steps.length - 1}
             activeStepClassName={activeStepClassName}
             completedStepClassName={completedStepClassName}
             disabledStepClassName={disabledStepClassName}
