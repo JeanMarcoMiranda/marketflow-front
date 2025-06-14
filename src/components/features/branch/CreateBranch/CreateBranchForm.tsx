@@ -451,6 +451,8 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
                             {...field}
                             disabled={isCreating}
                             className="h-10"
+                            value={field.value as string | undefined ?? ""}
+                            onChange={(e) => field.onChange(e.target.value)}
                           />
                         </FormControl>
                       </div>
