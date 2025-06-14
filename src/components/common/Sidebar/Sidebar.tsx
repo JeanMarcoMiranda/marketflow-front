@@ -16,7 +16,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useAuthStore } from "@/store/useAuthStore";
 import { BranchSwitcher } from "./BranchSwitcher";
 import { Branch } from "@/api/types/response.types";
 import { useDialogStore } from "@/store/useDialogStore";
