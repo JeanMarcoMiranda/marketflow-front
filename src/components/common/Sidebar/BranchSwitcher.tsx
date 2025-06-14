@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import { Branch } from "@/api/types/response.types"
 import { getInitials } from "@/lib/getInitials"
+import { useUserPreferencesStore } from "@/store/useUserPreferences"
 
 interface BranchSwitcherProps {
   branches: Branch[];
@@ -27,11 +28,11 @@ export function BranchSwitcher({
   onAddBranchClick
 }: BranchSwitcherProps) {
   const { isMobile } = useSidebar()
+  const { selected_branch_id, setSelectedBranch } = useUserPreferencesStore()
+  const defaultBranch = selected_branch_id !== null ? branches.find(branch => branch.id === selected_branch_id) : null
   const [activeBranch, setActiveBranch] = React.useState<Branch | undefined>(
-    branches.length > 0 ? branches[0] : undefined
+    defaultBranch ? defaultBranch : undefined
   )
-
-  console.log('onAddBranchClick type:', typeof onAddBranchClick); // Debug log
 
   // Update activeBranch when branches change (e.g., after loading)
   useEffect(() => {
@@ -121,7 +122,10 @@ export function BranchSwitcher({
             {branches.map((branch, index) => (
               <DropdownMenuItem
                 key={branch.id}
-                onClick={() => setActiveBranch(branch)}
+                onClick={() => {
+                  setActiveBranch(branch)
+                  setSelectedBranch(branch.id)
+                }}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">

@@ -7,6 +7,7 @@ import { lazy } from "react";
 import { ProtectedRoute } from "./protectedRoutes";
 import BusinessConfigurationPage from "@/features/BusinessConfiguration/pages";
 import PrivateRoute from "./PrivateRoute";
+import ProductListPage from "@/pages/inventory/ProductListPage";
 
 // Private routes
 const Dashboard = Loadable(
@@ -68,7 +69,7 @@ export const Router = createBrowserRouter([
           },
           {
             path: "/inventory",
-            element: <InventoryPage />,
+            element: <ProductListPage />,
           },
           {
             path: "/users",

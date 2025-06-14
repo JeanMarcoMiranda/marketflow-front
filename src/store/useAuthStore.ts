@@ -44,7 +44,6 @@ export const useAuthStore = create<AuthState>()(
 			},
 
 			setUserSession: (userSession: UserSession | null) => {
-				set({ userSession: userSession });
 				set((state) => ({
 					userSession,
 					isAuthenticated: !!userSession && !!state.userData
