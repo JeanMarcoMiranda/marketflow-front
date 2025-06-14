@@ -13,19 +13,25 @@ import React, { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import { Branch } from "@/api/types/response.types"
-import { getInitials } from "@/lib/utils"
+import { getInitials } from "@/lib/getInitials"
+
+interface BranchSwitcherProps {
+  branches: Branch[];
+  isBranchesLoading?: boolean;
+  onAddBranchClick: () => void; // Make optional
+}
 
 export function BranchSwitcher({
   branches,
-  isBranchesLoading = false
-}: {
-  branches: Branch[];
-  isBranchesLoading?: boolean
-}) {
+  isBranchesLoading = false,
+  onAddBranchClick
+}: BranchSwitcherProps) {
   const { isMobile } = useSidebar()
   const [activeBranch, setActiveBranch] = React.useState<Branch | undefined>(
     branches.length > 0 ? branches[0] : undefined
   )
+
+  console.log('onAddBranchClick type:', typeof onAddBranchClick); // Debug log
 
   // Update activeBranch when branches change (e.g., after loading)
   useEffect(() => {
@@ -134,13 +140,13 @@ export function BranchSwitcher({
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="gap-2 p-2">
-              <Link to="/businessConfiguration">
+            <DropdownMenuItem asChild className="gap-2 p-2" onSelect={() => onAddBranchClick()}>
+              <div className="flex">
                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                   <Plus className="size-4" />
                 </div>
                 <div className="font-medium text-muted-foreground">Add Branch</div>
-              </Link>
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

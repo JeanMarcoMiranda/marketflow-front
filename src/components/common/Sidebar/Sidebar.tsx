@@ -22,6 +22,8 @@ import {
 import { useAuthStore } from "@/store/useAuthStore";
 import { BranchSwitcher } from "./BranchSwitcher";
 import { Branch } from "@/api/types/response.types";
+import { useDialogStore } from "@/store/useDialogStore";
+import { CreateBranchForm } from "@/components/features/branch/CreateBranch/CreateBranchForm";
 
 // This is sample data.
 const data = {
@@ -75,6 +77,19 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
 }
 
 export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
+  const { openDialog, closeDialog } = useDialogStore()
+
+  const openCreateBranchModal = () => {
+    openDialog(
+      <CreateBranchForm
+        onSuccess={async () => {
+          closeDialog()
+        }}
+      />,
+      { title: "Create New Branch", maxWidth: "xl" }
+    )
+  }
+
   // Obtenemos el usuario desde el store
   const { user: supabaseUser, userData } = useAuthStore();
   const userRole = userData?.role || "customer";
@@ -96,7 +111,7 @@ export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <BranchSwitcher branches={businessBranches} />
+        <BranchSwitcher branches={businessBranches} onAddBranchClick={openCreateBranchModal} />
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={filteredProjects} />
