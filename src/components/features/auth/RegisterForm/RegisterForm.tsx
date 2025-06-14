@@ -23,7 +23,7 @@ const registerSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
-interface RegisterFormProps {
+export interface RegisterFormProps {
   onSubmit: (data: Omit<RegisterFormData, "confirmPassword">) => void;
 }
 
