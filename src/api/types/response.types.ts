@@ -69,6 +69,10 @@ export interface Branch {
   updated_at: string
 }
 
+export interface CreateBranch extends Omit<Branch, 'id' | 'created_at' | 'updated_at'> {
+  id_super_admin: string;
+}
+
 // Tipo para el body de esta respuesta específica
 export interface LoginResponseBody {
   user: User;
