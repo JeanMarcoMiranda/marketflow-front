@@ -11,7 +11,7 @@ import ProductListPage from "@/pages/inventory/ProductListPage";
 
 // Private routes
 const Dashboard = Loadable(
-  lazy(() => import("@/features/Dashboard/pages/Dashboard"))
+  lazy(() => import("@/pages/dashboard/DashboardPage"))
 );
 // const OrdersPage = Loadable(
 //   lazy(() => import("@/features/Orders/pages/Orders"))
