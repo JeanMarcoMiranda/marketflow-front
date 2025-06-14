@@ -8,8 +8,11 @@ export default defineConfig({
 	server: {
 		host: "0.0.0.0",
 		port: 5173,
+		proxy: {
+			'/api': "https://marketflow-api-hmkc.onrender.com"
+		}
 	},
-	base: "./",
+	base: "/",
 	plugins: [react(), tailwindcss()],
 	resolve: {
 		alias: {
