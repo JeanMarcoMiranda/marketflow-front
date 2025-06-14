@@ -1,4 +1,3 @@
-import { ApiResponse, Branch } from "@/api/types/response.types";
 import { CreateBranchFormData, createBranchSchema } from "./schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,12 +35,10 @@ import {
   Star,
   AlertCircle,
   CheckCircle2,
-  User,
-  Shield
 } from "lucide-react";
 
 interface CreateBranchFormProps {
-  onSuccess?: (data: ApiResponse<Branch>) => void;
+  onSuccess: () => void;
   defaultValues?: Partial<CreateBranchFormData>;
 }
 
@@ -62,10 +59,10 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   const { closeDialog } = useDialogStore();
   const { userData } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   // Verificar que el usuario esté autenticado y tenga los datos necesarios
-  if (!userData || !userData.id_business) {
+  if (!userData || !userData.id_business || !userData.id) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
@@ -88,16 +85,13 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   const form = useForm<CreateBranchFormData>({
     resolver: zodResolver(createBranchSchema),
     defaultValues: {
-      id_business: userData.id_business, // Obtenido del usuario autenticado
+      id_business: userData.id_business,
       name: '',
       contact_number: '',
-      manager_id: userData.id,
       address: '',
       city: '',
       postal_code: '',
-      country_id: '',
       status: 'active',
-      image_url: '',
       coordinates: { lat: 0, lng: 0 },
       inventory_capacity: 0,
       operating_hours: {
@@ -109,7 +103,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
         saturday: '09:00-18:00',
         sunday: 'Cerrado',
       },
-      id_super_admin: userData.id, // Obtenido del usuario autenticado
+      id_super_admin: userData.id,
       ...defaultValues,
     },
   });
@@ -121,17 +115,24 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   const onSubmit = async (data: CreateBranchFormData) => {
     try {
       await createBranch({
-        ...data,
-        coordinates: {
-          lat: Number(data.coordinates.lat) || 0,
-          lng: Number(data.coordinates.lng) || 0,
-        },
-        inventory_capacity: Number(data.inventory_capacity) || 0,
-        image_url: data.image_url || '',
+        id_business: data.id_business,
+        id_super_admin: data.id_super_admin,
+        name: data.name,
+        ...(data.contact_number && { contact_number: data.contact_number }),
+        ...(data.address && { address: data.address }),
+        ...(data.city && { city: data.city }),
+        ...(data.postal_code && { postal_code: data.postal_code }),
+        ...(data.status && { status: data.status }),
+        ...(data.coordinates && {
+          coordinates: {
+            lat: Number(data.coordinates.lat) || 0,
+            lng: Number(data.coordinates.lng) || 0,
+          },
+        }),
+        ...(data.inventory_capacity && { inventory_capacity: Number(data.inventory_capacity) || 0 }),
+        ...(data.operating_hours && { operating_hours: data.operating_hours }),
       });
-      if (onSuccess) {
-        // onSuccess will be called by the hook
-      }
+      onSuccess()
     } catch (error) {
       // Errors are handled by the hook's onCreateError
     }
@@ -409,60 +410,6 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
             <Clock className="h-5 w-5 text-purple-600" />
           </div>
           <div>
-            <CardTitle className="text-xl">Horarios de Operación</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">
-              Define los horarios de atención
-            </p>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="px-0 space-y-4">
-        <div className="grid grid-cols-1 gap-4">
-          {DAYS_OF_WEEK.map((day) => (
-            <FormField
-              key={day.key}
-              control={form.control}
-              name={`operating_hours.${day.key}` as keyof CreateBranchFormData}
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel className="text-sm font-medium min-w-[100px]">
-                      {day.label}
-                    </FormLabel>
-                    <div className="flex-1 max-w-[200px]">
-                      <FormControl>
-                        <Input
-                          placeholder="09:00-18:00 o Cerrado"
-                          {...field}
-                          disabled={isCreating}
-                          className="h-10"
-                        />
-                      </FormControl>
-                    </div>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-        </div>
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-          <p className="text-sm text-blue-700">
-            💡 <strong>Formato:</strong> Use "09:00-18:00" para horarios o "Cerrado" para días sin atención
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderStep4 = () => (
-    <Card className="border-0 shadow-none">
-      <CardHeader className="px-0 pb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-orange-100 rounded-lg">
-            <Settings className="h-5 w-5 text-orange-600" />
-          </div>
-          <div>
             <CardTitle className="text-xl">Configuración Adicional</CardTitle>
             <p className="text-sm text-gray-600 mt-1">
               Ajustes opcionales de la sucursal
@@ -494,120 +441,48 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="manager_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium">
-                  ID del Gerente
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="UUID del gerente"
-                    {...field}
-                    disabled={isCreating}
-                    className="h-11"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
-
-        <FormField
-          control={form.control}
-          name="image_url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-medium flex items-center gap-2">
-                <ImageIcon className="h-4 w-4" />
-                Imagen de la Sucursal (Opcional)
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://ejemplo.com/imagen.jpg"
-                  {...field}
-                  disabled={isCreating}
-                  className="h-11"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <Separator className="my-6" />
 
-        <div className="space-y-4">
-          <h4 className="font-medium">IDs del Sistema</h4>
+        <div>
+          <h4 className="font-medium mb-4 flex items-center gap-2">
+            <Clock className="h-4 w-4" />
+            Horarios de Operación (Opcional)
+          </h4>
           <div className="grid grid-cols-1 gap-4">
-            <FormField
-              control={form.control}
-              name="id_business"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium flex items-center gap-2">
-                    ID del Negocio
-                    <Star className="h-4 w-4 text-red-500" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="UUID del negocio"
-                      {...field}
-                      disabled={isCreating}
-                      className="h-11"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="id_super_admin"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium flex items-center gap-2">
-                    ID del Super Administrador
-                    <Star className="h-4 w-4 text-red-500" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="UUID del super admin"
-                      {...field}
-                      disabled={isCreating}
-                      className="h-11"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="country_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium">
-                    ID del País
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="UUID del país"
-                      {...field}
-                      disabled={isCreating}
-                      className="h-11"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {DAYS_OF_WEEK.map((day) => (
+              <FormField
+                key={day.key}
+                control={form.control}
+                name={`operating_hours.${day.key}` as keyof CreateBranchFormData}
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="text-sm font-medium min-w-[100px]">
+                        {day.label}
+                      </FormLabel>
+                      <div className="flex-1 max-w-[200px]">
+                        <FormControl>
+                          <Input
+                            placeholder="09:00-18:00 o Cerrado"
+                            {...field}
+                            disabled={isCreating}
+                            className="h-10"
+                          />
+                        </FormControl>
+                      </div>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-sm text-blue-700">
+              💡 <strong>Formato:</strong> Use "09:00-18:00" para horarios o "Cerrado" para días sin atención
+            </p>
           </div>
         </div>
       </CardContent>
@@ -622,8 +497,6 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
         return renderStep2();
       case 3:
         return renderStep3();
-      case 4:
-        return renderStep4();
       default:
         return renderStep1();
     }
@@ -701,4 +574,4 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
       </Form>
     </div>
   );
-};;
+};

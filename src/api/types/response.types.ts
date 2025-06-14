@@ -69,8 +69,30 @@ export interface Branch {
   updated_at: string
 }
 
-export interface CreateBranch extends Omit<Branch, 'id' | 'created_at' | 'updated_at'> {
+export interface CreateBranch {
+  id_business: string;
   id_super_admin: string;
+  name: string;
+  contact_number?: string;
+  address?: string;
+  city?: string;
+  postal_code?: string;
+  country_id?: string;
+  status?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+  inventory_capacity?: number;
+  operating_hours?: {
+    monday?: string;
+    tuesday?: string;
+    wednesday?: string;
+    thursday?: string;
+    friday?: string;
+    saturday?: string;
+    sunday?: string;
+  };
 }
 
 // Tipo para el body de esta respuesta específica

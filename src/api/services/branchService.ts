@@ -6,6 +6,7 @@ export class BranchService {
 
   async createBranch(branch: CreateBranch): Promise<ApiResponse<Branch>> {
     try {
+
       const response = await http.post<ApiResponse<Branch>>(
         `${this.BRANCH_ENDPOINT}`, branch
       )
