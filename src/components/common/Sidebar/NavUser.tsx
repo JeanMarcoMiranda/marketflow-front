@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export function NavUser({
   user,
@@ -37,12 +38,12 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
 
-  const { signOut } = useAuthStore();
+  const { logout } = useAuth()
   const navigate = useNavigate();
 
   //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
-    await signOut();
+    await logout();
     navigate("/auth/login");
   };
 

@@ -55,8 +55,10 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
               type="email"
               placeholder="m@example.com"
               {...register("email")}
-              error={errors.email?.message}
             />
+            {errors.email && (
+              <span className="text-sm text-red-500">{errors.email.message}</span>
+            )}
           </div>
 
           <div className="grid gap-2 relative">
@@ -65,7 +67,6 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
               id="password"
               type={showPassword ? "text" : "password"}
               {...register("password")}
-              error={errors.password?.message}
             />
             <button
               type="button"
@@ -74,6 +75,9 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
+            {errors.password && (
+              <span className="text-sm text-red-500">{errors.password.message}</span>
+            )}
           </div>
 
           <div className="grid gap-2 relative">
@@ -82,7 +86,6 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
               id="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               {...register("confirmPassword")}
-              error={errors.confirmPassword?.message}
             />
             <button
               type="button"
@@ -91,6 +94,9 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
+            {errors.confirmPassword && (
+              <span className="text-sm text-red-500">{errors.confirmPassword.message}</span>
+            )}
           </div>
         </div>
       ),
@@ -106,8 +112,10 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
             <Input
               id="businessName"
               {...register("businessName")}
-              error={errors.businessName?.message}
             />
+            {errors.businessName && (
+              <span className="text-sm text-red-500">{errors.businessName.message}</span>
+            )}
           </div>
 
           <div className="grid gap-2">
@@ -115,8 +123,10 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
             <Input
               id="branchName"
               {...register("branchName")}
-              error={errors.branchName?.message}
             />
+            {errors.branchName && (
+              <span className="text-sm text-red-500">{errors.branchName.message}</span>
+            )}
           </div>
         </div>
       ),

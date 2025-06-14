@@ -4,8 +4,8 @@ import PrivateLayout from "@/shared/layout/PrivateLayout";
 import PublicRoute from "./PublicRoute";
 import { Loadable } from "@/components/common/Loadable";
 import { lazy } from "react";
-import { ProtectedRoute } from "./protectedRoutes";
-import BusinessConfigurationPage from "@/features/BusinessConfiguration/pages";
+// import { ProtectedRoute } from "./protectedRoutes";
+// import BusinessConfigurationPage from "@/features/BusinessConfiguration/pages";
 import PrivateRoute from "./PrivateRoute";
 import ProductListPage from "@/pages/inventory/ProductListPage";
 
@@ -13,13 +13,13 @@ import ProductListPage from "@/pages/inventory/ProductListPage";
 const Dashboard = Loadable(
   lazy(() => import("@/features/Dashboard/pages/Dashboard"))
 );
-const OrdersPage = Loadable(
-  lazy(() => import("@/features/Orders/pages/Orders"))
-);
-const UsersPage = Loadable(lazy(() => import("@/features/Users/pages/Users")));
-const BranchesPage = Loadable(lazy(() => import("@/features/Branches/pages")));
-const BusinessPage = Loadable(lazy(() => import("@/features/Business/pages")));
-const ProductsPage = Loadable(lazy(() => import("@/features/Products/pages")));
+// const OrdersPage = Loadable(
+//   lazy(() => import("@/features/Orders/pages/Orders"))
+// );
+// const UsersPage = Loadable(lazy(() => import("@/features/Users/pages/Users")));
+// const BranchesPage = Loadable(lazy(() => import("@/features/Branches/pages")));
+// const BusinessPage = Loadable(lazy(() => import("@/features/Business/pages")));
+// const ProductsPage = Loadable(lazy(() => import("@/features/Products/pages")));
 
 // Public Routes
 const LoginPage = Loadable(lazy(() => import("@/pages/auth/LoginPage")));
@@ -27,7 +27,7 @@ const RegisterPage = Loadable(
   lazy(() => import("@/pages/auth/RegisterPage"))
 );
 const NotFound = Loadable(
-  lazy(() => import("@/features/NotFound/pages/NotFound"))
+  lazy(() => import("@/pages/NotFound"))
 );
 
 export const Router = createBrowserRouter([
@@ -60,38 +60,38 @@ export const Router = createBrowserRouter([
             path: "/dashboard",
             element: <Dashboard />,
           },
-          {
-            path: "/orders",
-            element: <OrdersPage />,
-          },
+          // {
+          //   path: "/orders",
+          //   element: <OrdersPage />,
+          // },
           {
             path: "/inventory",
             element: <ProductListPage />,
           },
-          {
-            path: "/users",
-            element: <UsersPage />,
-          },
-          {
-            path: "/branches",
-            element: <BranchesPage />,
-          },
-          {
-            path: "/products",
-            element: <ProductsPage />,
-          },
-          {
-            path: "/business",
-            element: (
-              <ProtectedRoute allowedRoles={["developer"]} element={<BusinessPage />} />
-            ),
-          },
-          {
-            path: "/businessConfiguration",
-            element: (
-              <ProtectedRoute allowedRoles={["developer"]} element={<BusinessConfigurationPage />} />
-            ),
-          },
+          // {
+          //   path: "/users",
+          //   element: <UsersPage />,
+          // },
+          // {
+          //   path: "/branches",
+          //   element: <BranchesPage />,
+          // },
+          // {
+          //   path: "/products",
+          //   element: <ProductsPage />,
+          // },
+          // {
+          //   path: "/business",
+          //   element: (
+          //     <ProtectedRoute allowedRoles={["developer"]} element={<BusinessPage />} />
+          //   ),
+          // },
+          // {
+          //   path: "/businessConfiguration",
+          //   element: (
+          //     <ProtectedRoute allowedRoles={["developer"]} element={<BusinessConfigurationPage />} />
+          //   ),
+          // },
         ]
       },
     ]

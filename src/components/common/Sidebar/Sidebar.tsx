@@ -21,6 +21,7 @@ import { BranchSwitcher } from "./BranchSwitcher";
 import { Branch } from "@/api/types/response.types";
 import { useDialogStore } from "@/store/useDialogStore";
 import { CreateBranchForm } from "@/components/features/branch/CreateBranch/CreateBranchForm";
+import { useAuth } from "@/hooks/useAuth";
 
 // This is sample data.
 const data = {
@@ -75,6 +76,7 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
 
 export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
   const { openDialog, closeDialog } = useDialogStore();
+  const { userData } = useAuth()
 
   const openCreateBranchModal = () => {
     openDialog(
@@ -88,22 +90,22 @@ export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
   };
 
   // Obtenemos el usuario desde el store
-  const { user: supabaseUser, userData } = useAuthStore();
-  const userRole = userData?.role || "customer";
+  // const { user: supabaseUser, userData } = useAuthStore();
+  // const userRole = userData?.role || "customer";
 
   const currentUser = {
     name: userData?.name || "Admin",
-    email: supabaseUser?.user?.email || "admin@lalena.com",
+    email: userData?.email || "admin@lalena.com",
     avatar: "/avatars/admin.jpg",
   };
 
   // Filtrar proyectos según el rol del usuario
-  const filteredProjects = data.projects.filter((project) => {
-    if (project.name === "Negocios" && userRole !== "developer") {
-      return false; // Restringir la sección "Negocios" si el usuario no es developer
-    }
-    return true;
-  });
+  // const filteredProjects = data.projects.filter((project) => {
+  //   if (project.name === "Negocios" && userRole !== "developer") {
+  //     return false; // Restringir la sección "Negocios" si el usuario no es developer
+  //   }
+  //   return true;
+  // });
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -114,7 +116,7 @@ export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
         />
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={filteredProjects} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={currentUser} />

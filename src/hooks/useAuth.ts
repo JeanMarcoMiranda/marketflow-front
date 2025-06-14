@@ -39,10 +39,10 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await logoutMutation.mutateAsync();
+      logoutStore()
       setSelectedBranch(null)
       setBusiness(null)
-      logoutStore()
+      await logoutMutation.mutateAsync();
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       throw error;
