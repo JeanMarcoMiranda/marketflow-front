@@ -1,29 +1,10 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserBusiness } from "@/features/Business/hooks/useBusiness";
 import { LogOut, Bell, BarChart2, Users, ShoppingBag } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { FormCreateBusiness } from "@/features/Business/pages/FormCreate/BusinessCreate";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Dashboard() {
-  const { userData, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
-  //TODO: Cmabiar la funcion para obtener del localstorage
-  const { userBusinessesQuery } = useUserBusiness(userData?.id ?? "");
-  const [showDialog, setShowDialog] = useState(false);
-
-  useEffect(() => {
-    if (userData && userBusinessesQuery.data?.length === 0) {
-      setShowDialog(true);
-    }
-  }, [userData, userBusinessesQuery.data]);
 
   //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
@@ -135,18 +116,6 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Dialog para crear negocio si el usuario no tiene uno */}
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>¡Bienvenido!</DialogTitle>
-            <DialogDescription>
-              Para comenzar, por favor crea tu negocio.
-            </DialogDescription>
-          </DialogHeader>
-          <FormCreateBusiness onSuccess={() => setShowDialog(false)} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
