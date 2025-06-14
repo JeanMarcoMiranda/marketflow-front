@@ -16,9 +16,6 @@ const Dashboard = Loadable(
 const OrdersPage = Loadable(
   lazy(() => import("@/features/Orders/pages/Orders"))
 );
-const InventoryPage = Loadable(
-  lazy(() => import("@/features/Inventory/index"))
-);
 const UsersPage = Loadable(lazy(() => import("@/features/Users/pages/Users")));
 const BranchesPage = Loadable(lazy(() => import("@/features/Branches/pages")));
 const BusinessPage = Loadable(lazy(() => import("@/features/Business/pages")));

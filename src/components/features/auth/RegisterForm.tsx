@@ -27,9 +27,7 @@ interface RegisterFormProps {
   onSubmit: (data: Omit<RegisterFormData, "confirmPassword">) => void;
 }
 
-export function RegisterForm({
-  onSubmit
-}: RegisterFormProps) {
+export function RegisterForm({ onSubmit }: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -37,7 +35,7 @@ export function RegisterForm({
     register,
     handleSubmit,
     trigger,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
@@ -126,8 +124,8 @@ export function RegisterForm({
   ];
 
   const submitForm = (data: RegisterFormData) => {
-    const { confirmPassword, ...submitData } = data;
-    onSubmit(submitData);
+    const { email, password, businessName, branchName } = data;
+    onSubmit({ email, password, businessName, branchName });
   };
 
   return (

@@ -86,10 +86,11 @@ export class AuthService {
 	 * Maneja los errores comunes de autenticación
 	 * @param error Error recibido de la API
 	 */
-	private handleAuthError(error: any) {
+	private handleAuthError(error: unknown) {
 		// Se puede personalizar el manejo de errores aquí
-		if (error.response) {
-			switch (error.response.status) {
+		if (error && typeof error === "object" && "response" in error) {
+			const response = (error as { response: { status: number; data?: { message?: string } } }).response;
+			switch (response.status) {
 				case 401:
 					console.error("Credenciales inválidas");
 					break;
@@ -102,11 +103,14 @@ export class AuthService {
 				default:
 					console.error(
 						"Error en autenticación:",
-						error.response.data?.message || error.message,
+						response.data?.message || "Error desconocido",
 					);
 			}
 		} else {
-			console.error("Error de conexión:", error.message);
+			const message = error && typeof error === "object" && "message" in error
+				? (error as { message: string }).message
+				: "Error desconocido";
+			console.error("Error de conexión:", message);
 		}
 	}
 }

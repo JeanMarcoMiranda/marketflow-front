@@ -74,7 +74,7 @@ httpClient.interceptors.response.use(
 					originalRequest.headers.Authorization = `Bearer ${access_token}`;
 					return httpClient(originalRequest);
 				}
-			} catch (refreshError) {
+			} catch {
 				// Si falla la renovación del token, limpia la sesión en el store
 				useAuthStore.getState().setUserSession(null);
 				useAuthStore.getState().setUser(null);
@@ -95,11 +95,11 @@ httpClient.interceptors.response.use(
 const http = {
 	get: <T>(url: string, config: AxiosRequestConfig = {}) =>
 		httpClient.get<T>(url, config),
-	post: <T>(url: string, data: any, config: AxiosRequestConfig = {}) =>
+	post: <T, D = unknown>(url: string, data: D, config: AxiosRequestConfig = {}) =>
 		httpClient.post<T>(url, data, config),
-	put: <T>(url: string, data: any, config: AxiosRequestConfig = {}) =>
+	put: <T, D = unknown>(url: string, data: D, config: AxiosRequestConfig = {}) =>
 		httpClient.put<T>(url, data, config),
-	patch: <T>(url: string, data: any, config: AxiosRequestConfig = {}) =>
+	patch: <T, D = unknown>(url: string, data: D, config: AxiosRequestConfig = {}) =>
 		httpClient.patch<T>(url, data, config),
 	delete: <T>(url: string, config: AxiosRequestConfig = {}) =>
 		httpClient.delete<T>(url, config),

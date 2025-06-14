@@ -63,8 +63,8 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
   ];
 
   const submitForm = (data: RegisterFormData) => {
-    const { confirmPassword, ...submitData } = data;
-    onSubmit(submitData);
+    const { email, password, businessName, branchName } = data;
+    onSubmit({ email, password, businessName, branchName });
   };
 
   return (

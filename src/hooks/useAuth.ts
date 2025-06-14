@@ -4,7 +4,7 @@ import { useUserPreferencesStore } from "@/store/useUserPreferences";
 
 export const useAuth = () => {
   const { userData, userSession, setUser, setUserSession, logout: logoutStore } = useAuthStore();
-  const { setSelectedBranch } = useUserPreferencesStore()
+  const { setSelectedBranch, setBusiness } = useUserPreferencesStore()
   const loginMutation = useLoginMutation();
   const logoutMutation = useLogoutMutation();
   const registerMutation = useRegisterMutation();
@@ -15,6 +15,7 @@ export const useAuth = () => {
       setUser(userData.body.user);
       setUserSession(userData.body.session);
       setSelectedBranch(userData.body.user.id_branch)
+      setBusiness(userData.body.user.id_business)
       return userData;
     } catch (error) {
       console.error("Error de autenticación:", error);
@@ -28,6 +29,7 @@ export const useAuth = () => {
       setUser(userData.body.user);
       setUserSession(userData.body.session);
       setSelectedBranch(userData.body.user.id_branch)
+      setBusiness(userData.body.user.id_business)
       return userData;
     } catch (error) {
       console.error("Error de autenticación:", error);
@@ -39,6 +41,7 @@ export const useAuth = () => {
     try {
       await logoutMutation.mutateAsync();
       setSelectedBranch(null)
+      setBusiness(null)
       logoutStore()
     } catch (error) {
       console.error("Error al cerrar sesión:", error);

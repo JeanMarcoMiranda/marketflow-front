@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,7 +20,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,8 +30,6 @@ import {
   Building2,
   MapPin,
   Clock,
-  Settings,
-  Image as ImageIcon,
   Star,
   AlertCircle,
   CheckCircle2,
@@ -43,67 +41,47 @@ interface CreateBranchFormProps {
 }
 
 const DAYS_OF_WEEK = [
-  { key: 'monday', label: 'Lunes' },
-  { key: 'tuesday', label: 'Martes' },
-  { key: 'wednesday', label: 'Miércoles' },
-  { key: 'thursday', label: 'Jueves' },
-  { key: 'friday', label: 'Viernes' },
-  { key: 'saturday', label: 'Sábado' },
-  { key: 'sunday', label: 'Domingo' },
+  { key: "monday", label: "Lunes" },
+  { key: "tuesday", label: "Martes" },
+  { key: "wednesday", label: "Miércoles" },
+  { key: "thursday", label: "Jueves" },
+  { key: "friday", label: "Viernes" },
+  { key: "saturday", label: "Sábado" },
+  { key: "sunday", label: "Domingo" },
 ];
 
 export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   onSuccess,
-  defaultValues = {}
+  defaultValues = {},
 }) => {
   const { closeDialog } = useDialogStore();
   const { userData } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
 
-  // Verificar que el usuario esté autenticado y tenga los datos necesarios
-  if (!userData || !userData.id_business || !userData.id) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-center">
-          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Error de Autenticación
-          </h3>
-          <p className="text-sm text-gray-600 mb-4">
-            No se pudo obtener la información del usuario o del negocio.
-          </p>
-          <Button onClick={closeDialog} variant="outline">
-            Cerrar
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   // Initialize form with React Hook Form and Zod resolver
   const form = useForm<CreateBranchFormData>({
     resolver: zodResolver(createBranchSchema),
     defaultValues: {
-      id_business: userData.id_business,
-      name: '',
-      contact_number: '',
-      address: '',
-      city: '',
-      postal_code: '',
-      status: 'active',
+      id_business: userData?.id_business || "",
+      name: "",
+      contact_number: "",
+      address: "",
+      city: "",
+      postal_code: "",
+      status: "active",
       coordinates: { lat: 0, lng: 0 },
       inventory_capacity: 0,
       operating_hours: {
-        monday: '09:00-18:00',
-        tuesday: '09:00-18:00',
-        wednesday: '09:00-18:00',
-        thursday: '09:00-18:00',
-        friday: '09:00-18:00',
-        saturday: '09:00-18:00',
-        sunday: 'Cerrado',
+        monday: "09:00-18:00",
+        tuesday: "09:00-18:00",
+        wednesday: "09:00-18:00",
+        thursday: "09:00-18:00",
+        friday: "09:00-18:00",
+        saturday: "09:00-18:00",
+        sunday: "Cerrado",
       },
-      id_super_admin: userData.id,
+      id_super_admin: userData?.id || "",
       ...defaultValues,
     },
   });
@@ -113,29 +91,27 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
 
   // Handle form submission
   const onSubmit = async (data: CreateBranchFormData) => {
-    try {
-      await createBranch({
-        id_business: data.id_business,
-        id_super_admin: data.id_super_admin,
-        name: data.name,
-        ...(data.contact_number && { contact_number: data.contact_number }),
-        ...(data.address && { address: data.address }),
-        ...(data.city && { city: data.city }),
-        ...(data.postal_code && { postal_code: data.postal_code }),
-        ...(data.status && { status: data.status }),
-        ...(data.coordinates && {
-          coordinates: {
-            lat: Number(data.coordinates.lat) || 0,
-            lng: Number(data.coordinates.lng) || 0,
-          },
-        }),
-        ...(data.inventory_capacity && { inventory_capacity: Number(data.inventory_capacity) || 0 }),
-        ...(data.operating_hours && { operating_hours: data.operating_hours }),
-      });
-      onSuccess()
-    } catch (error) {
-      // Errors are handled by the hook's onCreateError
-    }
+    await createBranch({
+      id_business: data.id_business,
+      id_super_admin: data.id_super_admin,
+      name: data.name,
+      ...(data.contact_number && { contact_number: data.contact_number }),
+      ...(data.address && { address: data.address }),
+      ...(data.city && { city: data.city }),
+      ...(data.postal_code && { postal_code: data.postal_code }),
+      ...(data.status && { status: data.status }),
+      ...(data.coordinates && {
+        coordinates: {
+          lat: Number(data.coordinates.lat) || 0,
+          lng: Number(data.coordinates.lng) || 0,
+        },
+      }),
+      ...(data.inventory_capacity && {
+        inventory_capacity: Number(data.inventory_capacity) || 0,
+      }),
+      ...(data.operating_hours && { operating_hours: data.operating_hours }),
+    });
+    onSuccess();
   };
 
   const nextStep = () => {
@@ -331,7 +307,9 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
             name="postal_code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-medium">Código Postal</FormLabel>
+                <FormLabel className="text-sm font-medium">
+                  Código Postal
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="04001"
@@ -366,7 +344,9 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
                       step="any"
                       placeholder="-16.4040"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value) || 0)}
+                      onChange={(e) =>
+                        field.onChange(Number(e.target.value) || 0)
+                      }
                       disabled={isCreating}
                       className="h-11"
                     />
@@ -387,7 +367,9 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
                       step="any"
                       placeholder="-71.5440"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value) || 0)}
+                      onChange={(e) =>
+                        field.onChange(Number(e.target.value) || 0)
+                      }
                       disabled={isCreating}
                       className="h-11"
                     />
@@ -481,7 +463,8 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
           </div>
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-700">
-              💡 <strong>Formato:</strong> Use "09:00-18:00" para horarios o "Cerrado" para días sin atención
+              💡 <strong>Formato:</strong> Use "09:00-18:00" para horarios o
+              "Cerrado" para días sin atención
             </p>
           </div>
         </div>
@@ -502,22 +485,41 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
     }
   };
 
+  // Verificar autenticación
+  if (!userData || !userData.id_business || !userData.id) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Error de Autenticación
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            No se pudo obtener la información del usuario o del negocio.
+          </p>
+          <Button onClick={closeDialog} variant="outline">
+            Cerrar
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {renderStepIndicator()}
 
-          <div className="min-h-[500px]">
-            {renderCurrentStep()}
-          </div>
+          <div className="min-h-[500px]">{renderCurrentStep()}</div>
 
           {/* Error Message */}
           {isCreateError && (
             <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg">
               <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
               <p className="text-sm text-red-700">
-                {createError?.message || 'Ocurrió un error inesperado. Inténtalo de nuevo.'}
+                {createError?.message ||
+                  "Ocurrió un error inesperado. Inténtalo de nuevo."}
               </p>
             </div>
           )}
@@ -531,14 +533,14 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
               disabled={isCreating}
               className="min-w-[100px]"
             >
-              {currentStep === 1 ? 'Cancelar' : 'Anterior'}
+              {currentStep === 1 ? "Cancelar" : "Anterior"}
             </Button>
 
             <div className="flex gap-2">
               {Array.from({ length: totalSteps }, (_, i) => (
                 <div
                   key={i}
-                  className={`w-2 h-2 rounded-full transition-colors ${i + 1 <= currentStep ? 'bg-blue-500' : 'bg-gray-300'
+                  className={`w-2 h-2 rounded-full transition-colors ${i + 1 <= currentStep ? "bg-blue-500" : "bg-gray-300"
                     }`}
                 />
               ))}
@@ -565,7 +567,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
                     Creando...
                   </>
                 ) : (
-                  'Crear Sucursal'
+                  "Crear Sucursal"
                 )}
               </Button>
             )}
@@ -574,4 +576,4 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
       </Form>
     </div>
   );
-};
+};;

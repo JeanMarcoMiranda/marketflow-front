@@ -5,16 +5,11 @@ export class BranchService {
   private BRANCH_ENDPOINT = "/branch"
 
   async createBranch(branch: CreateBranch): Promise<ApiResponse<Branch>> {
-    try {
-
-      const response = await http.post<ApiResponse<Branch>>(
-        `${this.BRANCH_ENDPOINT}`, branch
-      )
-
-      return response.data
-    } catch (error) {
-      throw error
-    }
+    const response = await http.post<ApiResponse<Branch>>(
+      `${this.BRANCH_ENDPOINT}`,
+      branch
+    );
+    return response.data;
   }
 }
 

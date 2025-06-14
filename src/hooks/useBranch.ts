@@ -3,20 +3,16 @@ import { CreateBranch } from '@/api/types/response.types';
 import { useCallback } from 'react';
 
 export const useBranch = () => {
-  const createBranchMutation = useCreateBranchMutation()
+  const createBranchMutation = useCreateBranchMutation();
 
   // Función para crear una sucursal
   const createBranch = useCallback(
     async (branch: CreateBranch) => {
-      try {
-        if (!branch.name || !branch.id_business) {
-          throw new Error('El nombre y el ID del negocio son obligatorios');
-        }
-        const response = await createBranchMutation.mutateAsync(branch);
-        return response;
-      } catch (error) {
-        throw error;
+      if (!branch.name || !branch.id_business) {
+        throw new Error('El nombre y el ID del negocio son obligatorios');
       }
+      const response = await createBranchMutation.mutateAsync(branch);
+      return response;
     },
     [createBranchMutation]
   );
