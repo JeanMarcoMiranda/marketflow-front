@@ -71,9 +71,10 @@ const data = {
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   businessBranches: Branch[];
+  onBranchesRefetch: () => void
 };
 
-export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
+export function AppSidebar({ businessBranches, onBranchesRefetch, ...props }: AppSidebarProps) {
   const { openDialog, closeDialog } = useDialogStore();
   const { userData } = useAuth()
 
@@ -82,6 +83,7 @@ export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
       <CreateBranchForm
         onSuccess={async () => {
           closeDialog();
+          onBranchesRefetch()
         }}
       />,
       { title: "Create New Branch", maxWidth: "xl" }

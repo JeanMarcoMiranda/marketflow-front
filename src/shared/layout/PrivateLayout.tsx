@@ -6,6 +6,7 @@ import { useBusiness } from "@/hooks/useBusiness";
 
 export default function PrivateLayout() {
   const {
+    refetchBranches,
     business,
     businessError,
     branches,
@@ -38,7 +39,7 @@ export default function PrivateLayout() {
 
   return (
     <SidebarProvider>
-      <AppSidebar businessBranches={branches ?? []} />
+      <AppSidebar businessBranches={branches ?? []} onBranchesRefetch={() => { refetchBranches() }} />
       <SidebarInset>
         <Header />
         <main className="flex h-full flex-1 flex-col space-y-8 p-8">

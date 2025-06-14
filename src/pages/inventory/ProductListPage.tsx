@@ -1,15 +1,13 @@
-import { useProduct } from "@/hooks/useProduct"
-import { useUserPreferencesStore } from "@/store/useUserPreferences"
+import ProductsTable from "@/components/features/inventory/ProfuctsTable/ProductsTable"
 
 const ProductListPage = () => {
-  const { selected_branch_id, business_id } = useUserPreferencesStore()
-  const { products } = useProduct(business_id!, selected_branch_id!)
-
-  console.log(products)
-
   return (
-    <div>ProductListPage</div>
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Product List</h1>
+      <ProductsTable />
+    </div>
   )
+
 }
 
 export default ProductListPage
