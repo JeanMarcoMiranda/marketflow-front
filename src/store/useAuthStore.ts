@@ -4,8 +4,10 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface AuthState {
 	userData: UserData | null;
 	userSession: UserSession | null;
+	isAuthenticated: boolean;
 	setUser: (user: UserData | null) => void;
 	setUserSession: (user: UserSession | null) => void;
+	logout: () => void
 }
 
 interface UserData {
@@ -32,18 +34,27 @@ export const useAuthStore = create<AuthState>()(
 		(set) => ({
 			userData: null,
 			userSession: null,
+			isAuthenticated: false,
 
 			setUser: (userData: UserData | null) => {
-				set({ userData: userData });
+				set((state) => ({
+					userData,
+					isAuthenticated: !!userData && !!state.userSession
+				}))
 			},
 
 			setUserSession: (userSession: UserSession | null) => {
-				set({ userSession: userSession });
+				set((state) => ({
+					userSession,
+					isAuthenticated: !!userSession && !!state.userData
+				}))
 			},
 
 			reset: () => {
 				set({ userData: null, userSession: null });
 			},
+
+			logout: () => set({ userData: null, userSession: null, isAuthenticated: false }),
 		}),
 		{
 			name: "auth-storage", // Nombre de la clave en localStorage

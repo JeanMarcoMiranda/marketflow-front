@@ -1,19 +1,44 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import { AppSidebar } from "../../components/common/Sidebar/Sidebar";
-import { useAuthStore } from "@/store/useAuthStore";
 import { Header } from "@/components/common/Header";
+import { useBusiness } from "@/hooks/useBusiness";
 
 export default function PrivateLayout() {
-  const { userSession } = useAuthStore();
+  const {
+    business,
+    businessError,
+    branches,
+    branchesError,
+    hasBusinessId,
+    isAnyLoading,
+    hasAnyError,
+  } = useBusiness();
 
-  if (!userSession) {
-    return <Navigate to="/auth/login" replace />;
+  if (!hasBusinessId) {
+    return <div>No business ID found. Please log in or register a business.</div>;
+  }
+
+  if (isAnyLoading) {
+    return <div>Loading business data...</div>;
+  }
+
+  if (hasAnyError) {
+    return (
+      <div>
+        {businessError && <p>Business error: {businessError.message}</p>}
+        {branchesError && <p>Branches error: {branchesError.message}</p>}
+      </div>
+    );
+  }
+
+  if (!business) {
+    return <div>No business data available.</div>;
   }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar businessBranches={branches ?? []} />
       <SidebarInset>
         <Header />
         <main className="flex h-full flex-1 flex-col space-y-8 p-8">

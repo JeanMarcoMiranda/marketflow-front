@@ -1,8 +1,10 @@
 import { useLoginMutation, useLogoutMutation, useRegisterMutation } from "@/api/queries/authQueries";
 import { useAuthStore } from "@/store/useAuthStore"
+import { useUserPreferencesStore } from "@/store/useUserPreferences";
 
 export const useAuth = () => {
-  const { userData, userSession, setUser, setUserSession } = useAuthStore();
+  const { userData, userSession, setUser, setUserSession, logout: logoutStore } = useAuthStore();
+  const { setSelectedBranch, setBusiness } = useUserPreferencesStore()
   const loginMutation = useLoginMutation();
   const logoutMutation = useLogoutMutation();
   const registerMutation = useRegisterMutation();
@@ -12,6 +14,8 @@ export const useAuth = () => {
       const userData = await loginMutation.mutateAsync({ email, password });
       setUser(userData.body.user);
       setUserSession(userData.body.session);
+      setSelectedBranch(userData.body.user.id_branch)
+      setBusiness(userData.body.user.id_business)
       return userData;
     } catch (error) {
       console.error("Error de autenticación:", error);
@@ -24,6 +28,8 @@ export const useAuth = () => {
       const userData = await registerMutation.mutateAsync({ email, password, businessName, branchName });
       setUser(userData.body.user);
       setUserSession(userData.body.session);
+      setSelectedBranch(userData.body.user.id_branch)
+      setBusiness(userData.body.user.id_business)
       return userData;
     } catch (error) {
       console.error("Error de autenticación:", error);
@@ -34,8 +40,9 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       await logoutMutation.mutateAsync();
-      setUser(null);
-      setUserSession(null);
+      setSelectedBranch(null)
+      setBusiness(null)
+      logoutStore()
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       throw error;

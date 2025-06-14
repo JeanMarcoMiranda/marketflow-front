@@ -41,7 +41,8 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
   const steps: Step[] = [
     {
       id: "personal-info",
-      title: "Información Personal",
+      title: "Personal",
+      subtitle: "Información Personal",
       icon: <User2 className="h-5 w-5" />,
       content: (
         <PersonalInfoStep
@@ -54,15 +55,16 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
     },
     {
       id: "business-info",
-      title: "Información del Negocio",
+      title: "Business",
+      subtitle: "Información del Negocio",
       icon: <Building2 className="h-5 w-5" />,
       content: <BusinessInfoStep />,
     },
   ];
 
   const submitForm = (data: RegisterFormData) => {
-    const { confirmPassword, ...submitData } = data;
-    onSubmit(submitData);
+    const { email, password, businessName, branchName } = data;
+    onSubmit({ email, password, businessName, branchName });
   };
 
   return (
@@ -78,7 +80,7 @@ export function RegisterForm({ onSubmit }: RegisterFormProps) {
         <Stepper
           steps={steps}
           onComplete={handleSubmit(submitForm)}
-          variant="with-line"
+          variant="filled"
           renderActions={({
             nextStep,
             prevStep,

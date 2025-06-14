@@ -5,14 +5,10 @@ import {
   Truck,
   BookMarked,
   // User,
-  Store,
-  Package,
-  Cookie,
 } from "lucide-react";
 
 import { NavProjects } from "./NavProjects";
 import { NavUser } from "./NavUser";
-import { TeamSwitcher } from "./TeamSwitcher";
 import {
   Sidebar,
   SidebarContent,
@@ -22,21 +18,16 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { BranchSwitcher } from "./BranchSwitcher";
+import { Branch } from "@/api/types/response.types";
+import { useDialogStore } from "@/store/useDialogStore";
+import { CreateBranchForm } from "@/components/features/branch/CreateBranch/CreateBranchForm";
 
 // This is sample data.
 const data = {
-  teams: [
-    {
-      name: "La Leña",
-      logo: Pizza,
-      plan: "Premium",
-    },
-  ],
   branches: [
     {
       name: "La Leña",
       logo: Pizza,
-      plan: "Premium",
     },
   ],
   projects: [
@@ -45,21 +36,21 @@ const data = {
       url: "/dashboard",
       icon: BookMarked,
     },
-    {
-      name: "Negocios",
-      url: "/business",
-      icon: Package,
-    },
-    {
-      name: "Sucursales",
-      url: "/branches",
-      icon: Store,
-    },
-    {
-      name: "Productos",
-      url: "/products",
-      icon: Cookie,
-    },
+    // {
+    //   name: "Negocios",
+    //   url: "/business",
+    //   icon: Package,
+    // },
+    // {
+    //   name: "Sucursales",
+    //   url: "/branches",
+    //   icon: Store,
+    // },
+    // {
+    //   name: "Productos",
+    //   url: "/products",
+    //   icon: Cookie,
+    // },
     {
       name: "Inventario",
       url: "/inventory",
@@ -78,7 +69,24 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  businessBranches: Branch[];
+};
+
+export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
+  const { openDialog, closeDialog } = useDialogStore();
+
+  const openCreateBranchModal = () => {
+    openDialog(
+      <CreateBranchForm
+        onSuccess={async () => {
+          closeDialog();
+        }}
+      />,
+      { title: "Create New Branch", maxWidth: "xl" }
+    );
+  };
+
   // Obtenemos el usuario desde el store
   const { user: supabaseUser, userData } = useAuthStore();
   const userRole = userData?.role || "customer";
@@ -100,7 +108,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <BranchSwitcher branches={data.branches} />
+        <BranchSwitcher
+          branches={businessBranches}
+          onAddBranchClick={openCreateBranchModal}
+        />
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={filteredProjects} />

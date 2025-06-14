@@ -1,41 +1,5 @@
 import http from "@/api/httpClient";
-
-interface ApiResponse<T> {
-	status: number;
-	body: T;
-	reason: string;
-}
-
-// Tipos específicos para User y Session
-interface User {
-	id: string;
-	email: string;
-	name: string;
-	role_id: string;
-	active: boolean;
-	phone_number: string | null;
-	id_business: string | null,
-	id_branch: string | null,
-	created_at: string;
-}
-
-interface Session {
-	access_token: string;
-	refresh_token: string;
-	expires_in: number;
-	expires_at: number;
-}
-
-// Tipo para el body de esta respuesta específica
-interface LoginResponseBody {
-	user: User;
-	session: Session;
-}
-
-interface RegisterResponseBody {
-	user: User;
-	session: Session;
-}
+import { ApiResponse, LoginResponseBody, RegisterResponseBody, User } from "../types/response.types";
 
 export class AuthService {
 	// Endpoint base para autenticación
@@ -122,10 +86,11 @@ export class AuthService {
 	 * Maneja los errores comunes de autenticación
 	 * @param error Error recibido de la API
 	 */
-	private handleAuthError(error: any) {
+	private handleAuthError(error: unknown) {
 		// Se puede personalizar el manejo de errores aquí
-		if (error.response) {
-			switch (error.response.status) {
+		if (error && typeof error === "object" && "response" in error) {
+			const response = (error as { response: { status: number; data?: { message?: string } } }).response;
+			switch (response.status) {
 				case 401:
 					console.error("Credenciales inválidas");
 					break;
@@ -138,11 +103,14 @@ export class AuthService {
 				default:
 					console.error(
 						"Error en autenticación:",
-						error.response.data?.message || error.message,
+						response.data?.message || "Error desconocido",
 					);
 			}
 		} else {
-			console.error("Error de conexión:", error.message);
+			const message = error && typeof error === "object" && "message" in error
+				? (error as { message: string }).message
+				: "Error desconocido";
+			console.error("Error de conexión:", message);
 		}
 	}
 }
