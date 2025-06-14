@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { BranchSwitcher } from "./BranchSwitcher";
+import { Branch } from "@/api/types/response.types";
 
 // This is sample data.
 const data = {
@@ -69,7 +70,11 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  businessBranches: Branch[]
+}
+
+export function AppSidebar({ businessBranches, ...props }: AppSidebarProps) {
   // Obtenemos el usuario desde el store
   const { user: supabaseUser, userData } = useAuthStore();
   const userRole = userData?.role || "customer";
@@ -91,7 +96,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <BranchSwitcher branches={data.branches} />
+        <BranchSwitcher branches={businessBranches} />
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={filteredProjects} />

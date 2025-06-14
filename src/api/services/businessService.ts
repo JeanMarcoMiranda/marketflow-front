@@ -1,6 +1,5 @@
-import { Branch } from "@/features/Branches/data/models/branchSchema";
 import http from "../httpClient";
-import { ApiResponse, Business } from "../types/response.types";
+import { ApiResponse, Branch, Business } from "../types/response.types";
 
 export class BusinessService {
   private BUSINESS_ENDPOINT = "/business"

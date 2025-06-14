@@ -36,12 +36,9 @@ export default function PrivateLayout() {
     return <div>No business data available.</div>;
   }
 
-  console.log("this is the business data: ", business)
-  console.log("these are the business branches: ", branches)
-
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar businessBranches={branches ?? []} />
       <SidebarInset>
         <Header />
         <main className="flex h-full flex-1 flex-col space-y-8 p-8">

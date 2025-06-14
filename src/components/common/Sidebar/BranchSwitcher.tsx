@@ -9,20 +9,62 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronsUpDown, Edit, Plus } from "lucide-react"
-import React from "react"
+import React, { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
+import { Branch } from "@/api/types/response.types"
+import { getInitials } from "@/lib/utils"
 
 export function BranchSwitcher({
   branches,
+  isBranchesLoading = false
 }: {
-  branches: {
-    name: string
-    logo: React.ElementType
-  }[]
+  branches: Branch[];
+  isBranchesLoading?: boolean
 }) {
   const { isMobile } = useSidebar()
-  const [activeBranch, setActiveBranch] = React.useState(branches[0])
+  const [activeBranch, setActiveBranch] = React.useState<Branch | undefined>(
+    branches.length > 0 ? branches[0] : undefined
+  )
+
+  // Update activeBranch when branches change (e.g., after loading)
+  useEffect(() => {
+    if (branches.length > 0 && !activeBranch) {
+      setActiveBranch(branches[0]);
+    }
+  }, [branches, activeBranch]);
+
+  if (isBranchesLoading) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" disabled>
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gray-200">
+              <span className="text-sm font-medium">...</span>
+            </div>
+            <span className="truncate font-semibold">Loading...</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
+
+  if (branches.length === 0) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" asChild>
+            <Link to="/businessConfiguration">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gray-200">
+                <Plus className="size-4" />
+              </div>
+              <span className="truncate font-semibold">Add Branch</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
 
   return (
     <SidebarMenu>
@@ -34,14 +76,24 @@ export function BranchSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <activeBranch.logo className="size-4" />
+                {activeBranch?.image_url ? (
+                  <img
+                    src={activeBranch.image_url}
+                    alt={activeBranch.name}
+                    className="size-6 rounded-sm object-cover"
+                  />
+                ) : (
+                  <span className="text-sm font-medium">{getInitials(activeBranch?.name || "Branch")}</span>
+                )}
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{activeBranch.name}</span>
+                <span className="truncate font-semibold">{activeBranch?.name || "Select Branch"}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
+          {/* Dropdown content */}
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             align="start"
@@ -58,24 +110,37 @@ export function BranchSwitcher({
                 </Button>
               </DropdownMenuItem>
             </div>
-
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="text-xs text-muted-foreground">Branches</DropdownMenuLabel>
             {branches.map((branch, index) => (
-              <DropdownMenuItem key={branch.name} onClick={() => setActiveBranch(branch)} className="gap-2 p-2">
+              <DropdownMenuItem
+                key={branch.id}
+                onClick={() => setActiveBranch(branch)}
+                className="gap-2 p-2"
+              >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
-                  <branch.logo className="size-4 shrink-0" />
+                  {branch.image_url ? (
+                    <img
+                      src={branch.image_url}
+                      alt={branch.name}
+                      className="size-5 rounded-sm object-cover"
+                    />
+                  ) : (
+                    <span className="text-xs font-medium">{getInitials(branch.name)}</span>
+                  )}
                 </div>
-                {branch.name}
+                <span className="truncate">{branch.name}</span>
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                <Plus className="size-4" />
-              </div>
-              <div className="font-medium text-muted-foreground">Agreagar Sucursal</div>
+            <DropdownMenuItem asChild className="gap-2 p-2">
+              <Link to="/businessConfiguration">
+                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <Plus className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">Add Branch</div>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

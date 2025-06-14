@@ -9,7 +9,7 @@ export const useBusiness = () => {
   const businessQuery = useGetBusinessByIdQuery(businessId ?? "");
 
   // Fetch business branches
-  const branchesQuery = useGetBusinessBranchesById(businessId ?? "");
+  const businessBranchesQuery = useGetBusinessBranchesById(businessId ?? "");
 
   return {
     // Business query results
@@ -17,12 +17,12 @@ export const useBusiness = () => {
     isBusinessLoading: businessQuery.isLoading,
     businessError: businessQuery.error,
     // Branches query results
-    branches: branchesQuery.data,
-    isBranchesLoading: branchesQuery.isLoading,
-    branchesError: branchesQuery.error,
+    branches: businessBranchesQuery.data?.body,
+    isBranchesLoading: businessBranchesQuery.isLoading,
+    branchesError: businessBranchesQuery.error,
     // Shared state
     hasBusinessId: !!businessId,
-    isAnyLoading: businessQuery.isLoading || branchesQuery.isLoading,
-    hasAnyError: businessQuery.error || branchesQuery.error,
+    isAnyLoading: businessQuery.isLoading || businessBranchesQuery.isLoading,
+    hasAnyError: businessQuery.error || businessBranchesQuery.error,
   };
 };
