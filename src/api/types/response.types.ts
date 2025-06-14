@@ -96,26 +96,56 @@ export interface CreateBranch {
 }
 
 export interface Product {
-  id: string
-  id_business: string
-  id_branch: string
-  name: string
-  description: string
-  sku: string
-  unit_price: number
-  cost_price: number
-  unit_of_measure: string
-  taxable: boolean
-  active: boolean
-  expiration_date: string
-  batch_number: string
-  metadata: Metadata
-  created_at: string
-  updated_at: string
-  deleted_at: string
+  id: string;
+  id_business: string;
+  id_branch: string;
+  name: string;
+  description: string;
+  sku: string;
+  unit_price: number;
+  cost_price: number;
+  unit_of_measure: string;
+  taxable: boolean;
+  active: boolean;
+  expiration_date: string;
+  batch_number: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
 }
 
-export type Metadata = object;
+export type Metadata = Record<string, unknown>;
+
+export interface CreateProductPayload {
+  name: string;
+  description: string;
+  sku: string;
+  unit_price: number;
+  cost_price: number;
+  unit_of_measure: string;
+  taxable: boolean;
+  active: boolean;
+  id_business: string;
+  id_branch: string;
+  expiration_date?: string;
+  batch_number?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface UpdateProductPayload {
+  name?: string;
+  description?: string;
+  sku?: string;
+  unit_price?: number;
+  cost_price?: number;
+  unit_of_measure?: string;
+  taxable?: boolean;
+  active?: boolean;
+  expiration_date?: string;
+  batch_number?: string;
+  metadata?: Record<string, unknown>;
+}
 
 // Tipo para el body de esta respuesta específica
 export interface LoginResponseBody {

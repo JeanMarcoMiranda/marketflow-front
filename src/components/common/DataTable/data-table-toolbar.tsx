@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { ComponentType } from "react";
+import { ComponentType, ReactNode } from "react";
 import { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ export interface DataTableToolbarProps<TData> {
   searchColumnId?: string;
   searchPlaceholder?: string;
   filters?: DataTableToolbarFacet[];
+  actions?: ReactNode
 }
 
 export function DataTableToolbar<TData>({
@@ -31,6 +32,7 @@ export function DataTableToolbar<TData>({
   searchColumnId,
   searchPlaceholder = "Search...",
   filters,
+  actions
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -80,7 +82,14 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+
+      <div className="flex items-center space-x-2"> {/* Contenedor para acciones y opciones de vista */}
+        {/* Aquí se renderizarán los botones de acción personalizados */}
+        {actions}
+        <DataTableViewOptions table={table} />
+      </div>
+
+      {/* <DataTableViewOptions table={table} /> */}
     </div>
   );
 }

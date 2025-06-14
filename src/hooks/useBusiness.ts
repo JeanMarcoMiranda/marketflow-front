@@ -12,6 +12,7 @@ export const useBusiness = () => {
   const businessBranchesQuery = useGetBusinessBranchesById(businessId ?? "");
 
   return {
+    refetchBranches: businessBranchesQuery.refetch,
     // Business query results
     business: businessQuery.data,
     isBusinessLoading: businessQuery.isLoading,
