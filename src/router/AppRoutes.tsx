@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import PublicLayout from "@/shared/layout/PublicLayout";
 import PrivateLayout from "@/shared/layout/PrivateLayout";
 import PublicRoute from "./PublicRoute";
@@ -38,6 +38,10 @@ export const Router = createBrowserRouter([
         path: "/",
         element: <PublicLayout />,
         children: [
+          {
+            path: "/",
+            element: <Navigate to="/auth/login" replace />,
+          },
           {
             path: "/auth/login",
             element: <LoginPage />,
@@ -100,8 +104,6 @@ export const Router = createBrowserRouter([
     path: "*",
     element: <NotFound />
   }
-
-
 ]);
 
 const AppRoutes = () => <RouterProvider router={Router} />;
