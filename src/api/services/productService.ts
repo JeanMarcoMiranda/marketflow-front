@@ -8,6 +8,8 @@ export class ProductService {
     const response = await http.get<ApiResponse<Product[]>>(
       `${this.PRODUCT_ENDPOINT}/?id_business=${id_business}&id_branch=${id_branch}`
     );
+
+    console.log("Response from getProductsByBusinessAndBranchId:", response.data);
     return response.data;
   }
 
