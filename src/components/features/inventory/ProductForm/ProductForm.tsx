@@ -56,6 +56,7 @@ interface ProductFormProps {
   createError: unknown;
   updateError: unknown;
   idBusiness: string;
+  idBranch: string;
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -67,6 +68,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   isCreating,
   isUpdating,
   idBusiness,
+  idBranch
 }) => {
   const isEditing = !!defaultValues?.id;
   const [isMetadataExpanded, setIsMetadataExpanded] = React.useState(false);
@@ -82,6 +84,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     taxable: defaultValues?.taxable ?? true,
     active: defaultValues?.active ?? true,
     id_business: defaultValues?.id_business || idBusiness,
+    id_branch: defaultValues?.id_branch || idBranch,
     expiration_date: defaultValues?.expiration_date
       ? new Date(defaultValues.expiration_date).toISOString().split('T')[0]
       : "",
@@ -130,6 +133,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   //   return metadataInput as Record<string, any>;
   // };
+
+  console.log("Is dirty:", isDirty);
+  console.log("Is valid:", isValid);
+  console.log("Form values:", watch());
 
   const onSubmit = async (data: ProductFormData) => {
     try {

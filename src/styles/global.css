@@ -29,7 +29,7 @@
   --chart-4: hsl(197 37% 24%);
   --chart-5: hsl(43 74% 66%);
   --chart-6: hsl(27 87% 67%);
-  --radius: -1.6rem;
+  --radius: 0.625rem;
   --sidebar: hsl(-1 0% 98%);
   --sidebar-foreground: hsl(239 5.3% 26.1%);
   --sidebar-primary: hsl(239 5.9% 10%);
@@ -113,6 +113,7 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
 }
+
 
 @layer base {
   * {

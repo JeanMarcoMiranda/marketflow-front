@@ -50,6 +50,7 @@ function ProductsTable() {
         createError={createError}
         updateError={updateError}
         idBusiness={business_id!}
+        idBranch={selected_branch_id!}
       />,
       {
         maxWidth: "xl",
@@ -70,6 +71,7 @@ function ProductsTable() {
         updateError={updateError}
         idBusiness={business_id!}
         defaultValues={product}
+        idBranch={selected_branch_id!}
       />,
       {
         maxWidth: "xl",
