@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Branch } from "@/api/types/response.types";
 import { getInitials } from "@/lib/get-initials";
-import { useUserPreferencesStore } from "@/store/use-user-preferences";
+import { useUserPreferencesStore } from "@/store/use-user-preferences-store";
 
 interface BranchSwitcherProps {
   branches: Branch[];

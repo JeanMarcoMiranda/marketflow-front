@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/common/data-table/data-table";
 import { useProduct } from "@/hooks/use-product";
-import { useUserPreferencesStore } from "@/store/use-user-preferences";
+import { useUserPreferencesStore } from "@/store/use-user-preferences-store";
 import { getProductColumns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Loader2, PlusCircle } from "lucide-react";

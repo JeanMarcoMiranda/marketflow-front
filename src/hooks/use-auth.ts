@@ -4,7 +4,7 @@ import {
   useRegisterMutation,
 } from "@/api/queries/auth-queries";
 import { useAuthStore } from "@/store/use-auth-store";
-import { useUserPreferencesStore } from "@/store/use-user-preferences";
+import { useUserPreferencesStore } from "@/store/use-user-preferences-store";
 
 export const useAuth = () => {
   const {

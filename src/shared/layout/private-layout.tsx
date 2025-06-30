@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
-import { AppSidebar } from "../../components/common/sidebar/sidebar";
 import { useBusiness } from "@/hooks/use-business";
-import { Header } from "@/components/common/header";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button"; // Asumiendo que tienes un componente Button de tu UI library
 import { Loader2, AlertTriangle } from "lucide-react"; // Iconos de Lucide para spinner y error
+import { AppSidebar } from "@/components/common/Sidebar/Sidebar";
+import { Header } from "@/components/common/Header";
+import { useAuth } from "@/hooks/use-auth";
 
 // Componente para el estado de carga
 const LoadingState = () => (
@@ -93,31 +94,33 @@ const NoBusinessData = () => (
 );
 
 export default function PrivateLayout() {
-  const {
-    refetchBranches,
-    business,
-    businessError,
-    branches,
-    branchesError,
-    hasBusinessId,
-    isAnyLoading,
-    hasAnyError,
-  } = useBusiness();
+  const { userData } = useAuth()
+  const businessId = userData?.id_business;
 
-  if (!hasBusinessId) {
+  if (!businessId) {
     return <NoBusinessId />;
   }
 
-  if (isAnyLoading) {
+  const {
+    business,
+    branches,
+    isLoading,
+    isError,
+    error,
+    refetchAll,
+    refetchBranches
+  } = useBusiness(businessId);
+
+  if (isLoading) {
     return <LoadingState />;
   }
 
-  if (hasAnyError) {
+  if (isError) {
     return (
       <ErrorState
-        businessError={businessError}
-        branchesError={branchesError}
-        onRetry={refetchBranches}
+        businessError={error}
+        branchesError={error}
+        onRetry={refetchAll}
       />
     );
   }
