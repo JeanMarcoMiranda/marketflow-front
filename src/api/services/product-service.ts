@@ -7,7 +7,7 @@ import {
 } from "../types/response.types";
 
 export class ProductService {
-  private PRODUCT_ENDPOINT = "/product";
+  private readonly PRODUCT_ENDPOINT = "/product";
 
   async getProductsByBusinessAndBranchId(
     id_business: string,

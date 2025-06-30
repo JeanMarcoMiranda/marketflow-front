@@ -29,7 +29,7 @@ export function GlobalDialog() {
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeDialog()}>
       <DialogContent
         className={`max-h-[90vh] overflow-y-auto ${
-          maxWidthClasses[options.maxWidth || "md"]
+          maxWidthClasses[options.maxWidth ?? "md"]
         }`}
       >
         {options.title && (

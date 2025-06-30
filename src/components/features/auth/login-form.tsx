@@ -11,7 +11,7 @@ interface LoginFormProps extends React.ComponentPropsWithoutRef<"form"> {
   onLogin: (email: string, password: string) => void;
 }
 
-export function LoginForm({ onLogin, className, ...props }: LoginFormProps) {
+export function LoginForm({ onLogin, className, ...props }: Readonly<LoginFormProps>) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

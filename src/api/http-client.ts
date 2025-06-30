@@ -10,7 +10,7 @@ declare module "axios" {
 
 // Configuración base para todas las solicitudes
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://localhost:3000/api/";
+  import.meta.env.VITE_API_BASE_URL ?? "https://localhost:3000/api/";
 const DEFAULT_TIMEOUT = 30000; // 30 segundos
 
 // Creamos una instancia de axios con configuración por defecto
@@ -34,7 +34,7 @@ httpClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(new Error(error?.message ?? String(error)))
 );
 
 // Interceptor de respuestas
@@ -88,7 +88,7 @@ httpClient.interceptors.response.use(
     }
 
     // Devolver el error crudo para que el consumidor lo maneje
-    return Promise.reject(error);
+    return Promise.reject(new Error(error?.message ?? String(error)));
   }
 );
 

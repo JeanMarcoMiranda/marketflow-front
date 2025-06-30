@@ -24,14 +24,14 @@ import { useUserPreferencesStore } from "@/store/use-user-preferences";
 interface BranchSwitcherProps {
   branches: Branch[];
   isBranchesLoading?: boolean;
-  onAddBranchClick: () => void; // Make optional
+  onAddBranchClick: () => void;
 }
 
 export function BranchSwitcher({
   branches,
   isBranchesLoading = false,
   onAddBranchClick,
-}: BranchSwitcherProps) {
+}: Readonly<BranchSwitcherProps>) {
   const { isMobile } = useSidebar();
   const { selected_branch_id, setSelectedBranch } = useUserPreferencesStore();
   const defaultBranch =
@@ -39,7 +39,7 @@ export function BranchSwitcher({
       ? branches.find((branch) => branch.id === selected_branch_id)
       : null;
   const [activeBranch, setActiveBranch] = React.useState<Branch | undefined>(
-    defaultBranch ? defaultBranch : undefined
+    defaultBranch ?? undefined
   );
 
   // Update activeBranch when branches change (e.g., after loading)
@@ -99,13 +99,13 @@ export function BranchSwitcher({
                   />
                 ) : (
                   <span className="text-sm font-medium">
-                    {getInitials(activeBranch?.name || "Branch")}
+                    {getInitials(activeBranch?.name ?? "Branch")}
                   </span>
                 )}
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {activeBranch?.name || "Select Branch"}
+                  {activeBranch?.name ?? "Select Branch"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />

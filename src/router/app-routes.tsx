@@ -56,38 +56,10 @@ export const Router = createBrowserRouter([
             path: "/dashboard",
             element: <Dashboard />,
           },
-          // {
-          //   path: "/orders",
-          //   element: <OrdersPage />,
-          // },
           {
             path: "/inventory",
             element: <ProductListPage />,
           },
-          // {
-          //   path: "/users",
-          //   element: <UsersPage />,
-          // },
-          // {
-          //   path: "/branches",
-          //   element: <BranchesPage />,
-          // },
-          // {
-          //   path: "/products",
-          //   element: <ProductsPage />,
-          // },
-          // {
-          //   path: "/business",
-          //   element: (
-          //     <ProtectedRoute allowedRoles={["developer"]} element={<BusinessPage />} />
-          //   ),
-          // },
-          // {
-          //   path: "/businessConfiguration",
-          //   element: (
-          //     <ProtectedRoute allowedRoles={["developer"]} element={<BusinessConfigurationPage />} />
-          //   ),
-          // },
         ],
       },
     ],

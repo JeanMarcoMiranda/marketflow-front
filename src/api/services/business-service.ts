@@ -2,7 +2,7 @@ import http from "../http-client";
 import { ApiResponse, Branch, Business } from "../types/response.types";
 
 export class BusinessService {
-  private BUSINESS_ENDPOINT = "/business";
+  private readonly BUSINESS_ENDPOINT = "/business";
 
   async getBusinessById(id: string): Promise<ApiResponse<Business>> {
     const response = await http.get<ApiResponse<Business>>(

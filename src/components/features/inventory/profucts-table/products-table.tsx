@@ -84,21 +84,19 @@ function ProductsTable() {
   });
 
   const toolbarActions = (
-    <>
-      <Button
-        variant="default"
-        size="sm"
-        onClick={openCreateProductModal}
-        disabled={isLoading || !business_id || isCreating}
-      >
-        {isCreating ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <PlusCircle className="mr-2 h-4 w-4" />
-        )}
-        {isCreating ? "Creando..." : "Agregar Producto"}
-      </Button>
-    </>
+    <Button
+      variant="default"
+      size="sm"
+      onClick={openCreateProductModal}
+      disabled={isLoading || !business_id || isCreating}
+    >
+      {isCreating ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      ) : (
+        <PlusCircle className="mr-2 h-4 w-4" />
+      )}
+      {isCreating ? "Creando..." : "Agregar Producto"}
+    </Button>
   );
 
   if (error) {

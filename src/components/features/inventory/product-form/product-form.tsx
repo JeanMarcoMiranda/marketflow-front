@@ -4,13 +4,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { productFormSchema, ProductFormData } from "./schema";
 
 // Componentes de Shadcn UI
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Product, CreateProductPayload, UpdateProductPayload } from "@/api/types/response.types";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Product,
+  CreateProductPayload,
+  UpdateProductPayload,
+} from "@/api/types/response.types";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
@@ -68,31 +86,34 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   isCreating,
   isUpdating,
   idBusiness,
-  idBranch
+  idBranch,
 }) => {
   const isEditing = !!defaultValues?.id;
   const [isMetadataExpanded, setIsMetadataExpanded] = React.useState(false);
 
   // Valores por defecto mejorados
-  const getDefaultValues = React.useCallback((): Partial<ProductFormData> => ({
-    name: defaultValues?.name || "",
-    description: defaultValues?.description || "",
-    sku: defaultValues?.sku || "",
-    unit_price: defaultValues?.unit_price ?? 0.01,
-    cost_price: defaultValues?.cost_price ?? 0,
-    unit_of_measure: defaultValues?.unit_of_measure || "unidad",
-    taxable: defaultValues?.taxable ?? true,
-    active: defaultValues?.active ?? true,
-    id_business: defaultValues?.id_business || idBusiness,
-    id_branch: defaultValues?.id_branch || idBranch,
-    expiration_date: defaultValues?.expiration_date
-      ? new Date(defaultValues.expiration_date).toISOString().split('T')[0]
-      : "",
-    batch_number: defaultValues?.batch_number || "",
-    metadata: defaultValues?.metadata
-      ? JSON.stringify(defaultValues.metadata, null, 2)
-      : "",
-  }), [defaultValues, idBusiness]);
+  const getDefaultValues = React.useCallback(
+    (): Partial<ProductFormData> => ({
+      name: defaultValues?.name ?? "",
+      description: defaultValues?.description ?? "",
+      sku: defaultValues?.sku ?? "",
+      unit_price: defaultValues?.unit_price ?? 0.01,
+      cost_price: defaultValues?.cost_price ?? 0,
+      unit_of_measure: defaultValues?.unit_of_measure ?? "unidad",
+      taxable: defaultValues?.taxable ?? true,
+      active: defaultValues?.active ?? true,
+      id_business: defaultValues?.id_business ?? idBusiness,
+      id_branch: defaultValues?.id_branch ?? idBranch,
+      expiration_date: defaultValues?.expiration_date
+        ? new Date(defaultValues.expiration_date).toISOString().split("T")[0]
+        : "",
+      batch_number: defaultValues?.batch_number ?? "",
+      metadata: defaultValues?.metadata
+        ? JSON.stringify(defaultValues.metadata, null, 2)
+        : "",
+    }),
+    [defaultValues, idBusiness]
+  );
 
   // Initialize form con memoización
   const form = useForm<ProductFormData>({
@@ -113,26 +134,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const costPrice = watch("cost_price");
   const profitMargin = React.useMemo(() => {
     if (unitPrice && costPrice && costPrice > 0) {
-      return ((unitPrice - costPrice) / costPrice * 100).toFixed(1);
+      return (((unitPrice - costPrice) / costPrice) * 100).toFixed(1);
     }
     return null;
   }, [unitPrice, costPrice]);
-
-  // Función para procesar metadata
-  // const processMetadata = (metadataInput: string | object | null | undefined): Record<string, any> => {
-  //   if (!metadataInput) return {};
-
-  //   if (typeof metadataInput === 'string') {
-  //     if (!metadataInput.trim()) return {};
-  //     try {
-  //       return JSON.parse(metadataInput);
-  //     } catch {
-  //       throw new Error("El formato JSON de metadata no es válido");
-  //     }
-  //   }
-
-  //   return metadataInput as Record<string, any>;
-  // };
 
   console.log("Is dirty:", isDirty);
   console.log("Is valid:", isValid);
@@ -141,13 +146,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onSubmit = async (data: ProductFormData) => {
     try {
       let metadataObject = {};
-      if (typeof data.metadata === 'string' && data.metadata) {
+      if (typeof data.metadata === "string" && data.metadata) {
         metadataObject = JSON.parse(data.metadata);
-      } else if (typeof data.metadata === 'object' && data.metadata !== null) {
+      } else if (typeof data.metadata === "object" && data.metadata !== null) {
         metadataObject = data.metadata;
       }
 
-      const expirationDateISO = data.expiration_date ? new Date(data.expiration_date).toISOString() : undefined;
+      const expirationDateISO = data.expiration_date
+        ? new Date(data.expiration_date).toISOString()
+        : undefined;
 
       if (isEditing && defaultValues?.id) {
         const payload: UpdateProductPayload = {
@@ -197,11 +204,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     } catch (err) {
       console.error("Error al guardar producto:", err);
 
-      toast.error(`Error al ${isEditing ? 'actualizar' : 'crear'} producto.`, {
-        description: getErrorMessage(err) || "Ocurrió un problema inesperado. Inténtalo de nuevo.",
+      toast.error(`Error al ${isEditing ? "actualizar" : "crear"} producto.`, {
+        description:
+          getErrorMessage(err) ??
+          "Ocurrió un problema inesperado. Inténtalo de nuevo.",
         action: {
           label: "Reintentar",
-          onClick: () => handleSubmit(onSubmit)(),
+          onClick: () => {
+            void handleSubmit(onSubmit)();
+          },
         },
       });
     }
@@ -209,13 +220,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   // Helper function para extraer mensajes de error
   const getErrorMessage = (error: unknown): string | null => {
-    if (error && typeof error === 'object' && 'message' in error) {
+    if (error && typeof error === "object" && "message" in error) {
       return (error as { message: string }).message;
     }
     return null;
   };
 
-  // const currentError = isEditing ? updateError : createError;
   const isPending = isEditing ? isUpdating : isCreating;
 
   return (
@@ -232,8 +242,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             <p className="text-gray-600">
               {isEditing
                 ? "Modifica la información de tu producto"
-                : "Completa los datos para crear un nuevo producto"
-              }
+                : "Completa los datos para crear un nuevo producto"}
             </p>
           </div>
         </div>
@@ -252,7 +261,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-
           {/* Información Básica */}
           <Card>
             <CardHeader>
@@ -332,9 +340,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         className="min-h-[100px] resize-none"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Máximo 500 caracteres
-                    </FormDescription>
+                    <FormDescription>Máximo 500 caracteres</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -411,7 +417,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             min="0.01"
                             placeholder="0.00"
                             {...field}
-                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                              field.onChange(parseFloat(e.target.value) || 0)
+                            }
                             disabled={isPending}
                             className="h-11 pl-8"
                           />
@@ -439,7 +447,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             min="0"
                             placeholder="0.00"
                             {...field}
-                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                              field.onChange(parseFloat(e.target.value) || 0)
+                            }
                             disabled={isPending}
                             className="h-11 pl-8"
                           />
@@ -542,7 +552,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         <Input
                           type="date"
                           {...field}
-                          value={field.value || ""}
+                          value={field.value ?? ""}
                           disabled={isPending}
                           className="h-11"
                         />
@@ -582,7 +592,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         type="button"
                         variant="ghost"
                         size="sm"
-                        onClick={() => setIsMetadataExpanded(!isMetadataExpanded)}
+                        onClick={() =>
+                          setIsMetadataExpanded(!isMetadataExpanded)
+                        }
                         className="p-0 h-auto font-medium text-sm"
                       >
                         Metadata (JSON) {isMetadataExpanded ? "▼" : "▶"}
@@ -599,7 +611,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                           />
                         </FormControl>
                         <FormDescription>
-                          Datos adicionales en formato JSON. Ejemplo: {"{"}"marca": "Ejemplo", "peso": 500{"}"}
+                          Datos adicionales en formato JSON. Ejemplo: {"{"}
+                          "marca": "Ejemplo", "peso": 500{"}"}
                         </FormDescription>
                         <FormMessage />
                       </>
@@ -609,17 +622,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               />
             </CardContent>
           </Card>
-
-          {/* Error Global */}
-          {/* {isError && currentError && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error de Validación</AlertTitle>
-              <AlertDescription>
-                {currentError?.message || "Verifica los datos ingresados e intenta nuevamente."}
-              </AlertDescription>
-            </Alert>
-          )} */}
 
           {/* Botones de Acción */}
           <div className="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t">
@@ -645,9 +647,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               ) : (
                 <>
                   {isEditing ? (
-                    <><Save className="h-4 w-4 mr-2" />Guardar Cambios</>
+                    <>
+                      <Save className="h-4 w-4 mr-2" />
+                      Guardar Cambios
+                    </>
                   ) : (
-                    <><Plus className="h-4 w-4 mr-2" />Crear Producto</>
+                    <>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Crear Producto
+                    </>
                   )}
                 </>
               )}

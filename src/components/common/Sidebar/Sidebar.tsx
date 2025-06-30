@@ -36,21 +36,6 @@ const data = {
       url: "/dashboard",
       icon: BookMarked,
     },
-    // {
-    //   name: "Negocios",
-    //   url: "/business",
-    //   icon: Package,
-    // },
-    // {
-    //   name: "Sucursales",
-    //   url: "/branches",
-    //   icon: Store,
-    // },
-    // {
-    //   name: "Productos",
-    //   url: "/products",
-    //   icon: Cookie,
-    // },
     {
       name: "Inventario",
       url: "/inventory",
@@ -61,11 +46,6 @@ const data = {
       url: "/orders",
       icon: Truck,
     },
-    // {
-    //   name: "Usuarios",
-    //   url: "/users",
-    //   icon: User,
-    // },
   ],
 };
 
@@ -94,23 +74,11 @@ export function AppSidebar({
     );
   };
 
-  // Obtenemos el usuario desde el store
-  // const { user: supabaseUser, userData } = useAuthStore();
-  // const userRole = userData?.role || "customer";
-
   const currentUser = {
-    name: userData?.name || "Admin",
-    email: userData?.email || "admin@lalena.com",
+    name: userData?.name ?? "Admin",
+    email: userData?.email ?? "admin@lalena.com",
     avatar: "/avatars/admin.jpg",
   };
-
-  // Filtrar proyectos según el rol del usuario
-  // const filteredProjects = data.projects.filter((project) => {
-  //   if (project.name === "Negocios" && userRole !== "developer") {
-  //     return false; // Restringir la sección "Negocios" si el usuario no es developer
-  //   }
-  //   return true;
-  // });
 
   return (
     <Sidebar collapsible="icon" {...props}>

@@ -8,7 +8,7 @@ import {
 
 export class AuthService {
   // Endpoint base para autenticación
-  private AUTH_ENDPOINT = "/auth";
+  private readonly AUTH_ENDPOINT = "/auth";
 
   /**
    * Inicia sesión con email y contraseña
@@ -110,7 +110,7 @@ export class AuthService {
         default:
           console.error(
             "Error en autenticación:",
-            response.data?.message || "Error desconocido"
+            response.data?.message ?? "Error desconocido"
           );
       }
     } else {

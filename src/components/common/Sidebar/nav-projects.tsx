@@ -17,10 +17,10 @@ import { Link } from "react-router-dom"
 export function NavProjects({
   projects,
 }: {
-  projects: {
-    name: string
-    url: string
-    icon: LucideIcon
+  readonly projects: readonly {
+    readonly name: string
+    readonly url: string
+    readonly icon: LucideIcon
   }[]
 }) {
 

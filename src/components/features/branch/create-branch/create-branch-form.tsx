@@ -63,7 +63,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   const form = useForm<CreateBranchFormData>({
     resolver: zodResolver(createBranchSchema),
     defaultValues: {
-      id_business: userData?.id_business || "",
+      id_business: userData?.id_business ?? "",
       name: "",
       contact_number: "",
       address: "",
@@ -81,7 +81,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
         saturday: "09:00-18:00",
         sunday: "Cerrado",
       },
-      id_super_admin: userData?.id || "",
+      id_super_admin: userData?.id ?? "",
       ...defaultValues,
     },
   });
@@ -494,7 +494,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
   };
 
   // Verificar autenticación
-  if (!userData || !userData.id_business || !userData.id) {
+  if (!(userData?.id_business && userData?.id)) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
@@ -526,7 +526,7 @@ export const CreateBranchForm: React.FC<CreateBranchFormProps> = ({
             <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg">
               <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
               <p className="text-sm text-red-700">
-                {createError?.message ||
+                {createError?.message ??
                   "Ocurrió un error inesperado. Inténtalo de nuevo."}
               </p>
             </div>

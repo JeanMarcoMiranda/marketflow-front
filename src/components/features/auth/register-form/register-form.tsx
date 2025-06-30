@@ -31,7 +31,7 @@ export interface RegisterFormProps {
   onSubmit: (data: Omit<RegisterFormData, "confirmPassword">) => void;
 }
 
-export function RegisterForm({ onSubmit }: RegisterFormProps) {
+export function RegisterForm({ onSubmit }: Readonly<RegisterFormProps>) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
