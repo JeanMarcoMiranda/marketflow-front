@@ -31,11 +31,9 @@ export const Header = () => {
         <Separator orientation="vertical" className="mr-2 h-4" />
         <Breadcrumb>
           <BreadcrumbList>
-            {/* Primer elemento fijo: "Pizzería Leña" sin enlace */}
+            {/* Primer elemento fijo: "MarketFlow" sin enlace */}
             <BreadcrumbItem>
-              <BreadcrumbPage className="font-bold">
-                Pizzería Leña
-              </BreadcrumbPage>
+              <BreadcrumbPage className="font-bold">MarketFlow</BreadcrumbPage>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
 
