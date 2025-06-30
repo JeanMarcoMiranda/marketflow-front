@@ -6,7 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SidebarTrigger } from "../../components/ui/sidebar";
+import { SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { Link, useLocation } from "react-router-dom";
 
@@ -33,7 +33,9 @@ export const Header = () => {
           <BreadcrumbList>
             {/* Primer elemento fijo: "Pizzería Leña" sin enlace */}
             <BreadcrumbItem>
-              <BreadcrumbPage className="font-bold">Pizzería Leña</BreadcrumbPage>
+              <BreadcrumbPage className="font-bold">
+                Pizzería Leña
+              </BreadcrumbPage>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
 

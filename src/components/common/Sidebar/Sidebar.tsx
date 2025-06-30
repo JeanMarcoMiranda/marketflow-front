@@ -7,8 +7,8 @@ import {
   // User,
 } from "lucide-react";
 
-import { NavProjects } from "./NavProjects";
-import { NavUser } from "./NavUser";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -16,11 +16,11 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { BranchSwitcher } from "./BranchSwitcher";
+import { BranchSwitcher } from "./branch-switcher";
 import { Branch } from "@/api/types/response.types";
-import { useDialogStore } from "@/store/useDialogStore";
-import { CreateBranchForm } from "@/components/features/branch/CreateBranch/CreateBranchForm";
-import { useAuth } from "@/hooks/useAuth";
+import { useDialogStore } from "@/store/use-dialog-store";
+import { CreateBranchForm } from "@/components/features/branch/create-branch/create-branch-form";
+import { useAuth } from "@/hooks/use-auth";
 
 // This is sample data.
 const data = {
@@ -71,19 +71,23 @@ const data = {
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   businessBranches: Branch[];
-  onBranchesRefetch: () => void
+  onBranchesRefetch: () => void;
 };
 
-export function AppSidebar({ businessBranches, onBranchesRefetch, ...props }: AppSidebarProps) {
+export function AppSidebar({
+  businessBranches,
+  onBranchesRefetch,
+  ...props
+}: AppSidebarProps) {
   const { openDialog, closeDialog } = useDialogStore();
-  const { userData } = useAuth()
+  const { userData } = useAuth();
 
   const openCreateBranchModal = () => {
     openDialog(
       <CreateBranchForm
         onSuccess={async () => {
           closeDialog();
-          onBranchesRefetch()
+          onBranchesRefetch();
         }}
       />,
       { title: "Create New Branch", maxWidth: "xl" }

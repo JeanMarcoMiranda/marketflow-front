@@ -1,7 +1,7 @@
-import { useStepper } from "./hooks/useStepper";
-import { StepperStep } from "./StepperStep";
-import { StepperContent } from "./StepperContent";
-import { StepperActions } from "./StepperActions";
+import { useStepper } from "./hooks/use-stepper";
+import { StepperStep } from "./stepper-step";
+import { StepperContent } from "./stepper-content";
+import { StepperActions } from "./stepper-actions";
 import { cn } from "@/lib/utils";
 import { StepperProps } from "./types/stepper.types";
 
