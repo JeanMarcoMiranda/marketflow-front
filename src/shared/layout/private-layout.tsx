@@ -2,13 +2,12 @@ import { Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import { useBusiness } from "@/hooks/use-business";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button"; // Asumiendo que tienes un componente Button de tu UI library
-import { Loader2, AlertTriangle } from "lucide-react"; // Iconos de Lucide para spinner y error
+import { Button } from "@/components/ui/button";
+import { Loader2, AlertTriangle } from "lucide-react";
 import { AppSidebar } from "@/components/common/Sidebar/Sidebar";
 import { Header } from "@/components/common/Header";
 import { useAuth } from "@/hooks/use-auth";
 
-// Componente para el estado de carga
 const LoadingState = () => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -21,7 +20,6 @@ const LoadingState = () => (
   </motion.div>
 );
 
-// Componente para errores
 const ErrorState = ({
   businessError,
   branchesError,
@@ -54,7 +52,6 @@ const ErrorState = ({
   </motion.div>
 );
 
-// Componente para cuando no hay businessId
 const NoBusinessId = () => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -75,7 +72,6 @@ const NoBusinessId = () => (
   </motion.div>
 );
 
-// Componente para cuando no hay datos de negocio
 const NoBusinessData = () => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}

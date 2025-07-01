@@ -39,9 +39,9 @@ const BusinessConfigurationPage = () => {
       >
         <Alert variant="destructive" className="max-w-2xl mx-auto">
           <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Error loading business data</AlertTitle>
+          <AlertTitle>Error al cargar los datos del negocio</AlertTitle>
           <AlertDescription className="mt-2">
-            <p className="mb-3">{error?.message || 'Unknown error occurred'}</p>
+            <p className="mb-3">{error?.message || 'Ocurrió un error desconocido'}</p>
             <Button
               variant="outline"
               size="sm"
@@ -49,7 +49,7 @@ const BusinessConfigurationPage = () => {
               className="hover:bg-destructive/10"
             >
               <RefreshCcw className="mr-2 h-4 w-4" />
-              Try Again
+              Reintentar
             </Button>
           </AlertDescription>
         </Alert>
@@ -64,7 +64,7 @@ const BusinessConfigurationPage = () => {
       className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100/50"
     >
       <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Header with improved typography and spacing */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -72,10 +72,10 @@ const BusinessConfigurationPage = () => {
         >
           <div className="space-y-1">
             <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-              Business Configuration
+              Configuración del Negocio
             </h1>
             <p className="text-slate-600">
-              Manage your business information and settings
+              Administra la información y configuración de tu negocio
             </p>
           </div>
 
@@ -86,7 +86,7 @@ const BusinessConfigurationPage = () => {
                 className="flex items-center gap-1 px-3 py-1"
               >
                 <Activity className="h-3 w-3" />
-                {business.status}
+                {business.status === 'active' ? 'Activo' : 'Inactivo'}
               </Badge>
             )}
             <Button
@@ -95,7 +95,7 @@ const BusinessConfigurationPage = () => {
               className="hover:bg-slate-50 transition-colors"
             >
               <RefreshCcw className="mr-2 h-4 w-4" />
-              Refresh
+              Actualizar
             </Button>
           </div>
         </motion.div>
@@ -122,7 +122,7 @@ const BusinessConfigurationPage = () => {
 
 export default BusinessConfigurationPage;
 
-// NoBusinessId Component
+// Componente para cuando no hay ID de negocio
 const NoBusinessId = () => (
   <motion.div
     initial={{ opacity: 0, scale: 0.95 }}
@@ -150,11 +150,11 @@ const NoBusinessId = () => (
       className="space-y-3 max-w-md"
     >
       <h2 className="text-2xl font-bold text-slate-800">
-        No Business Found
+        No se encontró un negocio
       </h2>
       <p className="text-slate-600 leading-relaxed">
-        You need to be associated with a business to access this page.
-        Please log in or register your business to continue.
+        Necesitas estar asociado a un negocio para acceder a esta página.
+        Por favor inicia sesión o registra tu negocio para continuar.
       </p>
     </motion.div>
 
@@ -167,7 +167,7 @@ const NoBusinessId = () => (
         asChild
         className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-8 py-3"
       >
-        <a href="/login">Get Started</a>
+        <a href="/login">Comenzar</a>
       </Button>
     </motion.div>
   </motion.div>

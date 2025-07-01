@@ -56,7 +56,7 @@ const BusinessInfoField = ({
           ) : (
             <p className="text-sm text-slate-900 font-medium">
               {value || (
-                <span className="text-slate-500 italic">Not provided</span>
+                <span className="text-slate-500 italic">No especificado</span>
               )}
             </p>
           )}

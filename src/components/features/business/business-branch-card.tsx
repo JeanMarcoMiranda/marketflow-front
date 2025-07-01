@@ -26,7 +26,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
   const [imageError, setImageError] = useState(false);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString('es-PE', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -34,9 +34,8 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
   };
 
   const getOperatingHours = () => {
-    if (!branch.operating_hours) return 'Hours not set';
-    // Assuming operating_hours has day properties
-    return branch.operating_hours.monday || 'Hours not set';
+    if (!branch.operating_hours) return 'Horario no definido';
+    return branch.operating_hours.monday || 'Horario no definido';
   };
 
   if (viewMode === 'list') {
@@ -48,12 +47,11 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
         <Card className="hover:shadow-md transition-all duration-200 border-slate-200/60 hover:border-slate-300">
           <CardContent className="p-6">
             <div className="flex items-center gap-6">
-              {/* Image/Icon */}
               <div className="flex-shrink-0">
                 {branch.image_url && !imageError ? (
                   <img
                     src={branch.image_url}
-                    alt={`${branch.name} image`}
+                    alt={`Imagen de ${branch.name}`}
                     className="h-16 w-16 rounded-lg object-cover ring-2 ring-slate-200"
                     onError={() => setImageError(true)}
                   />
@@ -64,7 +62,6 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
                 )}
               </div>
 
-              {/* Main Info */}
               <div className="flex-grow space-y-2">
                 <div className="flex items-start justify-between">
                   <div>
@@ -79,7 +76,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
                     className="flex items-center gap-1"
                   >
                     <Activity className="h-3 w-3" />
-                    {branch.status}
+                    {branch.status === 'active' ? 'Activo' : 'Inactivo'}
                   </Badge>
                 </div>
 
@@ -92,7 +89,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
                   )}
                   <div className="flex items-center gap-1">
                     <Box className="h-3 w-3" />
-                    <span>Capacity: {branch.inventory_capacity}</span>
+                    <span>Capacidad: {branch.inventory_capacity}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
@@ -101,7 +98,6 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm">
                   <Edit className="h-4 w-4" />
@@ -124,14 +120,13 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
       className="h-full"
     >
       <Card className="hover:shadow-xl transition-all duration-300 h-full border-slate-200/60 hover:border-slate-300 group overflow-hidden">
-        {/* Image Section */}
         <div className="relative overflow-hidden">
           {branch.image_url && !imageError ? (
             <motion.img
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
               src={branch.image_url}
-              alt={`${branch.name} image`}
+              alt={`Imagen de ${branch.name}`}
               className="w-full h-48 object-cover"
               onError={() => setImageError(true)}
             />
@@ -141,7 +136,6 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
             </div>
           )}
 
-          {/* Status Badge */}
           <Badge
             className={cn(
               "absolute top-3 right-3 shadow-sm",
@@ -151,14 +145,12 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
             )}
           >
             <Activity className="h-3 w-3 mr-1" />
-            {branch.status}
+            {branch.status === 'active' ? 'Activo' : 'Inactivo'}
           </Badge>
 
-          {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
-        {/* Content */}
         <div className="flex flex-col flex-grow">
           <CardHeader className="pb-4">
             <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">
@@ -181,7 +173,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
 
               <div className="flex items-center text-sm text-slate-600">
                 <Box className="mr-2 h-4 w-4 text-slate-400" />
-                <span>Capacity: {branch.inventory_capacity || 'Not set'}</span>
+                <span>Capacidad: {branch.inventory_capacity || 'No definido'}</span>
               </div>
 
               <div className="flex items-center text-sm text-slate-600">
@@ -192,7 +184,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
               {branch.created_at && (
                 <div className="flex items-center text-sm text-slate-500">
                   <Calendar className="mr-2 h-4 w-4 text-slate-400" />
-                  <span>Created {formatDate(branch.created_at)}</span>
+                  <span>Creado el {formatDate(branch.created_at)}</span>
                 </div>
               )}
             </div>
@@ -205,7 +197,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
               className="hover:bg-slate-50 hover:border-slate-300 transition-colors"
             >
               <Edit className="mr-2 h-4 w-4" />
-              Edit
+              Editar
             </Button>
             <Button
               variant="outline"
@@ -213,7 +205,7 @@ const BusinessBranchCard = ({ branch, viewMode = 'grid' }: BusinessBranchCardPro
               className="hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-colors"
             >
               <Eye className="mr-2 h-4 w-4" />
-              View
+              Ver
             </Button>
           </CardFooter>
         </div>

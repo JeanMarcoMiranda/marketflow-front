@@ -5,7 +5,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
-  Map,
   Plus,
   Search,
   Grid3X3,
@@ -23,7 +22,6 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
 
   if (!branches) return null;
 
-  // Filter and sort logic
   const filteredBranches = branches
     .filter(branch =>
       branch.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -62,21 +60,14 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
   };
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <motion.div variants={containerVariants} initial="hidden" animate="visible">
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardHeader className="pb-6">
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-          >
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-3">
                 <CardTitle className="text-2xl font-bold text-slate-900">
-                  Business Branches
+                  Sucursales del Negocio
                 </CardTitle>
                 <Badge variant="secondary" className="flex items-center gap-1">
                   <MapPin className="h-3 w-3" />
@@ -84,18 +75,18 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                 </Badge>
               </div>
               <CardDescription className="text-base">
-                Manage your business branches and settings
+                Administra las sucursales y configuraciones de tu negocio
               </CardDescription>
               {totalBranches > 0 && (
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                   <div className="flex items-center gap-1">
                     <div className="h-2 w-2 rounded-full bg-green-500" />
-                    <span>{activeBranches} Active</span>
+                    <span>{activeBranches} Activas</span>
                   </div>
                   {totalBranches - activeBranches > 0 && (
                     <div className="flex items-center gap-1">
                       <div className="h-2 w-2 rounded-full bg-gray-400" />
-                      <span>{totalBranches - activeBranches} Inactive</span>
+                      <span>{totalBranches - activeBranches} Inactivas</span>
                     </div>
                   )}
                 </div>
@@ -108,7 +99,7 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                 className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <Plus className="mr-2 h-4 w-4" />
-                Add Branch
+                Añadir Sucursal
               </Button>
             </div>
           </motion.div>
@@ -119,15 +110,11 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
             <BusinessBranchEmpty />
           ) : (
             <motion.div variants={containerVariants} className="space-y-6">
-              {/* Search and Filter Controls */}
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4"
-              >
+              <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-grow max-w-md">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                   <Input
-                    placeholder="Search branches..."
+                    placeholder="Buscar sucursales..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 border-slate-200 focus:border-blue-300 focus:ring-blue-100"
@@ -135,18 +122,16 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Sort Dropdown */}
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as any)}
                     className="px-3 py-2 text-sm border border-slate-200 rounded-md bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-colors"
                   >
-                    <option value="name">Sort by Name</option>
-                    <option value="status">Sort by Status</option>
-                    <option value="created">Sort by Created</option>
+                    <option value="name">Ordenar por Nombre</option>
+                    <option value="status">Ordenar por Estado</option>
+                    <option value="created">Ordenar por Fecha de Creación</option>
                   </select>
 
-                  {/* View Mode Toggle */}
                   <div className="flex items-center bg-slate-100 rounded-lg p-1">
                     <Button
                       variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -168,19 +153,12 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                 </div>
               </motion.div>
 
-              {/* Results Count */}
               {searchTerm && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  className="text-sm text-slate-600"
-                >
-                  Found {filteredBranches.length} location{filteredBranches.length !== 1 ? 's' : ''}
-                  {searchTerm && ` matching "${searchTerm}"`}
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="text-sm text-slate-600">
+                  Se encontraron {filteredBranches.length} ubicación{filteredBranches.length !== 1 ? 'es' : ''}{searchTerm && ` que coinciden con "${searchTerm}"`}
                 </motion.div>
               )}
 
-              {/* Branches Grid/List */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={viewMode}
@@ -188,11 +166,7 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.2 }}
-                  className={
-                    viewMode === 'grid'
-                      ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
-                      : "space-y-4"
-                  }
+                  className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}
                 >
                   {filteredBranches.map((branch, index) => (
                     <motion.div
@@ -201,16 +175,12 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <BusinessBranchCard
-                        branch={branch}
-                        viewMode={viewMode}
-                      />
+                      <BusinessBranchCard branch={branch} viewMode={viewMode} />
                     </motion.div>
                   ))}
                 </motion.div>
               </AnimatePresence>
 
-              {/* No Results */}
               {filteredBranches.length === 0 && searchTerm && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -220,16 +190,12 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                   <div className="h-16 w-16 mx-auto bg-slate-100 rounded-full flex items-center justify-center">
                     <Search className="h-8 w-8 text-slate-400" />
                   </div>
-                  <h3 className="text-lg font-medium text-slate-900">No locations found</h3>
+                  <h3 className="text-lg font-medium text-slate-900">No se encontraron ubicaciones</h3>
                   <p className="text-slate-600">
-                    Try adjusting your search terms or filters
+                    Intenta modificar los filtros o términos de búsqueda
                   </p>
-                  <Button
-                    variant="outline"
-                    onClick={() => setSearchTerm("")}
-                    className="mt-4"
-                  >
-                    Clear Search
+                  <Button variant="outline" onClick={() => setSearchTerm("")} className="mt-4">
+                    Limpiar Búsqueda
                   </Button>
                 </motion.div>
               )}
