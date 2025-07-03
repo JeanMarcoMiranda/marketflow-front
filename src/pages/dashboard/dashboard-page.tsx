@@ -8,7 +8,6 @@ export default function Dashboard() {
 
   //TODO: Implementar la función de cerrar sesión y redirigir al login
   const handleLogout = async () => {
-    // await signOut();
     logout();
     navigate("/auth/login");
   };
@@ -48,7 +47,7 @@ export default function Dashboard() {
     <div>
       {/* Encabezado */}
       <header className="bg-white shadow-lg rounded-lg p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-800"> Panel de control</h1>
         <button
           onClick={handleLogout}
           className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-500 transition duration-300"
@@ -67,9 +66,9 @@ export default function Dashboard() {
 
         {/* Tarjetas de métricas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <div
-              key={index}
+              key={stat.title}
               className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4"
             >
               <div className="p-3 rounded-full bg-gray-100">{stat.icon}</div>
@@ -96,7 +95,7 @@ export default function Dashboard() {
             <ul className="space-y-3">
               {notifications.map((note, index) => (
                 <li
-                  key={index}
+                  key={note}
                   className="flex items-center gap-3 border-b last:border-none py-3 px-4 rounded-lg hover:bg-gray-100 transition duration-200"
                 >
                   {/* Indicador de nuevo mensaje */}

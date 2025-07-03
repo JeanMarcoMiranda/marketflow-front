@@ -32,13 +32,13 @@ const data = {
   ],
   projects: [
     {
-      name: "Dashboard",
+      name: "	Panel de control",
       url: "/dashboard",
       icon: BookMarked,
     },
     {
-      name: "Inventario",
-      url: "/inventory",
+      name: "Productos",
+      url: "/products",
       icon: ClipboardList,
     },
     {

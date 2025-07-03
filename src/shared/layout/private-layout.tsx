@@ -4,8 +4,8 @@ import { useBusiness } from "@/hooks/use-business";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Loader2, AlertTriangle } from "lucide-react";
-import { AppSidebar } from "@/components/common/Sidebar/Sidebar";
-import { Header } from "@/components/common/Header";
+import { AppSidebar } from "@/components/common/sidebar/sidebar";
+import { Header } from "@/components/common/header";
 import { useAuth } from "@/hooks/use-auth";
 
 const LoadingState = () => (
@@ -90,12 +90,8 @@ const NoBusinessData = () => (
 );
 
 export default function PrivateLayout() {
-  const { userData } = useAuth()
+  const { userData } = useAuth();
   const businessId = userData?.id_business;
-
-  if (!businessId) {
-    return <NoBusinessId />;
-  }
 
   const {
     business,
@@ -104,8 +100,12 @@ export default function PrivateLayout() {
     isError,
     error,
     refetchAll,
-    refetchBranches
-  } = useBusiness(businessId);
+    refetchBranches,
+  } = useBusiness(businessId ?? "");
+
+  if (!businessId) {
+    return <NoBusinessId />;
+  }
 
   if (isLoading) {
     return <LoadingState />;

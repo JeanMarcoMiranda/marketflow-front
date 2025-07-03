@@ -69,7 +69,7 @@ export function BranchSwitcher({
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild>
-            <Link to="/businessConfiguration">
+            <Link to="/business-configuration">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gray-200">
                 <Plus className="size-4" />
               </div>
@@ -125,7 +125,7 @@ export function BranchSwitcher({
               </DropdownMenuLabel>
               <DropdownMenuItem asChild>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link to="/businessConfiguration">
+                  <Link to="/business-configuration">
                     <Edit className="size-4 flex-shrink-0" />
                   </Link>
                 </Button>

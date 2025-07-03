@@ -10,7 +10,7 @@ import { lazy } from "react";
 
 import PrivateRoute from "./private-route";
 import ProductListPage from "@/pages/inventory/product-list-page";
-import { Loadable } from "@/components/common/Loadable";
+import { Loadable } from "@/components/common/loadable";
 
 // Private routes
 const Dashboard = Loadable(
@@ -20,7 +20,9 @@ const Dashboard = Loadable(
 // Public Routes
 const LoginPage = Loadable(lazy(() => import("@/pages/auth/login-page")));
 const RegisterPage = Loadable(lazy(() => import("@/pages/auth/register-page")));
-const BusinessConfigurationPage = Loadable(lazy(() => import("@/pages/business/business-configuration-page")));
+const BusinessConfigurationPage = Loadable(
+  lazy(() => import("@/pages/business/business-configuration-page"))
+);
 const NotFound = Loadable(lazy(() => import("@/pages/not-found")));
 
 export const Router = createBrowserRouter([
@@ -58,11 +60,11 @@ export const Router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "/inventory",
+            path: "/products",
             element: <ProductListPage />,
           },
           {
-            path: "/businessConfiguration",
+            path: "/business-configuration",
             element: <BusinessConfigurationPage />,
           },
         ],

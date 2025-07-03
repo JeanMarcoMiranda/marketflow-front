@@ -13,18 +13,12 @@ const BusinessConfigurationPage = () => {
   const { userData } = useAuth();
   const businessId = userData?.id_business;
 
+  const { business, branches, isLoading, isError, error, refetchAll } =
+    useBusiness(businessId ?? "");
+
   if (!businessId) {
     return <NoBusinessId />;
   }
-
-  const {
-    business,
-    branches,
-    isLoading,
-    isError,
-    error,
-    refetchAll
-  } = useBusiness(businessId);
 
   if (isLoading) {
     return <BusinessConfigurationSkeleton />;
@@ -41,7 +35,9 @@ const BusinessConfigurationPage = () => {
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Error al cargar los datos del negocio</AlertTitle>
           <AlertDescription className="mt-2">
-            <p className="mb-3">{error?.message || 'Ocurrió un error desconocido'}</p>
+            <p className="mb-3">
+              {error?.message ?? "Ocurrió un error desconocido"}
+            </p>
             <Button
               variant="outline"
               size="sm"
@@ -71,7 +67,7 @@ const BusinessConfigurationPage = () => {
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         >
           <div className="space-y-1">
-            <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent pb-2">
               Configuración del Negocio
             </h1>
             <p className="text-slate-600">
@@ -82,11 +78,11 @@ const BusinessConfigurationPage = () => {
           <div className="flex items-center gap-3">
             {business?.status && (
               <Badge
-                variant={business.status === 'active' ? 'default' : 'secondary'}
+                variant={business.status === "active" ? "default" : "secondary"}
                 className="flex items-center gap-1 px-3 py-1"
               >
                 <Activity className="h-3 w-3" />
-                {business.status === 'active' ? 'Activo' : 'Inactivo'}
+                {business.status === "active" ? "Activo" : "Inactivo"}
               </Badge>
             )}
             <Button
@@ -153,8 +149,8 @@ const NoBusinessId = () => (
         No se encontró un negocio
       </h2>
       <p className="text-slate-600 leading-relaxed">
-        Necesitas estar asociado a un negocio para acceder a esta página.
-        Por favor inicia sesión o registra tu negocio para continuar.
+        Necesitas estar asociado a un negocio para acceder a esta página. Por
+        favor inicia sesión o registra tu negocio para continuar.
       </p>
     </motion.div>
 
