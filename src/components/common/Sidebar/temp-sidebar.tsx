@@ -1,4 +1,5 @@
 import type * as React from "react";
+import { IconHelp, IconSearch, IconSettings } from "@tabler/icons-react";
 import { ClipboardList, Pizza, Truck, BookMarked, Package } from "lucide-react";
 
 import { NavProjects } from "./nav-projects";
@@ -16,15 +17,8 @@ import { useDialogStore } from "@/store/use-dialog-store";
 import { CreateBranchForm } from "@/components/features/branch/create-branch/create-branch-form";
 import { useAuth } from "@/hooks/use-auth";
 
-// This is sample data.
 const data = {
-  branches: [
-    {
-      name: "La Leña",
-      logo: Pizza,
-    },
-  ],
-  projects: [
+  proyectos: [
     {
       name: "	Panel de control",
       url: "/dashboard",
@@ -49,7 +43,24 @@ const data = {
       name: "Ventas",
       url: "/sales",
       icon: Pizza,
-    }
+    },
+  ],
+  Ajustes: [
+    {
+      title: "Configuración",
+      url: "#",
+      icon: IconSettings,
+    },
+    {
+      title: "Obtener ayuda",
+      url: "#",
+      icon: IconHelp,
+    },
+    {
+      title: "Buscar",
+      url: "#",
+      icon: IconSearch,
+    },
   ],
 };
 
@@ -80,7 +91,7 @@ export function AppSidebar({
 
   const currentUser = {
     name: userData?.name ?? "Admin",
-    email: userData?.email ?? "admin@lalena.com",
+    email: userData?.email ?? "admin@admin.com",
     avatar: "/avatars/admin.jpg",
   };
 
@@ -93,7 +104,13 @@ export function AppSidebar({
         />
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        {Object.entries(data).map(([groupKey, items]) => (
+          <NavProjects
+            key={groupKey}
+            groupName={groupKey.charAt(0).toUpperCase() + groupKey.slice(1)}
+            projects={items}
+          />
+        ))}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={currentUser} />

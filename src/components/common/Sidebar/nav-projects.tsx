@@ -1,52 +1,40 @@
-import { MoreHorizontal, type LucideIcon } from "lucide-react"
-
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { Link } from "react-router-dom"
+} from "@/components/ui/sidebar";
+import { type LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function NavProjects({
+  groupName,
   projects,
-}: {
+}: Readonly<{
+  groupName: string;
   readonly projects: readonly {
-    readonly name: string
-    readonly url: string
-    readonly icon: LucideIcon
-  }[]
-}) {
-
+    readonly name?: string;
+    readonly title?: string;
+    readonly url: string;
+    readonly icon: LucideIcon | React.ComponentType;
+  }[];
+}>) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>{groupName}</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem key={item.name ?? item.title}>
             <SidebarMenuButton asChild>
               <Link to={item.url}>
                 <item.icon />
-                <span>{item.name}</span>
+                <span>{item.name ?? item.title}</span>
               </Link>
             </SidebarMenuButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
-                  <MoreHorizontal />
-                  <span className="sr-only">More</span>
-                </SidebarMenuAction>
-              </DropdownMenuTrigger>
-            </DropdownMenu>
           </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

@@ -4,8 +4,8 @@ import { useBusiness } from "@/hooks/use-business";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Loader2, AlertTriangle } from "lucide-react";
-import { AppSidebar } from "@/components/common/sidebar/sidebar";
-import { Header } from "@/components/common/header";
+import { AppSidebar } from "@/components/common/sidebar/temp-sidebar";
+import { Header } from "@/components/common/temp-header";
 import { useAuth } from "@/hooks/use-auth";
 
 const LoadingState = () => (

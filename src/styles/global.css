@@ -114,10 +114,18 @@
   --color-sidebar: var(--sidebar);
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/49;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
