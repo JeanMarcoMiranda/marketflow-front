@@ -46,6 +46,11 @@ const data = {
       url: "/orders",
       icon: Truck,
     },
+    {
+      name: "Ventas",
+      url: "/sales",
+      icon: Pizza,
+    }
   ],
 };
 

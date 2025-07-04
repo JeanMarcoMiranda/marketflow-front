@@ -10,7 +10,12 @@ import { lazy } from "react";
 
 import PrivateRoute from "./private-route";
 import ProductListPage from "@/pages/inventory/product-list-page";
+<<<<<<< Updated upstream
 import { Loadable } from "@/components/common/loadable";
+=======
+import { Loadable } from "@/components/common/Loadable";
+import SalesPage from "@/pages/sales/sales-page";
+>>>>>>> Stashed changes
 
 // Private routes
 const Dashboard = Loadable(
@@ -67,6 +72,10 @@ export const Router = createBrowserRouter([
             path: "/business-configuration",
             element: <BusinessConfigurationPage />,
           },
+          {
+            path: "/sales",
+            element: <SalesPage />,
+          }
         ],
       },
     ],

@@ -105,6 +105,7 @@ export interface Product {
   unit_price: number;
   cost_price: number;
   unit_of_measure: string;
+  image_url: string;
   taxable: boolean;
   active: boolean;
   expiration_date: string;
@@ -113,6 +114,23 @@ export interface Product {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+}
+
+export interface SaleItem {
+  id: string;
+  product: Product;
+  quantity: number;
+  unit_price: number;
+  total: number;
+  discount?: number;
+}
+
+export interface SaleSummary {
+  subtotal: number;
+  tax: number;
+  discount: number;
+  total: number;
+  items_count: number;
 }
 
 export type Metadata = Record<string, unknown>;
