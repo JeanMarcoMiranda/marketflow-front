@@ -1,119 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { LogOut, Bell, BarChart2, Users, ShoppingBag } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { SectionCards } from "@/components/features/dashboard/dashboard-section-cards";
+import { ChartAreaInteractive } from "@/components/features/dashboard/dashboard-chart-area-interactive";
+import { DataTable } from "@/components/features/dashboard/dashboard-data-table";
+import data from "./data.json";
 
 export default function Dashboard() {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  //TODO: Implementar la función de cerrar sesión y redirigir al login
-  const handleLogout = async () => {
-    logout();
-    navigate("/auth/login");
-  };
-
-  // Datos ficticios para métricas y notificaciones
-  const stats = [
-    {
-      title: "Usuarios Activos",
-      value: 1254,
-      icon: <Users className="h-6 w-6 text-blue-500" />,
-    },
-    {
-      title: "Ventas Hoy",
-      value: "$3,487",
-      icon: <ShoppingBag className="h-6 w-6 text-green-500" />,
-    },
-    {
-      title: "Tareas Pendientes",
-      value: 23,
-      icon: <Bell className="h-6 w-6 text-yellow-500" />,
-    },
-    {
-      title: "Actividad Reciente",
-      value: "Alta",
-      icon: <BarChart2 className="h-6 w-6 text-red-500" />,
-    },
-  ];
-
-  const notifications = [
-    "Nuevo usuario registrado: Juan Pérez",
-    "Pedido #98234 completado",
-    "Servidor en mantenimiento a las 2AM",
-    "Pago recibido de $149.99",
-  ];
-
   return (
     <div>
-      {/* Encabezado */}
-      <header className="bg-white shadow-lg rounded-lg p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800"> Panel de control</h1>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-500 transition duration-300"
-        >
-          <LogOut className="h-5 w-5" />
-          Cerrar sesión
-        </button>
-      </header>
-
-      {/* Contenido principal */}
-      <main className="flex-1 p-8">
-        {/* Bienvenida */}
-        <p className="text-gray-600 text-lg mb-6">
-          Bienvenido, <span className="font-semibold">Jacket</span>
-        </p>
-
-        {/* Tarjetas de métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat) => (
-            <div
-              key={stat.title}
-              className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4"
-            >
-              <div className="p-3 rounded-full bg-gray-100">{stat.icon}</div>
-              <div>
-                <p className="text-gray-600">{stat.title}</p>
-                <h3 className="text-2xl font-semibold">{stat.value}</h3>
-              </div>
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <SectionCards />
+            <div className="px-4 lg:px-6">
+              <ChartAreaInteractive />
             </div>
-          ))}
-        </div>
-
-        {/* Sección de Notificaciones */}
-        <div className="mt-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">
-              Notificaciones recientes
-            </h2>
-            <button className="text-blue-600 hover:underline text-sm">
-              Ver todas
-            </button>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <ul className="space-y-3">
-              {notifications.map((note, index) => (
-                <li
-                  key={note}
-                  className="flex items-center gap-3 border-b last:border-none py-3 px-4 rounded-lg hover:bg-gray-100 transition duration-200"
-                >
-                  {/* Indicador de nuevo mensaje */}
-                  <span className="h-3 w-3 bg-blue-500 rounded-full animate-pulse"></span>
-
-                  {/* Texto de la notificación */}
-                  <p className="text-gray-700 flex-1">{note}</p>
-
-                  {/* Hora de la notificación (simulada) */}
-                  <span className="text-xs text-gray-500">
-                    Hace {index + 1} min
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <DataTable data={data} />
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import PublicRoute from "./public-route";
 import { lazy } from "react";
 import SalesPage from "@/pages/sales/sales-page";
 import PrivateRoute from "./private-route";
-import { Loadable } from "@/components/common/Loadable";
+import { Loadable } from "@/components/common/temp-loadable";
 
 // Private routes
 const Dashboard = Loadable(
@@ -86,7 +86,7 @@ export const Router = createBrowserRouter([
           {
             path: "/calendar",
             element: <CalendarGridPage />,
-          }
+          },
         ],
       },
     ],
