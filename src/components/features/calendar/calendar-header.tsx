@@ -1,6 +1,8 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, Calendar, RotateCcw } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { MonthYear } from '@/api/types/orders.types';
+import { Button } from '@/components/ui/button';
 
 interface CalendarHeaderProps {
   currentDate: MonthYear;
@@ -26,68 +28,64 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   const years = Array.from({ length: 10 }, (_, i) => currentYear - 5 + i);
 
   return (
-    <div className="flex items-center justify-between p-4 bg-white border-b border-gray-200">
-      {/* Navegación de meses */}
-      <div className="flex items-center space-x-4">
-        <button
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-2">
+        <Button
+          variant="outline"
+          size="icon"
           onClick={() => onNavigateMonth('prev')}
-          className="p-2 rounded-md hover:bg-gray-100 transition-colors"
-          title="Mes anterior"
+          className="h-9 w-9"
         >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
 
         <div className="flex items-center space-x-2">
-          {/* Selector de mes */}
-          <select
-            value={currentDate.month}
-            onChange={(e) => onSetMonth(parseInt(e.target.value))}
-            className="bg-transparent text-lg font-semibold border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
-          >
-            {months.map((month, index) => (
-              <option key={index} value={index}>
-                {month}
-              </option>
-            ))}
-          </select>
+          <Select value={currentDate.month.toString()} onValueChange={(value) => onSetMonth(parseInt(value))}>
+            <SelectTrigger className="w-32 border-0 text-lg font-semibold">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {months.map((month, index) => (
+                <SelectItem key={index} value={index.toString()}>
+                  {month}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          {/* Selector de año */}
-          <select
-            value={currentDate.year}
-            onChange={(e) => onSetYear(parseInt(e.target.value))}
-            className="bg-transparent text-lg font-semibold border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+          <Select value={currentDate.year.toString()} onValueChange={(value) => onSetYear(parseInt(value))}>
+            <SelectTrigger className="w-20 border-0 text-lg font-semibold">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((year) => (
+                <SelectItem key={year} value={year.toString()}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <button
+        <Button
+          variant="outline"
+          size="icon"
           onClick={() => onNavigateMonth('next')}
-          className="p-2 rounded-md hover:bg-gray-100 transition-colors"
-          title="Mes siguiente"
+          className="h-9 w-9"
         >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+          <ChevronRight className="w-4 h-4" />
+        </Button>
       </div>
 
-      {/* Título y botón de hoy */}
       <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-bold text-gray-900 flex items-center">
-          <Calendar className="w-5 h-5 mr-2" />
-          Calendario de Órdenes
-        </h1>
-
-        <button
-          onClick={onGoToToday}
-          className="flex items-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          <RotateCcw className="w-4 h-4" />
-          <span>Hoy</span>
-        </button>
+        <div className="flex items-center space-x-2">
+          <Calendar className="w-5 h-5 text-muted-foreground" />
+          <h1 className="text-lg font-semibold">Calendario de Órdenes</h1>
+        </div>
+        <Button variant="outline" onClick={onGoToToday} size="sm">
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Hoy
+        </Button>
       </div>
     </div>
   );

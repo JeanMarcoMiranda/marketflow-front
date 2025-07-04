@@ -29,6 +29,9 @@ const BusinessConfigurationPage = Loadable(
   lazy(() => import("@/pages/business/business-configuration-page"))
 );
 const NotFound = Loadable(lazy(() => import("@/pages/not-found")));
+const CalendarGridPage = Loadable(
+  lazy(() => import("@/pages/calendar/calendar-grid-page"))
+);
 
 export const Router = createBrowserRouter([
   {
@@ -79,6 +82,10 @@ export const Router = createBrowserRouter([
           {
             path: "/sales",
             element: <SalesPage />,
+          },
+          {
+            path: "/calendar",
+            element: <CalendarGridPage />,
           }
         ],
       },
