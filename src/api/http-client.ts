@@ -34,7 +34,8 @@ httpClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(new Error(error?.message ?? String(error)))
+  // (error) => Promise.reject(new Error(error?.message ?? String(error)))
+  (error) => Promise.reject(error)
 );
 
 // Interceptor de respuestas
@@ -88,7 +89,8 @@ httpClient.interceptors.response.use(
     }
 
     // Devolver el error crudo para que el consumidor lo maneje
-    return Promise.reject(new Error(error?.message ?? String(error)));
+    // return Promise.reject(new Error(error?.message ?? String(error)));
+    return Promise.reject(error);
   }
 );
 

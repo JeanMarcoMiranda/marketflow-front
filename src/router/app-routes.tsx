@@ -7,19 +7,19 @@ import PublicLayout from "@/shared/layout/public-layout";
 import PrivateLayout from "@/shared/layout/private-layout";
 import PublicRoute from "./public-route";
 import { lazy } from "react";
-
-import PrivateRoute from "./private-route";
-import ProductListPage from "@/pages/inventory/product-list-page";
-<<<<<<< Updated upstream
-import { Loadable } from "@/components/common/loadable";
-=======
-import { Loadable } from "@/components/common/Loadable";
 import SalesPage from "@/pages/sales/sales-page";
->>>>>>> Stashed changes
+import PrivateRoute from "./private-route";
+import { Loadable } from "@/components/common/Loadable";
 
 // Private routes
 const Dashboard = Loadable(
   lazy(() => import("@/pages/dashboard/dashboard-page"))
+);
+const ProductListPage = Loadable(
+  lazy(() => import("@/pages/product/product-list-page"))
+);
+const InventoryListPage = Loadable(
+  lazy(() => import("@/pages/inventory/inventory-list-page"))
 );
 
 // Public Routes
@@ -67,6 +67,10 @@ export const Router = createBrowserRouter([
           {
             path: "/products",
             element: <ProductListPage />,
+          },
+          {
+            path: "/inventory",
+            element: <InventoryListPage />,
           },
           {
             path: "/business-configuration",
