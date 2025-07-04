@@ -1,4 +1,4 @@
-import ProductsTable from "@/components/features/inventory/profucts-table/products-table";
+import ProductsTable from "@/components/features/product/profucts-table/products-table";
 
 const ProductListPage = () => {
   return (

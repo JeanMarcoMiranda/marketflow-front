@@ -1,11 +1,5 @@
 import type * as React from "react";
-import {
-  ClipboardList,
-  Pizza,
-  Truck,
-  BookMarked,
-  // User,
-} from "lucide-react";
+import { ClipboardList, Pizza, Truck, BookMarked, Package } from "lucide-react";
 
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
@@ -42,10 +36,20 @@ const data = {
       icon: ClipboardList,
     },
     {
+      name: "Inventario",
+      url: "/inventory",
+      icon: Package,
+    },
+    {
       name: "Envios",
       url: "/orders",
       icon: Truck,
     },
+    {
+      name: "Ventas",
+      url: "/sales",
+      icon: Pizza,
+    }
   ],
 };
 
@@ -70,7 +74,7 @@ export function AppSidebar({
           onBranchesRefetch();
         }}
       />,
-      { title: "Create New Branch", maxWidth: "xl" }
+      { title: "Crear nueva Sucursal", maxWidth: "xl" }
     );
   };
 

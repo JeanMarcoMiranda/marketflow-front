@@ -12,8 +12,8 @@ export interface User {
   role_id: string;
   active: boolean;
   phone_number: string | null;
-  id_business: string | null,
-  id_branch: string | null,
+  id_business: string | null;
+  id_branch: string | null;
   created_at: string;
 }
 
@@ -36,37 +36,37 @@ export interface Business {
   contact_number: string;
   email: string;
   created_at: string;
-  updated_at: string
+  updated_at: string;
 }
 
 export interface Branch {
-  id: string
-  id_business: string
-  name: string
-  contact_number: string
-  manager_id: string
-  address: string
-  city: string
-  postal_code: string
-  country_id: string
-  status: string
-  image_url: string
+  id: string;
+  id_business: string;
+  name: string;
+  contact_number: string;
+  manager_id: string;
+  address: string;
+  city: string;
+  postal_code: string;
+  country_id: string;
+  status: string;
+  image_url: string;
   coordinates: {
-    lat: number
-    lng: number
-  }
-  inventory_capacity: number
+    lat: number;
+    lng: number;
+  };
+  inventory_capacity: number;
   operating_hours: {
-    monday: string
-    tuesday: string
-    wednesday: string
-    thursday: string
-    friday: string
-    saturday: string
-    sunday: string
-  }
-  created_at: string
-  updated_at: string
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+  };
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateBranch {
@@ -98,13 +98,14 @@ export interface CreateBranch {
 export interface Product {
   id: string;
   id_business: string;
-  id_branch: string;
+  id_branch?: string;
   name: string;
   description: string;
   sku: string;
   unit_price: number;
   cost_price: number;
   unit_of_measure: string;
+  image_url: string;
   taxable: boolean;
   active: boolean;
   expiration_date: string;
@@ -113,6 +114,42 @@ export interface Product {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+}
+
+export interface SaleItem {
+  id: string;
+  product: Product;
+  quantity: number;
+  unit_price: number;
+  total: number;
+  discount?: number;
+}
+
+export interface SaleSummary {
+  subtotal: number;
+  tax: number;
+  discount: number;
+  total: number;
+  items_count: number;
+}
+export interface Inventory {
+  id: string;
+  id_branch?: string;
+  id_product: string;
+  id_business: string;
+  available_quantity: number;
+  minimum_stock_quantity: number;
+  safety_stock: number;
+  reorder_quantity: number;
+  reorder_level: number;
+  status_alert?: string;
+  storage_location?: string;
+  last_reorder_date?: string;
+  created_at: string;
+  updated_at: string;
+  updated_by_id: string;
+  deleted_at?: string;
+  product?: Product;
 }
 
 export type Metadata = Record<string, unknown>;
@@ -147,6 +184,33 @@ export interface UpdateProductPayload {
   metadata?: Record<string, unknown>;
 }
 
+export interface CreateInventoryPayload {
+  id_product: string;
+  id_branch?: string;
+  id_business: string;
+  available_quantity: number;
+  minimum_stock_quantity: number;
+  safety_stock: number;
+  reorder_quantity: number;
+  reorder_level: number;
+  status_alert?: string;
+  storage_location?: string;
+  last_reorder_date?: string;
+  updated_by_id: string;
+}
+
+export interface UpdateInventoryPayload {
+  available_quantity?: number;
+  minimum_stock_quantity?: number;
+  safety_stock?: number;
+  reorder_quantity?: number;
+  reorder_level?: number;
+  status_alert?: string;
+  storage_location?: string;
+  last_reorder_date?: string;
+  updated_by_id?: string;
+}
+
 // Tipo para el body de esta respuesta específica
 export interface LoginResponseBody {
   user: User;
@@ -157,4 +221,3 @@ export interface RegisterResponseBody {
   user: User;
   session: Session;
 }
-
