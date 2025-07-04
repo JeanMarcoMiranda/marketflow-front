@@ -4,7 +4,7 @@ import { useBusiness } from "@/hooks/use-business";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Loader2, AlertTriangle } from "lucide-react";
-import { AppSidebar } from "@/components/common/sidebar/temp-sidebar";
+import { AppSidebar } from "@/components/common/temp-sidebar/temp-sidebar";
 import { Header } from "@/components/common/temp-header";
 import { useAuth } from "@/hooks/use-auth";
 

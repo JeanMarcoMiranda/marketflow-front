@@ -1,9 +1,14 @@
 import type * as React from "react";
 import { IconHelp, IconSearch, IconSettings } from "@tabler/icons-react";
-import { ClipboardList, Pizza, Truck, BookMarked, Package } from "lucide-react";
+import {
+  ClipboardList,
+  Pizza,
+  Truck,
+  BookMarked,
+  Package,
+  Calendar,
+} from "lucide-react";
 
-import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -11,11 +16,13 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { BranchSwitcher } from "./branch-switcher";
 import { Branch } from "@/api/types/response.types";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { CreateBranchForm } from "@/components/features/branch/create-branch/create-branch-form";
 import { useAuth } from "@/hooks/use-auth";
+import { BranchSwitcher } from "./branch-switcher";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 
 const data = {
   proyectos: [
@@ -38,6 +45,11 @@ const data = {
       name: "Envios",
       url: "/orders",
       icon: Truck,
+    },
+    {
+      name: "Calendario",
+      url: "/calendar",
+      icon: Calendar,
     },
     {
       name: "Ventas",
