@@ -1,7 +1,6 @@
 // src/utils/dateUtils.ts
 
-import { CalendarDate } from "@/api/types/orders.types";
-import { Order } from "@/api/types/response.types";
+import { CalendarDate, Order } from "@/api/types/orders.types";
 
 export const formatDate = (date: Date): string => {
   return date.toISOString().split('T')[0];
