@@ -41,7 +41,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         <div className="flex items-center space-x-2">
           <Select value={currentDate.month.toString()} onValueChange={(value) => onSetMonth(parseInt(value))}>
-            <SelectTrigger className="w-32 border-0 text-lg font-semibold">
+            <SelectTrigger className="min-w-32 border-0 text-lg font-semibold">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -54,7 +54,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           </Select>
 
           <Select value={currentDate.year.toString()} onValueChange={(value) => onSetYear(parseInt(value))}>
-            <SelectTrigger className="w-20 border-0 text-lg font-semibold">
+            <SelectTrigger className="border-0 text-lg font-semibold">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

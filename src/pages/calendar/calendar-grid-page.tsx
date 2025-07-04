@@ -44,7 +44,7 @@ const CalendarGridPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-fit bg-background">
       <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* Header del calendario */}
         <Card className="border-0 shadow-sm">
@@ -60,7 +60,7 @@ const CalendarGridPage: React.FC = () => {
         </Card>
 
         {/* Grid del calendario */}
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-md p-0">
           <CardContent className="p-0">
             <CalendarGrid
               calendarDates={calendarDates}

@@ -84,6 +84,10 @@ export const Router = createBrowserRouter([
             element: <SalesPage />,
           },
           {
+            path: "/orders",
+            element: <SalesPage />,
+          },
+          {
             path: "/calendar",
             element: <CalendarGridPage />,
           },
