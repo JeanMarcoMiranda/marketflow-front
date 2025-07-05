@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { Building2, Eye, EyeOff, User2 } from "lucide-react";
 import { useState } from "react";
-import { Step, Stepper } from "@/components/common/stepper";
+import { Step, Stepper } from "@/components/common/temp-stepper";
 
 // Esquema de validación con Zod
 const registerSchema = z
