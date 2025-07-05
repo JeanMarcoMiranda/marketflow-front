@@ -1,70 +1,8 @@
-import { Product } from "@/api/types/response.types";
+import type { Product } from "@/api/types/response.types";
 import { Button } from "@/components/ui/button";
 import { useProductSearch } from "@/hooks/use-product-search";
+import { mockProducts } from "@/lib/dummy-data/mock-products";
 import { Search, Scan } from "lucide-react";
-
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    id_business: 'biz1',
-    id_branch: 'branch1',
-    name: 'Coca Cola 500ml',
-    description: 'Refresco de cola 500ml',
-    sku: 'CC500',
-    unit_price: 2.50,
-    cost_price: 1.20,
-    unit_of_measure: 'botella',
-    image_url: '',
-    taxable: true,
-    active: true,
-    expiration_date: '2025-12-31',
-    batch_number: 'CC001',
-    metadata: {},
-    created_at: '2024-01-01',
-    updated_at: '2024-01-01',
-    deleted_at: ''
-  },
-  {
-    id: '2',
-    id_business: 'biz1',
-    id_branch: 'branch1',
-    name: 'Pan Integral',
-    description: 'Pan integral artesanal',
-    sku: 'PI001',
-    unit_price: 3.75,
-    cost_price: 1.80,
-    unit_of_measure: 'unidad',
-    image_url: '',
-    taxable: true,
-    active: true,
-    expiration_date: '2025-07-10',
-    batch_number: 'PI001',
-    metadata: {},
-    created_at: '2024-01-01',
-    updated_at: '2024-01-01',
-    deleted_at: ''
-  },
-  {
-    id: '3',
-    id_business: 'biz1',
-    id_branch: 'branch1',
-    name: 'Leche Entera 1L',
-    description: 'Leche entera pasteurizada',
-    sku: 'LE1L',
-    unit_price: 4.20,
-    cost_price: 2.50,
-    unit_of_measure: 'litro',
-    image_url: '',
-    taxable: true,
-    active: true,
-    expiration_date: '2025-07-15',
-    batch_number: 'LE001',
-    metadata: {},
-    created_at: '2024-01-01',
-    updated_at: '2024-01-01',
-    deleted_at: ''
-  }
-];
 
 const ProductSearch = ({ onProductSelect, onBarcodeScan }: {
   onProductSelect: (product: Product) => void;
