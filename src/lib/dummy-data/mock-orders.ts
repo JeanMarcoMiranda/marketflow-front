@@ -1,4 +1,4 @@
-import { Order } from "@/api/types/orders.types";
+import type { Order } from "@/api/types/orders.types";
 
 export const mockOrders: Order[] = [
   {
