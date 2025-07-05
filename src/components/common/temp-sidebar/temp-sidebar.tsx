@@ -16,7 +16,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Branch } from "@/api/types/response.types";
+import type { Branch } from "@/api/types/response.types";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { CreateBranchForm } from "@/components/features/branch/create-branch/create-branch-form";
 import { useAuth } from "@/hooks/use-auth";

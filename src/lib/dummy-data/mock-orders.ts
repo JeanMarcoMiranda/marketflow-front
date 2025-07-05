@@ -1,4 +1,4 @@
-import { Order } from "@/api/types/orders.types";
+import type { Order } from "@/api/types/orders.types";
 
 export const mockOrders: Order[] = [
   {
@@ -12,7 +12,8 @@ export const mockOrders: Order[] = [
     total_cost: 1500.00,
     updated_at: '2025-07-01T10:00:00Z',
     total_quantity: 10,
-    notes: 'Orden urgente para sucursal principal'
+    notes: 'Orden urgente para sucursal principal',
+    updated_by_id: 'user-1',
   },
   {
     id: '2',
@@ -25,7 +26,8 @@ export const mockOrders: Order[] = [
     total_cost: 2300.50,
     updated_at: '2025-07-03T14:30:00Z',
     total_quantity: 25,
-    notes: 'Material de oficina mensual'
+    notes: 'Material de oficina mensual',
+    updated_by_id: 'user-2',
   },
   {
     id: '3',
@@ -38,7 +40,8 @@ export const mockOrders: Order[] = [
     total_cost: 850.00,
     updated_at: '2025-07-06T16:45:00Z',
     total_quantity: 5,
-    notes: 'Repuesto de emergencia'
+    notes: 'Repuesto de emergencia',
+    updated_by_id: 'user-1',
   },
   {
     id: '4',
@@ -50,7 +53,8 @@ export const mockOrders: Order[] = [
     total_cost: 1200.00,
     updated_at: '2025-07-04T09:15:00Z',
     total_quantity: 8,
-    notes: 'Cancelado por cambio de proveedor'
+    notes: 'Cancelado por cambio de proveedor',
+    updated_by_id: 'user-3',
   },
   {
     id: '5',
@@ -63,7 +67,8 @@ export const mockOrders: Order[] = [
     total_cost: 3500.75,
     updated_at: '2025-07-10T11:20:00Z',
     total_quantity: 50,
-    notes: 'Orden para nueva sucursal'
+    notes: 'Orden para nueva sucursal',
+    updated_by_id: 'user-2',
   },
   {
     id: '6',
@@ -76,6 +81,7 @@ export const mockOrders: Order[] = [
     total_cost: 975.25,
     updated_at: '2025-07-12T13:50:00Z',
     total_quantity: 15,
-    notes: 'Equipos de seguridad'
+    notes: 'Equipos de seguridad',
+    updated_by_id: 'user-1',
   }
 ];
