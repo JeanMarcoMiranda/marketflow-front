@@ -11,7 +11,9 @@ interface OrderColumnsProps {
   onEdit: (order: Order) => void;
 }
 
-export function getOrderColumns({ onEdit }: OrderColumnsProps): ColumnDef<Order>[] {
+export function getOrderColumns({
+  onEdit,
+}: OrderColumnsProps): ColumnDef<Order>[] {
   return [
     {
       id: "select",
@@ -63,7 +65,12 @@ export function getOrderColumns({ onEdit }: OrderColumnsProps): ColumnDef<Order>
       ),
       cell: ({ row }) => {
         const status = row.getValue("status") as Order["status"];
-        let variant: "default" | "secondary" | "destructive" | "outline" = "default";
+        let variant:
+          | "default"
+          | "success"
+          | "secondary"
+          | "destructive"
+          | "outline" = "default";
         switch (status) {
           case "Pendiente":
             variant = "secondary";
