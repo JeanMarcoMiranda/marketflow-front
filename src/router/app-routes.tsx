@@ -21,6 +21,12 @@ const ProductListPage = Loadable(
 const InventoryListPage = Loadable(
   lazy(() => import("@/pages/inventory/inventory-list-page"))
 );
+const OrderListPage = Loadable(
+  lazy(() => import("@/pages/orders/order-list-page"))
+);
+const CalendarGridPage = Loadable(
+  lazy(() => import("@/pages/calendar/calendar-grid-page"))
+);
 
 // Public Routes
 const LoginPage = Loadable(lazy(() => import("@/pages/auth/login-page")));
@@ -29,9 +35,7 @@ const BusinessConfigurationPage = Loadable(
   lazy(() => import("@/pages/business/business-configuration-page"))
 );
 const NotFound = Loadable(lazy(() => import("@/pages/not-found")));
-const CalendarGridPage = Loadable(
-  lazy(() => import("@/pages/calendar/calendar-grid-page"))
-);
+
 
 export const Router = createBrowserRouter([
   {
@@ -85,7 +89,7 @@ export const Router = createBrowserRouter([
           },
           {
             path: "/orders",
-            element: <SalesPage />,
+            element: <OrderListPage />,
           },
           {
             path: "/calendar",

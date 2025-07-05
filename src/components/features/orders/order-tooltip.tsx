@@ -2,7 +2,7 @@ import type { Order } from '@/api/types/orders.types';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { formatDate } from '@/lib/date-utils';
 import { Separator } from '@radix-ui/react-separator';
-import { CalendarDays, Package, Truck } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 import OrderTooltipDetailCard from './order-tooltip-detail-card';
 import { Badge } from '@/components/ui/badge';
 
