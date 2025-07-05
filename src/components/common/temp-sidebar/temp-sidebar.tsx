@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { IconHelp, IconSearch, IconSettings } from "@tabler/icons-react";
+import { IconChartBar, IconHelp, IconSettings } from "@tabler/icons-react";
 import {
   ClipboardList,
   Pizza,
@@ -60,18 +60,18 @@ const data = {
   Ajustes: [
     {
       title: "Configuración",
-      url: "#",
+      url: "/settings",
       icon: IconSettings,
     },
     {
       title: "Obtener ayuda",
-      url: "#",
+      url: "/help",
       icon: IconHelp,
     },
     {
-      title: "Buscar",
-      url: "#",
-      icon: IconSearch,
+      title: "Reportes",
+      url: "/reports",
+      icon: IconChartBar,
     },
   ],
 };
