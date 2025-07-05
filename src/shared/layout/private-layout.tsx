@@ -136,7 +136,9 @@ export default function PrivateLayout() {
       <SidebarInset>
         <Header />
         <main className="flex h-full flex-1 flex-col space-y-8 p-8">
-          <Outlet />
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <Outlet />
+          </div>
         </main>
       </SidebarInset>
     </SidebarProvider>

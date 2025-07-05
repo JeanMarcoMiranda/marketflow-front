@@ -21,6 +21,8 @@ const ProductListPage = Loadable(
 const InventoryListPage = Loadable(
   lazy(() => import("@/pages/inventory/inventory-list-page"))
 );
+const HelpPage = Loadable(lazy(() => import("@/pages/help/help-page")));
+
 const OrderListPage = Loadable(
   lazy(() => import("@/pages/orders/order-list-page"))
 );
@@ -94,6 +96,10 @@ export const Router = createBrowserRouter([
           {
             path: "/calendar",
             element: <CalendarGridPage />,
+          },
+          {
+            path: "/help",
+            element: <HelpPage />,
           },
         ],
       },
