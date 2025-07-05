@@ -49,7 +49,7 @@ export const useOrders = () => {
       await new Promise(resolve => setTimeout(resolve, 500));
       setOrders([...ordersStore]);
       setError(null);
-    } catch (err) {
+    } catch {
       setError('Error al recargar las órdenes');
     } finally {
       setLoading(false);
@@ -68,13 +68,13 @@ export const useOrders = () => {
         notes: payload.notes || undefined,
       };
       ordersStore = [...ordersStore, newOrder];
-      localStorage.setItem('ordersStore', JSON.stringify(ordersStore)); // Persist to localStorage
+      localStorage.setItem('ordersStore', JSON.stringify(ordersStore));
       setOrders([...ordersStore]);
       setCreateError(null);
       return newOrder;
-    } catch (err) {
+    } catch {
       setCreateError('Error al crear la orden');
-      throw err;
+      throw new Error('Error al crear la orden');
     } finally {
       setIsCreating(false);
     }
@@ -95,12 +95,12 @@ export const useOrders = () => {
           }
           : order
       );
-      localStorage.setItem('ordersStore', JSON.stringify(ordersStore)); // Persist to localStorage
+      localStorage.setItem('ordersStore', JSON.stringify(ordersStore));
       setOrders([...ordersStore]);
       setUpdateError(null);
-    } catch (err) {
+    } catch {
       setUpdateError('Error al actualizar la orden');
-      throw err;
+      throw new Error('Error al actualizar la orden');
     } finally {
       setIsUpdating(false);
     }
@@ -111,12 +111,12 @@ export const useOrders = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
       ordersStore = ordersStore.filter(order => order.id !== id);
-      localStorage.setItem('ordersStore', JSON.stringify(ordersStore)); // Persist to localStorage
+      localStorage.setItem('ordersStore', JSON.stringify(ordersStore));
       setOrders([...ordersStore]);
       setDeleteError(null);
-    } catch (err) {
+    } catch {
       setDeleteError('Error al eliminar la orden');
-      throw err;
+      throw new Error('Error al eliminar la orden');
     } finally {
       setIsDeleting(false);
     }
