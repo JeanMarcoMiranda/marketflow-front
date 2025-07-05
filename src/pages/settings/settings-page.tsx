@@ -57,7 +57,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 
-export default function SettingsPage() {
+const SettingsPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("general");
   const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -222,26 +222,26 @@ export default function SettingsPage() {
 
   const handleSave = (section: string) => {
     setUnsavedChanges(false);
-    toast("Configuración guardada", {
+    toast.success("Configuración guardada", {
       description: `Los cambios en ${section} se han guardado correctamente.`,
     });
   };
 
   const handleReset = () => {
-    toast("Configuración restablecida", {
+    toast.success("Configuración restablecida", {
       description: "Se han restaurado los valores por defecto.",
     });
   };
 
   const handleExport = () => {
-    toast("Configuración exportada", {
+    toast.success("Configuración exportada", {
       description:
         "El archivo de configuración se ha descargado correctamente.",
     });
   };
 
   const handleImport = () => {
-    toast("Configuración importada", {
+    toast.success("Configuración importada", {
       description: "La configuración se ha importado correctamente.",
     });
   };
@@ -2269,4 +2269,6 @@ export default function SettingsPage() {
       </div>
     </div>
   );
-}
+};
+
+export default SettingsPage;
