@@ -587,20 +587,19 @@ MÉTRICAS PRINCIPALES:
 
 DATOS DE VENTAS:
 ${filteredData.salesData
-  .map(
-    (item) =>
-      `${item.date}: $${item.sales} (${item.transactions} transacciones)`
-  )
-  .join("\n")}
+            .map(
+              (item) =>
+                `${item.date}: $${item.sales} (${item.transactions} transacciones)`
+            )
+            .join("\n")}
         `;
 
         const blob = new Blob([pdfContent], { type: "text/plain" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${
-          new Date().toISOString().split("T")[0]
-        }.txt`;
+        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${new Date().toISOString().split("T")[0]
+          }.txt`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -634,9 +633,8 @@ ${filteredData.salesData
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${
-          new Date().toISOString().split("T")[0]
-        }.csv`;
+        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${new Date().toISOString().split("T")[0]
+          }.csv`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1026,7 +1024,7 @@ ${filteredData.salesData
                           fill="#8884d8"
                           dataKey="value"
                         >
-                          {productSalesData.map((entry, index) => (
+                          {productSalesData.map((_, index) => (
                             <Cell
                               key={`cell-${index}`}
                               fill={COLORS[index % COLORS.length]}
@@ -1158,8 +1156,8 @@ ${filteredData.salesData
                             name === "sales"
                               ? "Ventas"
                               : name === "customers"
-                              ? "Clientes"
-                              : "Ticket Promedio",
+                                ? "Clientes"
+                                : "Ticket Promedio",
                           ]}
                         />
                         <Bar dataKey="sales" fill="#0088FE" />
@@ -1410,11 +1408,10 @@ ${filteredData.salesData
                     >
                       <div className="flex items-center space-x-3">
                         <div
-                          className={`w-3 h-3 rounded-full ${
-                            movement.type === "Entrada"
+                          className={`w-3 h-3 rounded-full ${movement.type === "Entrada"
                               ? "bg-green-500"
                               : "bg-red-500"
-                          }`}
+                            }`}
                         ></div>
                         <div>
                           <p className="font-medium">{movement.product}</p>
@@ -1434,11 +1431,10 @@ ${filteredData.salesData
                           {movement.type}
                         </Badge>
                         <p
-                          className={`text-sm font-semibold ${
-                            movement.quantity > 0
+                          className={`text-sm font-semibold ${movement.quantity > 0
                               ? "text-green-600"
                               : "text-red-600"
-                          }`}
+                            }`}
                         >
                           {movement.quantity > 0 ? "+" : ""}
                           {movement.quantity}
@@ -1558,8 +1554,8 @@ ${filteredData.salesData
                           name === "income"
                             ? "Ingresos"
                             : name === "expenses"
-                            ? "Gastos"
-                            : "Ganancia",
+                              ? "Gastos"
+                              : "Ganancia",
                         ]}
                       />
                       <Legend />
