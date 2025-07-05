@@ -1,5 +1,3 @@
-
-import React from 'react';
 import { AlertCircle, CheckCircle, Clock, RefreshCw, TrendingUp } from 'lucide-react';
 import CalendarGrid from '@/components/features/calendar/calendar-grid';
 import CalendarHeader from '@/components/features/calendar/calendar-header';

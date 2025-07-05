@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Branch } from "@/api/types/response.types";
+import type { Branch } from "@/api/types/response.types";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -124,7 +124,7 @@ const BusinessBranchSection = ({ branches }: { branches: Branch[] | undefined })
                 <div className="flex items-center gap-2">
                   <select
                     value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
+                    onChange={(e) => setSortBy(e.target.value as 'name' | 'status' | 'created')}
                     className="px-3 py-2 text-sm border border-slate-200 rounded-md bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-colors"
                   >
                     <option value="name">Ordenar por Nombre</option>

@@ -1,5 +1,4 @@
-import { CalendarDate } from '@/api/types/orders.types';
-import React from 'react';
+import type { CalendarDate } from '@/api/types/orders.types';
 import CalendarDay from './calendar-day';
 import LegendItem from './calendar-legend-items';
 
@@ -15,6 +14,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({ calendarDates, loading }) =
     return (
       <div className="flex items-center justify-center h-96">
         <div className="flex items-center space-x-3">
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
           <span className="text-muted-foreground">Cargando órdenes...</span>
         </div>

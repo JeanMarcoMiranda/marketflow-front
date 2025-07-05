@@ -1,4 +1,4 @@
-import { Product } from "@/api/types/response.types";
+import type { Product } from "@/api/types/response.types";
 import ProductDetails from "@/components/features/sales/product-details";
 import ProductSearch from "@/components/features/sales/product-search";
 import SaleItemsList from "@/components/features/sales/sale-items-list";
