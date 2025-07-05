@@ -23,6 +23,14 @@ const InventoryListPage = Loadable(
 );
 const HelpPage = Loadable(lazy(() => import("@/pages/help/help-page")));
 
+const ReportsPage = Loadable(
+  lazy(() => import("@/pages/reports/reports-page"))
+);
+
+const SettingsPage = Loadable(
+  lazy(() => import("@/pages/settings/settings-page"))
+);
+
 const OrderListPage = Loadable(
   lazy(() => import("@/pages/orders/order-list-page"))
 );
@@ -37,7 +45,6 @@ const BusinessConfigurationPage = Loadable(
   lazy(() => import("@/pages/business/business-configuration-page"))
 );
 const NotFound = Loadable(lazy(() => import("@/pages/not-found")));
-
 
 export const Router = createBrowserRouter([
   {
@@ -98,8 +105,16 @@ export const Router = createBrowserRouter([
             element: <CalendarGridPage />,
           },
           {
+            path: "/settings",
+            element: <SettingsPage />,
+          },
+          {
             path: "/help",
             element: <HelpPage />,
+          },
+          {
+            path: "/reports",
+            element: <ReportsPage />,
           },
         ],
       },

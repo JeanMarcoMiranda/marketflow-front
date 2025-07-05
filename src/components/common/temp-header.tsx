@@ -20,6 +20,9 @@ const routeMap: Record<string, string> = {
   users: "Usuarios",
   branches: "Sucursales",
   products: "Productos",
+  help: "Soporte",
+  reports: "Reportes",
+  settings: "Configuración",
 };
 
 export const Header = () => {
