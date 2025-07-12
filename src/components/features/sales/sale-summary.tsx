@@ -19,45 +19,45 @@ const SaleSummary = ({ summary, onCompleteSale, onClearSale, isCompleting }: {
   const hasItems = summary.items_count > 0;
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-6">
+    <div className="bg-card border border-border rounded-lg p-6">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
-        <Receipt className="w-5 h-5 text-slate-600" />
-        <h3 className="font-medium text-slate-900">Resumen de venta</h3>
+        <Receipt className="w-5 h-5 text-primary" />
+        <h3 className="font-medium text-foreground">Resumen de venta</h3>
       </div>
 
       {/* Desglose de costos */}
       <div className="space-y-3 mb-6">
         <div className="flex justify-between text-sm">
-          <span className="text-slate-600">
+          <span className="text-muted-foreground">
             Artículos ({summary.items_count})
           </span>
-          <span className="text-slate-900">
+          <span className="text-foreground">
             S/. {summary.subtotal.toFixed(2)}
           </span>
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-slate-600">Impuestos (18%)</span>
-          <span className="text-slate-900">
+          <span className="text-muted-foreground">Impuestos (18%)</span>
+          <span className="text-foreground">
             S/. {summary.tax.toFixed(2)}
           </span>
         </div>
 
         {summary.discount > 0 && (
           <div className="flex justify-between text-sm">
-            <span className="text-slate-600">Descuentos</span>
-            <span className="text-emerald-600">
+            <span className="text-muted-foreground">Descuentos</span>
+            <span className="text-discount font-medium">
               -S/. {summary.discount.toFixed(2)}
             </span>
           </div>
         )}
 
         {/* Total */}
-        <div className="pt-3 border-t border-slate-200">
+        <div className="pt-3 border-t border-border">
           <div className="flex justify-between items-center">
-            <span className="font-medium text-slate-900">Total</span>
-            <span className="text-2xl font-semibold text-slate-900">
+            <span className="font-medium text-foreground">Total</span>
+            <span className="text-2xl font-semibold text-price">
               S/. {summary.total.toFixed(2)}
             </span>
           </div>
@@ -70,7 +70,7 @@ const SaleSummary = ({ summary, onCompleteSale, onClearSale, isCompleting }: {
         <Button
           onClick={onCompleteSale}
           disabled={!hasItems || isCompleting}
-          className="w-full bg-slate-900 hover:bg-slate-800 text-white transition-colors"
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
         >
           {isCompleting ? (
             <>
@@ -90,7 +90,7 @@ const SaleSummary = ({ summary, onCompleteSale, onClearSale, isCompleting }: {
           onClick={onClearSale}
           disabled={!hasItems || isCompleting}
           variant="outline"
-          className="w-full border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+          className="w-full border-border text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
         >
           <Trash2 className="w-4 h-4 mr-2" />
           Limpiar venta
@@ -99,7 +99,7 @@ const SaleSummary = ({ summary, onCompleteSale, onClearSale, isCompleting }: {
 
       {/* Mensaje de estado */}
       {!hasItems && (
-        <p className="text-center text-xs text-slate-500 mt-4">
+        <p className="text-center text-xs text-muted-foreground mt-4">
           Agrega productos para continuar
         </p>
       )}
