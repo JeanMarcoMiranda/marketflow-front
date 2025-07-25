@@ -34,7 +34,6 @@ httpClient.interceptors.request.use(
     }
     return config;
   },
-  // (error) => Promise.reject(new Error(error?.message ?? String(error)))
   (error) => Promise.reject(error)
 );
 
@@ -81,15 +80,15 @@ httpClient.interceptors.response.use(
         useAuthStore.getState().setUserSession(null);
         useAuthStore.getState().setUser(null);
 
-        // Redirige a la página de login
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
+        // Lanzar un error personalizado para que el componente lo maneje
+        return Promise.reject({
+          type: "UNAUTHORIZED",
+          message: "No se pudo renovar el token. Sesión finalizada.",
+        });
       }
     }
 
     // Devolver el error crudo para que el consumidor lo maneje
-    // return Promise.reject(new Error(error?.message ?? String(error)));
     return Promise.reject(error);
   }
 );

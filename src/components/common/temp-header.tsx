@@ -10,7 +10,7 @@ import { SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { Button } from "@/components/ui/button"; // Asegúrate de importar el componente Button
+import { Button } from "@/components/ui/button";
 
 // Mapeo de rutas de inglés a español con capitalización
 const routeMap: Record<string, string> = {
@@ -33,8 +33,13 @@ export const Header = () => {
 
   // Función para cerrar sesión y redirigir al login
   const handleLogout = async () => {
-    logout();
-    navigate("/auth/login");
+    try {
+      await logout(); // Asegurarse de que logout complete cualquier limpieza necesaria
+      navigate("/auth/login", { replace: true }); // Usar replace para evitar acumulación en el historial
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      navigate("/auth/login", { replace: true }); // Redirigir incluso si hay un error
+    }
   };
 
   return (

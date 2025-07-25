@@ -2,9 +2,10 @@ import BusinessBranchSection from "@/components/features/business/business-branc
 import BusinessConfigurationSkeleton from "@/components/features/business/business-configuration-skeleton";
 import BusinessInfoSection from "@/components/features/business/business-info-section";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
 import { useBusiness } from "@/hooks/use-business";
 import { AnimatePresence, motion } from "framer-motion";
 import { Activity, AlertTriangle, RefreshCcw } from "lucide-react";
@@ -163,7 +164,7 @@ const NoBusinessId = () => (
         asChild
         className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-8 py-3"
       >
-        <a href="/login">Comenzar</a>
+        <Link to="/login">Comenzar</Link>
       </Button>
     </motion.div>
   </motion.div>

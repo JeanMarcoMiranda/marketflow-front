@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import { useBusiness } from "@/hooks/use-business";
 import { motion } from "framer-motion";
@@ -67,7 +67,7 @@ const NoBusinessId = () => (
       Por favor, inicia sesión o registra un negocio para continuar.
     </p>
     <Button asChild className="mt-4 bg-blue-500 hover:bg-blue-600 text-white">
-      <a href="/login">Iniciar sesión</a>
+      <Link to="/login">Iniciar sesión</Link>
     </Button>
   </motion.div>
 );
