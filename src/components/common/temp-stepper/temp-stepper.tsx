@@ -3,7 +3,7 @@ import { StepperStep } from "./stepper-step";
 import { StepperContent } from "./stepper-content";
 import { StepperActions } from "./stepper-actions";
 import { cn } from "@/lib/utils";
-import { StepperProps } from "./types/stepper.types";
+import type { StepperProps } from "./types/stepper.types";
 
 export const Stepper = ({
   steps,
@@ -27,7 +27,7 @@ export const Stepper = ({
     goToStep,
     isFirstStep,
     isLastStep,
-  } = useStepper(initialStep, steps.length);
+  } = useStepper(steps.length, initialStep);
 
   const handleNext = () => {
     if (isLastStep) {

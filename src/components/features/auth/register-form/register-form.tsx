@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Building2, User2 } from "lucide-react";
 import { useState } from "react";
-import { Step, Stepper } from "@/components/common/temp-stepper";
+import { type Step, Stepper } from "@/components/common/temp-stepper";
 import { PersonalInfoStep } from "./steps/personal-info-step";
 import { BusinessInfoStep } from "./steps/business-info-step";
 
