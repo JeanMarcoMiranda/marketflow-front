@@ -22,7 +22,6 @@ export default function RegisterPage() {
     businessName: string;
     branchName: string;
   }) => {
-    console.log("Buenas")
     try {
       await register(
         data.email,
