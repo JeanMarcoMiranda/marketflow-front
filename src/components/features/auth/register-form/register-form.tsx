@@ -3,11 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Building2, User2 } from "lucide-react";
+import { User2, Building2, ArrowRight, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { type Step, Stepper } from "@/components/common/temp-stepper";
-import { PersonalInfoStep } from "./steps/personal-info-step";
 import { BusinessInfoStep } from "./steps/business-info-step";
+import { PersonalInfoStep } from "./steps/personal-info-step";
 
 // Esquema de validación con Zod
 const registerSchema = z
@@ -34,6 +34,7 @@ export interface RegisterFormProps {
 export function RegisterForm({ onSubmit }: Readonly<RegisterFormProps>) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -69,89 +70,119 @@ export function RegisterForm({ onSubmit }: Readonly<RegisterFormProps>) {
   ];
 
   const submitForm = (data: RegisterFormData) => {
+    setIsLoading(true);
+    // try {
     const { email, password, businessName, branchName } = data;
+    console.log("wenas register form", data);
     onSubmit({ email, password, businessName, branchName });
+    // } finally {
+    setIsLoading(false);
+    // }
   };
 
   return (
     <FormProvider {...methods}>
-      <div className="space-y-6">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-bold tracking-tight">Regístrate</h1>
-          <p className="text-sm text-muted-foreground max-w-md">
-            Completa los siguientes pasos para crear tu cuenta
-          </p>
-        </div>
+      <div className="animate-in fade-in duration-500">
+        <div className="space-y-8">
+          {/* Header Section */}
+          <div className="flex flex-col items-center gap-3 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 mb-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                <User2 className="size-5" />
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+              Crear cuenta nueva
+            </h1>
+            <p className="text-balance text-muted-foreground max-w-sm">
+              Completa los siguientes pasos para configurar tu sistema de punto
+              de venta
+            </p>
+          </div>
 
-        <Stepper
-          steps={steps}
-          onComplete={handleSubmit(submitForm)}
-          variant="filled"
-          renderActions={({
-            nextStep,
-            prevStep,
-            isFirstStep,
-            isLastStep,
-            currentStep,
-          }) => {
-            const validateAndNext = async () => {
-              let fieldsToValidate: (keyof RegisterFormData)[] = [];
+          {/* Stepper Form */}
+          <Stepper
+            steps={steps}
+            onComplete={handleSubmit(submitForm)}
+            renderActions={({
+              nextStep,
+              prevStep,
+              isFirstStep,
+              isLastStep,
+              currentStep,
+            }) => {
+              const validateAndNext = async () => {
+                let fieldsToValidate: (keyof RegisterFormData)[] = [];
+                if (currentStep === 0) {
+                  fieldsToValidate = ["email", "password", "confirmPassword"];
+                } else if (currentStep === 1) {
+                  fieldsToValidate = ["businessName", "branchName"];
+                }
+                const isValid = await trigger(fieldsToValidate);
+                if (isValid) nextStep();
+              };
 
-              if (currentStep === 0) {
-                fieldsToValidate = ["email", "password", "confirmPassword"];
-              } else if (currentStep === 1) {
-                fieldsToValidate = ["businessName", "branchName"];
-              }
-
-              const isValid = await trigger(fieldsToValidate);
-              if (isValid) nextStep();
-            };
-
-            return (
-              <div className="flex justify-between mt-6">
-                {!isFirstStep && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={prevStep}
-                    className="min-w-[100px]"
-                  >
-                    Anterior
-                  </Button>
-                )}
-
-                <div className="ml-auto flex gap-2">
-                  {!isLastStep ? (
+              return (
+                <div className="flex justify-between mt-8">
+                  {!isFirstStep && (
                     <Button
                       type="button"
-                      onClick={validateAndNext}
-                      className="min-w-[100px]"
+                      variant="outline"
+                      onClick={prevStep}
+                      className="h-12 px-6 transition-all duration-200 ease-in-out hover:scale-105 bg-transparent"
                     >
-                      Siguiente
-                    </Button>
-                  ) : (
-                    <Button
-                      type="submit"
-                      onClick={handleSubmit(submitForm)}
-                      className="min-w-[150px]"
-                    >
-                      Completar Registro
+                      <ArrowLeft className="h-4 w-4 mr-2" />
+                      Anterior
                     </Button>
                   )}
+                  <div className="ml-auto flex gap-2">
+                    {!isLastStep ? (
+                      <Button
+                        type="button"
+                        onClick={validateAndNext}
+                        className="h-12 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 group"
+                      >
+                        Siguiente
+                        <ArrowRight className="h-4 w-4 ml-2 transition-transform duration-200 ease-in-out group-hover:translate-x-1" />
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        disabled={isLoading}
+                        onClick={handleSubmit(submitForm)}
+                        className="h-12 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 group"
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center gap-2">
+                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground" />
+                            Creando cuenta...
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2">
+                            Completar registro
+                            <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1" />
+                          </div>
+                        )}
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          }}
-        />
+              );
+            }}
+          />
 
-        <div className="text-center text-sm">
-          ¿Ya tienes una cuenta?{" "}
-          <Link
-            to="/auth/login"
-            className="underline underline-offset-4 hover:text-primary transition-colors"
-          >
-            Inicia Sesión
-          </Link>
+          {/* Footer Links */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              ¿Ya tienes una cuenta?{" "}
+              <Link
+                to="/auth/login"
+                className="font-medium text-primary hover:text-primary/80 transition-colors duration-200 ease-in-out underline-offset-4 hover:underline"
+              >
+                Iniciar sesión
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </FormProvider>

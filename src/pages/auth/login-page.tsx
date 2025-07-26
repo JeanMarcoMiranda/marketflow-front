@@ -223,35 +223,20 @@ export default function LoginPage() {
         <div className="absolute inset-0 flex flex-col justify-end p-12 bg-gradient-to-t from-black/60 via-transparent to-transparent">
           <div className="text-white animate-in fade-in duration-1000 delay-500">
             <h2 className="text-3xl font-bold mb-4">Sistema POS Profesional</h2>
-            <p className="text-lg text-white/90 max-w-2xl leading-relaxed mb-6">
-              Transforma la gestión de tu minimarket con MarketFlow, un sistema
-              integral de punto de venta diseñado para optimizar tus operaciones
-              diarias. Administra ventas, pedidos e inventario con facilidad y
-              obtén insights valiosos a través de reportes detallados.
+            <p className="text-lg text-white/90 max-w-md leading-relaxed">
+              Gestiona tu minimarket de manera eficiente con nuestro sistema
+              integral de punto de venta.
             </p>
-            <div className="grid grid-cols-2 gap-4 mt-6">
+            <div className="flex items-center gap-4 mt-6">
               <div className="flex items-center gap-2 text-sm text-white/80">
                 <div className="h-2 w-2 rounded-full bg-green-400" />
-                Sistema seguro y confiable
+                Sistema seguro
               </div>
               <div className="flex items-center gap-2 text-sm text-white/80">
                 <div className="h-2 w-2 rounded-full bg-blue-400" />
-                Interfaz intuitiva y fácil de usar
-              </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
-                <div className="h-2 w-2 rounded-full bg-purple-400" />
-                Gestión de pedidos en tiempo real
-              </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
-                <div className="h-2 w-2 rounded-full bg-orange-400" />
-                Reportes detallados para tu negocio
+                Fácil de usar
               </div>
             </div>
-            <p className="text-sm text-white/70 mt-4 max-w-md">
-              💡 <strong>Tip:</strong> Optimiza tu flujo de trabajo con nuestras
-              herramientas integradas para ventas, pedidos y análisis, todo
-              desde un solo lugar.
-            </p>
           </div>
         </div>
       </div>
