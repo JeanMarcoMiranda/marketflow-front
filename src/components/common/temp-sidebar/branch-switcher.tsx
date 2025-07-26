@@ -1,5 +1,3 @@
-"use client"
-
 import { useSidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 import {
   DropdownMenu,

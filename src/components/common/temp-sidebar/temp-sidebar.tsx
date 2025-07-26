@@ -1,5 +1,3 @@
-"use client"
-
 import type * as React from "react"
 import { IconChartBar, IconHelp, IconSettings } from "@tabler/icons-react"
 import { ClipboardList, Pizza, Truck, BookMarked, Package, Calendar } from "lucide-react"
