@@ -45,6 +45,8 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { downloadCompatibleDevicesGuide, downloadProductsCSV, downloadTicketDesigns, downloadUserManual } from "@/lib/dummy-data/download-file-functions";
+import { mockProducts } from "@/lib/dummy-data/mock-products";
 
 const HelpPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -125,8 +127,7 @@ const HelpPage = () => {
     alert(
       `Ticket de soporte creado exitosamente!\n\nNúmero de ticket: #${Math.floor(
         Math.random() * 10000
-      )}\nPrioridad: ${
-        contactForm.priority
+      )}\nPrioridad: ${contactForm.priority
       }\n\nRecibirás una respuesta en tu email dentro de 24 horas.`
     );
     setShowContactForm(false);
@@ -583,13 +584,12 @@ const HelpPage = () => {
                   <CardContent className="pt-6">
                     <div className="flex items-start space-x-4">
                       <AlertCircle
-                        className={`h-6 w-6 mt-1 ${
-                          item.severity === "high"
-                            ? "text-red-500"
-                            : item.severity === "medium"
+                        className={`h-6 w-6 mt-1 ${item.severity === "high"
+                          ? "text-red-500"
+                          : item.severity === "medium"
                             ? "text-yellow-500"
                             : "text-green-500"
-                        }`}
+                          }`}
                       />
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 mb-2">
@@ -601,15 +601,15 @@ const HelpPage = () => {
                             item.severity === "high"
                               ? "destructive"
                               : item.severity === "medium"
-                              ? "default"
-                              : "secondary"
+                                ? "default"
+                                : "secondary"
                           }
                         >
                           {item.severity === "high"
                             ? "Crítico"
                             : item.severity === "medium"
-                            ? "Moderado"
-                            : "Menor"}
+                              ? "Moderado"
+                              : "Menor"}
                         </Badge>
                       </div>
                     </div>
@@ -632,12 +632,12 @@ const HelpPage = () => {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border rounded-lg">
                       <div>
-                        <h4 className="font-semibold">POS Market v2.1.3</h4>
+                        <h4 className="font-semibold">Manual de Usuario</h4>
                         <p className="text-sm text-gray-600">
-                          Última versión del software
+                          Guía completa para usar el sistema POS
                         </p>
                       </div>
-                      <Button size="sm">
+                      <Button onClick={() => downloadUserManual()} size="sm">
                         <Download className="h-4 w-4 mr-2" />
                         Descargar
                       </Button>
@@ -649,7 +649,7 @@ const HelpPage = () => {
                           Compatible con todas las marcas
                         </p>
                       </div>
-                      <Button size="sm">
+                      <Button onClick={() => downloadCompatibleDevicesGuide()} size="sm">
                         <Download className="h-4 w-4 mr-2" />
                         Descargar
                       </Button>
@@ -676,7 +676,7 @@ const HelpPage = () => {
                           Excel para importar inventario
                         </p>
                       </div>
-                      <Button size="sm">
+                      <Button onClick={() => downloadProductsCSV(mockProducts)} size="sm">
                         <Download className="h-4 w-4 mr-2" />
                         Descargar
                       </Button>
@@ -688,7 +688,7 @@ const HelpPage = () => {
                           Plantillas personalizables
                         </p>
                       </div>
-                      <Button size="sm">
+                      <Button onClick={() => downloadTicketDesigns()} size="sm">
                         <Download className="h-4 w-4 mr-2" />
                         Descargar
                       </Button>
@@ -895,24 +895,21 @@ const HelpPage = () => {
               {chatMessages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`flex ${
-                    msg.sender === "user" ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"
+                    }`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
-                      msg.sender === "user"
-                        ? "bg-blue-600 text-white"
-                        : "bg-white border"
-                    }`}
+                    className={`max-w-[80%] p-3 rounded-lg ${msg.sender === "user"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white border"
+                      }`}
                   >
                     <p className="text-sm">{msg.message}</p>
                     <p
-                      className={`text-xs mt-1 ${
-                        msg.sender === "user"
-                          ? "text-blue-100"
-                          : "text-gray-500"
-                      }`}
+                      className={`text-xs mt-1 ${msg.sender === "user"
+                        ? "text-blue-100"
+                        : "text-gray-500"
+                        }`}
                     >
                       {msg.time}
                     </p>
