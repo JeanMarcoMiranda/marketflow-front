@@ -452,44 +452,44 @@ export default function ReportsPage() {
     },
   ];
 
-  const employeePerformanceData = [
-    {
-      name: "María González",
-      sales: 15600,
-      transactions: 89,
-      avgTicket: 17.5,
-      efficiency: 95,
-      hours: 40,
-      commission: 234,
-    },
-    {
-      name: "Carlos Ruiz",
-      sales: 12400,
-      transactions: 76,
-      avgTicket: 16.3,
-      efficiency: 87,
-      hours: 38,
-      commission: 186,
-    },
-    {
-      name: "Ana López",
-      sales: 9800,
-      transactions: 62,
-      avgTicket: 15.8,
-      efficiency: 92,
-      hours: 35,
-      commission: 147,
-    },
-    {
-      name: "Luis Martín",
-      sales: 8200,
-      transactions: 54,
-      avgTicket: 15.2,
-      efficiency: 78,
-      hours: 32,
-      commission: 123,
-    },
-  ];
+  // const employeePerformanceData = [
+  //   {
+  //     name: "María González",
+  //     sales: 15600,
+  //     transactions: 89,
+  //     avgTicket: 17.5,
+  //     efficiency: 95,
+  //     hours: 40,
+  //     commission: 234,
+  //   },
+  //   {
+  //     name: "Carlos Ruiz",
+  //     sales: 12400,
+  //     transactions: 76,
+  //     avgTicket: 16.3,
+  //     efficiency: 87,
+  //     hours: 38,
+  //     commission: 186,
+  //   },
+  //   {
+  //     name: "Ana López",
+  //     sales: 9800,
+  //     transactions: 62,
+  //     avgTicket: 15.8,
+  //     efficiency: 92,
+  //     hours: 35,
+  //     commission: 147,
+  //   },
+  //   {
+  //     name: "Luis Martín",
+  //     sales: 8200,
+  //     transactions: 54,
+  //     avgTicket: 15.2,
+  //     efficiency: 78,
+  //     hours: 32,
+  //     commission: 123,
+  //   },
+  // ];
 
   const hourlyData = [
     { hour: "08:00", sales: 450, customers: 23, avgTicket: 19.6 },
@@ -587,19 +587,20 @@ MÉTRICAS PRINCIPALES:
 
 DATOS DE VENTAS:
 ${filteredData.salesData
-            .map(
-              (item) =>
-                `${item.date}: $${item.sales} (${item.transactions} transacciones)`
-            )
-            .join("\n")}
+  .map(
+    (item) =>
+      `${item.date}: $${item.sales} (${item.transactions} transacciones)`
+  )
+  .join("\n")}
         `;
 
         const blob = new Blob([pdfContent], { type: "text/plain" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${new Date().toISOString().split("T")[0]
-          }.txt`;
+        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${
+          new Date().toISOString().split("T")[0]
+        }.txt`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -633,8 +634,9 @@ ${filteredData.salesData
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${new Date().toISOString().split("T")[0]
-          }.csv`;
+        a.download = `${reportType.replace(/\s+/g, "_")}_${dateRange}_${
+          new Date().toISOString().split("T")[0]
+        }.csv`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -771,7 +773,10 @@ ${filteredData.salesData
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-2">
               <Calendar className="h-4 w-4 text-gray-500" />
-              <Select value={dateRange} onValueChange={(value) => setDateRange(value as DateRange)}>
+              <Select
+                value={dateRange}
+                onValueChange={(value) => setDateRange(value as DateRange)}
+              >
                 <SelectTrigger className="w-40">
                   <SelectValue />
                 </SelectTrigger>
@@ -787,7 +792,9 @@ ${filteredData.salesData
               <Users className="h-4 w-4 text-gray-500" />
               <Select
                 value={selectedEmployee}
-                onValueChange={(value) => setSelectedEmployee(value as Employee)}
+                onValueChange={(value) =>
+                  setSelectedEmployee(value as Employee)
+                }
               >
                 <SelectTrigger className="w-40">
                   <SelectValue />
@@ -806,7 +813,9 @@ ${filteredData.salesData
               <Package className="h-4 w-4 text-gray-500" />
               <Select
                 value={selectedCategory}
-                onValueChange={(value) => setSelectedCategory(value as Category)}
+                onValueChange={(value) =>
+                  setSelectedCategory(value as Category)
+                }
               >
                 <SelectTrigger className="w-40">
                   <SelectValue />
@@ -950,12 +959,12 @@ ${filteredData.salesData
 
         {/* Main Reports Tabs */}
         <Tabs defaultValue="dashboard" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="sales">Ventas</TabsTrigger>
             <TabsTrigger value="inventory">Inventario</TabsTrigger>
             <TabsTrigger value="financial">Financiero</TabsTrigger>
-            <TabsTrigger value="employees">Empleados</TabsTrigger>
+            {/* <TabsTrigger value="employees">Empleados</TabsTrigger> */}
             <TabsTrigger value="analytics">Análisis</TabsTrigger>
           </TabsList>
 
@@ -1156,8 +1165,8 @@ ${filteredData.salesData
                             name === "sales"
                               ? "Ventas"
                               : name === "customers"
-                                ? "Clientes"
-                                : "Ticket Promedio",
+                              ? "Clientes"
+                              : "Ticket Promedio",
                           ]}
                         />
                         <Bar dataKey="sales" fill="#0088FE" />
@@ -1408,10 +1417,11 @@ ${filteredData.salesData
                     >
                       <div className="flex items-center space-x-3">
                         <div
-                          className={`w-3 h-3 rounded-full ${movement.type === "Entrada"
+                          className={`w-3 h-3 rounded-full ${
+                            movement.type === "Entrada"
                               ? "bg-green-500"
                               : "bg-red-500"
-                            }`}
+                          }`}
                         ></div>
                         <div>
                           <p className="font-medium">{movement.product}</p>
@@ -1431,10 +1441,11 @@ ${filteredData.salesData
                           {movement.type}
                         </Badge>
                         <p
-                          className={`text-sm font-semibold ${movement.quantity > 0
+                          className={`text-sm font-semibold ${
+                            movement.quantity > 0
                               ? "text-green-600"
                               : "text-red-600"
-                            }`}
+                          }`}
                         >
                           {movement.quantity > 0 ? "+" : ""}
                           {movement.quantity}
@@ -1554,8 +1565,8 @@ ${filteredData.salesData
                           name === "income"
                             ? "Ingresos"
                             : name === "expenses"
-                              ? "Gastos"
-                              : "Ganancia",
+                            ? "Gastos"
+                            : "Ganancia",
                         ]}
                       />
                       <Legend />
@@ -1710,7 +1721,7 @@ ${filteredData.salesData
           </TabsContent>
 
           {/* Employees Tab */}
-          <TabsContent value="employees" className="space-y-6">
+          {/* <TabsContent value="employees" className="space-y-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
@@ -1903,7 +1914,7 @@ ${filteredData.salesData
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
+          </TabsContent> */}
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">

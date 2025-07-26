@@ -1,0 +1,18 @@
+[
+    {
+        "id": "item001",
+        "id_purchase_order": "e3f1c4f7-5ab9-4e9f-89fd-7b64a79905ad",
+        "id_product": "prod001",
+        "quantity": 100,
+        "unit_price": 1.80,
+        "total_price": 180.00
+    },
+    {
+        "id": "item002",
+        "id_purchase_order": "d487e970-248b-4e95-8179-e4f6a49f6eb1",
+        "id_product": "prod002",
+        "quantity": 200,
+        "unit_price": 2.50,
+        "total_price": 500.00
+    }
+]

@@ -191,14 +191,14 @@ const SettingsPage = () => {
     storageLimit: "10 GB",
   });
 
-  const [securityConfig, setSecurityConfig] = useState({
-    twoFactorAuth: false,
-    loginAttempts: 3,
-    sessionTimeout: 30,
-    auditLog: true,
-    encryptData: true,
-    allowRemoteAccess: false,
-  });
+  // const [securityConfig, setSecurityConfig] = useState({
+  //   twoFactorAuth: false,
+  //   loginAttempts: 3,
+  //   sessionTimeout: 30,
+  //   auditLog: true,
+  //   encryptData: true,
+  //   allowRemoteAccess: false,
+  // });
 
   const [notificationConfig, setNotificationConfig] = useState({
     email: {
@@ -285,15 +285,15 @@ const SettingsPage = () => {
           onValueChange={setActiveTab}
           className="space-y-8"
         >
-          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10">
+          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-6">
             <TabsTrigger value="general" className="flex items-center">
               <Building2 className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">General</span>
             </TabsTrigger>
-            <TabsTrigger value="hardware" className="flex items-center">
+            {/* <TabsTrigger value="hardware" className="flex items-center">
               <Printer className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Hardware</span>
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger value="sales" className="flex items-center">
               <CreditCard className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Ventas</span>
@@ -310,22 +310,22 @@ const SettingsPage = () => {
               <BarChart3 className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Reportes</span>
             </TabsTrigger>
-            <TabsTrigger value="cloud" className="flex items-center">
+            {/* <TabsTrigger value="cloud" className="flex items-center">
               <Cloud className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Nube</span>
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger value="security" className="flex items-center">
               <Shield className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Seguridad</span>
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex items-center">
+            {/* <TabsTrigger value="notifications" className="flex items-center">
               <Bell className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Notificaciones</span>
-            </TabsTrigger>
-            <TabsTrigger value="advanced" className="flex items-center">
+            </TabsTrigger> */}
+            {/* <TabsTrigger value="advanced" className="flex items-center">
               <Wrench className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Avanzado</span>
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           {/* General Settings */}
@@ -1744,7 +1744,7 @@ const SettingsPage = () => {
 
           {/* Security Settings */}
           <TabsContent value="security" className="space-y-6">
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Shield className="h-5 w-5 mr-2" />
@@ -1863,7 +1863,7 @@ const SettingsPage = () => {
                   />
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card>
               <CardHeader>

@@ -1,0 +1,38 @@
+[
+    {
+        "id": "e3f1c4f7-5ab9-4e9f-89fd-7b64a79905ad",
+        "id_branch": "b7aa3e2f-c2a7-470a-a943-f65ef1e8cd14",
+        "id_user": "df1a3f6c-61e2-4c2a-bb60-d59cbb8262db",
+        "id_supplier": "a53cdbb0-d3e7-4e4f-8a4e-65a892c42e63",
+        "status": "approved",
+        "request_date": "2025-07-25",
+        "expected_delivery_date": "2025-07-30",
+        "actual_delivery_date": null,
+        "total_quantity": 150,
+        "total_cost": 980.50,
+        "freight_cost": 35.00,
+        "notes": "Reponer stock de productos más vendidos.",
+        "updated_by_id": "df1a3f6c-61e2-4c2a-bb60-d59cbb8262db",
+        "created_at": "2025-07-25T10:32:45Z",
+        "updated_at": "2025-07-25T10:32:45Z",
+        "deleted_at": null
+    },
+    {
+        "id": "d487e970-248b-4e95-8179-e4f6a49f6eb1",
+        "id_branch": "c4123f6a-2022-4a3c-b882-2b34c45a8476",
+        "id_user": "a13fb7d0-72d4-46ea-b5fc-1e158d394890",
+        "id_supplier": "c45f879a-2434-43ec-b75b-8beceac27042",
+        "status": "in_transit",
+        "request_date": "2025-07-20",
+        "expected_delivery_date": "2025-07-26",
+        "actual_delivery_date": null,
+        "total_quantity": 320,
+        "total_cost": 2140.00,
+        "freight_cost": 80.00,
+        "notes": "Pedido urgente para campaña promocional.",
+        "updated_by_id": "a13fb7d0-72d4-46ea-b5fc-1e158d394890",
+        "created_at": "2025-07-20T08:15:10Z",
+        "updated_at": "2025-07-24T14:45:12Z",
+        "deleted_at": null
+    }
+]

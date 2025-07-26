@@ -1,0 +1,10 @@
+[
+    {
+        "id": "sup001",
+        "name": "Distribuidora Andina SAC",
+        "ruc": "20546789123",
+        "contact": "ventas@andina.com.pe",
+        "phone": "+51 987 654 321",
+        "created_at": "2025-07-01T08:00:00Z"
+    }
+]

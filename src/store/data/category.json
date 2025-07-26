@@ -1,0 +1,14 @@
+[
+    {
+        "id": "cat001",
+        "name": "Bebidas",
+        "description": "Bebidas frías y calientes",
+        "created_at": "2025-07-05T10:00:00Z"
+    },
+    {
+        "id": "cat002",
+        "name": "Snacks",
+        "description": "Productos para consumo rápido",
+        "created_at": "2025-07-06T09:30:00Z"
+    }
+]

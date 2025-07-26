@@ -1,0 +1,18 @@
+[
+    {
+        "id": "prod001",
+        "name": "Agua mineral 625ml",
+        "barcode": "7750123456789",
+        "price": 2.50,
+        "unit": "unidad",
+        "created_at": "2025-07-05T09:00:00Z"
+    },
+    {
+        "id": "prod002",
+        "name": "Papas fritas clásicas 100g",
+        "barcode": "7750987654321",
+        "price": 3.80,
+        "unit": "unidad",
+        "created_at": "2025-07-05T09:10:00Z"
+    }
+]

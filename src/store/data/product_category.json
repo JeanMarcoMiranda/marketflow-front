@@ -1,0 +1,12 @@
+[
+    {
+        "id": "rel001",
+        "id_product": "prod001",
+        "id_category": "cat001"
+    },
+    {
+        "id": "rel002",
+        "id_product": "prod002",
+        "id_category": "cat002"
+    }
+]
